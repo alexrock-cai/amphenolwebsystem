@@ -1,0 +1,72 @@
+<style type="text/css">
+#epromFormTable {
+	margin-left: auto;
+	margin-right: auto;
+}
+</style>
+<form id="pathSetForm"  data-dojo-type="dijit/form/Form" >
+		<h1>Eprom File Path Setting</h1>
+		<div id="tt" class="formInfo">本页设置eprom 工作岗位数据表的路径，并启动监测程序</div>
+		<table id="epromFormDialogTable" >
+			<tr>
+				<td><label for="RootPath">Root Path</label></td>
+				<td><input type="text" name="RootPath" id="rootPath"
+					data-dojo-type="dijit/form/TextBox" /></td>
+			</tr>
+
+			<tr>
+	        	<td><label for="LogFileType">Log File Type:</label></td>
+	        	<td>
+	        		<select id="logFileType" name="LogFileType" data-dojo-type="dijit/form/FilteringSelect">
+	            		<option value="A">TypeA(KV118)</option>
+	            		<option value="B">TypeB(KV113,115,116)</option>
+	            		<option value="C">TypeC(KV034)</option>
+	            		<option value="D">TypeD(excel)</option>
+	          		</select>
+	        	</td>
+	      	</tr>
+			<tr>
+	        	<td><label for="WorkStationName">WorkStationName:</label></td>
+	        	<td>
+	        		<select id="workStationName" name="WorkStationName" data-dojo-type="dijit/form/FilteringSelect">
+	            		<option value="DTS">DTS</option>
+	            		<option value="Shipment">Shipment</option>
+	            		<option value="Program">Program</option>
+	            		<option value="Verify">Verify</option>
+	          		</select>
+	        	</td>
+	      	</tr>
+
+			<tr>
+				
+				<td align="right" valign="middle">
+					<button type="button" data-dojo-type="dijit/form/Button" > <span>Submit</span>
+						<script type="dojo/on" data-dojo-event="click">
+							dojo.xhrPost({
+								url:"/eprom/setPath",
+								handle:"json",
+								form:"pathSetForm",
+								timeoutSeconds:3000,
+								load:function(response,ioArgs){
+																alert(JSON.parse(response).setPathStatus);
+																demo.registry.byId("EpromListGridxPathSetDialog").hide();
+																var epromListGridx=demo.registry.byId("EpromListGridxGrid");
+															    var estore=new dojo.data.ItemFileReadStore({url:'/eprom/getPathList'});
+																epromListGridx.model.clearCache();
+																epromListGridx.setStore(estore);	
+																epromListGridx.body.refresh();
+															  },
+								error:function(type,error){alert(error.message);},
+								timeout:function(type){alert("time out");}
+							});
+						</script>
+					</button>
+					</td>
+					<td align="center" valign="middle">
+					<button type="reset" data-dojo-type="dijit/form/Button" > Reset </button>
+					</td>
+				</tr>
+	
+		</table>
+		
+	</form>

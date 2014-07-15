@@ -1,0 +1,119 @@
+数据库创建说明
+数据库连接配置文件  mysql_connect
+jdbcUrl = jdbc:mysql://127.0.0.1/agis?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+user = root
+password =root
+devMode = true
+
+使用数据库用 agis
+创建数据表 PnInfoFromDTS 存储从DTS中导出的PN和SN信息。
+customerName pn customerPN rev team wo sn customerSN timeStamp status epromProg  epromVer
+use agis;
+create table PnInfoFromDTS(
+id  int(11) NOT NULL auto_increment,
+customerName varchar(50),
+pn   varchar(50),
+customerPN  varchar(50) ,
+rev  varchar(10),
+team varchar(10),
+wo   varchar(50),
+sn   varchar(50),
+customerSN  varchar(50) unique,
+timeStamp   varchar(50),
+status     varchar(10),
+epromProg  varchar(50),
+epromVer   varchar(50),
+programNum  int default 0,
+verifyNum   int default 0, 
+primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+创建数据表 EpromInfoFromLog 存储从Log文件中读取的eprom烧录信息
+
+create table EpromInfoFromLog(
+id int(11) NOT NULL auto_increment,
+pn        varchar(50),
+customerSN  varchar(50) unique,
+wo          varchar(50),
+date      varchar(20),
+time      varchar(20),
+allProgStatus  varchar(10),
+leftProgStatus varchar(10),
+rightProgStatus varchar(10),
+verStatus     varchar(10),
+primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+创建数据表EpromFilePathSet 存储设置的文件目录和文件名
+要求文件目录设置规则如下
+EpromLog文件路径规则如下
+WorkStationName\PNnumber\WOnumber\ProgrammingLog\filename
+WorkStationName\PNnumber\WOnumber\VerificationLog\filename
+DTS导出的文件路径
+WorkStationName\PNnumber\filename
+
+WorkStationName 可以是  DTS，Program，Verify
+LogType 的值可以是 ProgrammingLog 和 VerificationLog 这两种。
+
+create table EpromFilePathSet(
+id int(11) NOT NULL auto_increment,
+RootPath   varchar(100),
+WorkStationName   varchar(50),
+LogFileType       varchar(50),
+totalFiles  int(20) default 0,
+primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+表 EpromFileList 存储所有已经扫描过的并且已经保存到数据库中的文件名清单。
+create table EpromFileList(
+id int(11)  NOT NULL auto_increment,
+WorkStationName    varchar(50),
+filename varchar(100),
+primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+表EpromCheckLog 存储执行过程中的异常或者执行记录
+create table EpromCheckLog(
+id int(50) NOT NULL auto_increment,
+customerSN  varchar(50),
+event  varchar(50),
+content  varchar(250),
+primary key(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+表 PnInfoFromShipment 存储从仓库导出的准备发货的数据文件。
+create table PnInfoFromShipment(
+id int(50) NOT NULL auto_increment,
+org  varchar(50),
+customer  varchar(50),
+pl_id   varchar(50),
+pn      varchar(50),
+po_num  varchar(50),
+fiscal_wk  varchar(50),
+late_reason  varchar(50),
+decode     varchar(50),
+ref_id     varchar(50),
+sn        varchar(50),
+cust_sn    varchar(50),
+name       varchar(50),
+wo        varchar(50),
+timestamp_entry   varchar(50),
+primary key(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+verify,program log 解析考虑如下情况：
+1、根据日期确定最新的状态。
+2、考虑出现多次烧录Verify获取最后一次。
+3、需要记录Program 烧录的次数，并记录每次的时间。
+4、
+
+修改表结构语句
+alter table PnInfoFromDTS add column verifyNum int default 0 after programNum;
+
+
+2014-6-27
+1, 增加工单最终功能，根据设定的工单预定结束时间检查在制工单是否结束，如果没有结束统计以经完成多少工单。并把未完成的板子标出来。
+
+
+2014-7-12 调整数据库
+

@@ -1,0 +1,54 @@
+package com.amphenol.agis.model;
+
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Model;
+/**
+ * 
+ * table sys_product
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| id            | bigint(20)   | NO   | PRI | NULL    | auto_increment |
+| org           | varchar(50)  | YES  |     | NULL    |                |
+| customer_name | varchar(100) | YES  |     | NULL    |                |
+| pn            | varchar(100) | YES  |     | NULL    |                |
+| customer_pn   | varchar(100) | YES  |     | NULL    |                |
+| rev           | varchar(50)  | YES  |     | NULL    |                |
+| team          | varchar(50)  | YES  |     | NULL    |                |
+| wo            | varchar(100) | YES  |     | NULL    |                |
+| sn            | varchar(100) | YES  |     | NULL    |                |
+| customer_sn   | varchar(100) | YES  | MUL | NULL    |                |
+| timestamp     | varchar(100) | YES  |     | NULL    |                |
+| status        | varchar(100) | YES  |     | NULL    |                |
+| mac_address   | varchar(100) | YES  |     | NULL    |                |
+| pn_label      | varchar(100) | YES  |     | NULL    |                |
+| rev_label     | varchar(100) | YES  |     | NULL    |                |
+| hasprogram    | tinyint(1)   | YES  |     | NULL    |                |
+| program_id    | varchar(50)  | YES  |     | NULL    |                |
+| hasverify     | tinyint(1)   | YES  |     | NULL    |                |
+| verify_id     | varchar(50)  | YES  |     | NULL    |                |
+| onship        | tinyint(1)   | YES  |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+
+ * @author rocky
+ *
+ */
+
+public class ProductModel extends Model<ProductModel> 
+{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4881003661570807576L;
+	
+	public static ProductModel dao = new ProductModel();
+	
+	public List<ProductModel> findAll()
+	{
+		String sql="select * from sys_product";
+		return ProductModel.dao.find(sql);
+	}
+	
+}

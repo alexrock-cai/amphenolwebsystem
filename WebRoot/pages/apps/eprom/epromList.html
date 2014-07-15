@@ -1,0 +1,93 @@
+
+
+<div data-dojo-type="dijit/layout/BorderContainer"
+	id="EpromListGridx"
+	data-dojo-props="liveSplitters: true, design: 'sidebar'">
+	<div data-dojo-type="dojo/data/ItemFileWriteStore" id="EpromListGridxStore"
+		data-dojo-id="demo.EpromListGridxStore" style="display: none"
+		data-dojo-props="url: '/eprom/getPathList'"></div>
+	<div data-dojo-type="dijit/layout/ContentPane" id="EpromListGridxButtonPane"
+		data-dojo-props="region: 'top', splitter: false">
+		<div data-dojo-type="dijit/Dialog" id="EpromListGridxPathSetDialog" 
+		data-dojo-props="title: 'PathSet...', href: '/eprom/showSetPath'"></div>
+		<div data-dojo-type="dijit/Dialog" id="EpromListGridxPathEditDialog" 
+		data-dojo-props="title: 'PathEdit...', href: '/eprom/showEdit'"></div>
+		<button data-dojo-type="dijit/form/Button">New...
+					<script type="dojo/on" data-dojo-event="click">
+						demo.registry.byId("EpromListGridxPathSetDialog").show();
+					</script>
+		</button>
+		<button data-dojo-type="dijit/form/Button">Delete
+					<script type="dojo/on" data-dojo-event="click">
+						(function test(){
+								var epromListGridx=demo.registry.byId("EpromListGridxGrid");
+								var rowId=epromListGridx.select.row.getSelected();
+								alert(rowId);
+								dojo.xhrGet({
+									url:"/eprom/delete",
+									handle:"json",
+									content:{rowId:rowId},
+									load:function(response,ioArgs){
+												alert(JSON.parse(response).setPathStatus);
+											    var estore=new dojo.data.ItemFileReadStore({url:'/eprom/getPathList'});
+												epromListGridx.model.clearCache();
+												epromListGridx.setStore(estore);	
+												epromListGridx.body.refresh();
+									}
+								});
+
+						})()
+					</script>
+		</button>
+		<button data-dojo-type="dijit/form/Button">Edit
+					<script type="dojo/on" data-dojo-event="click">
+						(function(){
+							
+								demo.registry.byId("EpromListGridxPathEditDialog").show();
+								var epromListGridx=demo.registry.byId("EpromListGridxGrid");
+								var rowId=epromListGridx.select.row.getSelected();
+								var row=epromListGridx.model.byId(rowId).rawData;
+								demo.registry.byId("editPathId").set("value",row.id);
+								demo.registry.byId("editRootPath").set("value",row.RootPath);
+								demo.registry.byId("editLogFileType").set("value",row.LogFileType);
+								demo.registry.byId("editWorkStationName").set("value",row.WorkStationName);
+
+						})()
+					</script>
+		</button>
+	</div>
+	<div data-dojo-type="dijit/layout/ContentPane" id="EpromListGridxGridPane"
+		data-dojo-props="region: 'center'">
+<div data-dojo-type="gridx/Grid" id="EpromListGridxGrid" data-dojo-id="demo.EpromListGridxGrid"
+	data-dojo-props="
+		store: demo.EpromListGridxStore,
+		cacheClass: 'gridx/core/model/cache/Async',
+		structure: [
+			{ id: 'column_1', field: 'RootPath', name: 'RootPath', width: 'auto' },
+			{ id: 'column_2', field: 'WorkStationName', name: 'WorkStationName', width: 'auto' },
+			{ id: 'column_3', field: 'LogFileType', name: 'LogFileType', width: 'auto' },
+			{ id: 'column_4', field: 'totalFiles', name: 'totalFiles', width: 'auto' }
+		],
+		selectRowTriggerOnCell: true,
+		modules: [
+
+        	
+        	'gridx/modules/Focus',
+			'gridx/modules/CellWidget',
+			'gridx/modules/Edit',
+			'gridx/modules/VirtualVScroller',
+			'gridx/modules/ColumnResizer',
+			'gridx/modules/extendedSelect/Row',
+			'gridx/modules/SingleSort',
+			'gridx/modules/RowHeader',
+			'gridx/modules/IndirectSelect',
+			'gridx/modules/Filter',
+			'gridx/modules/filter/FilterBar',
+			'gridx/modules/Pagination',
+			'gridx/modules/pagination/PaginationBar',	
+		],
+		 editLazySave: true 
+		"></div>
+	</div>
+
+</div>

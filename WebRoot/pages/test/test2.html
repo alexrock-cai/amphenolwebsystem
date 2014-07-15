@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<link rel="stylesheet" href="../../pages/apps/demo.css" type="text/css" />
+	<script type="text/javascript">
+		dojoConfig = {
+			//async: true,
+			pareOnLoad:true,
+			isDebug:true
+		};
+	</script>
+	<script type="text/javascript" src="../../js/dojo-release-1.10.0/dojo/dojo.js"></script>
+	<script type="text/javascript" src="../../pages/apps/src.js" charset="utf-8"></script>
+	<script type="text/javascript">
+	
+	dojo.require("dijit.form.Button");
+
+dojo.ready(function(){
+  var node = dojo.byId("findMe");
+  dojo.connect(dijit.byId("buttonOne"), "onClick", function(){
+    dojo.fadeOut({node: node, duration: 300}).play();
+  });
+  dojo.connect(dijit.byId("buttonTwo"), "onClick", function(){
+    dojo.fadeIn({node: node, duration: 300}).play();
+  });
+});
+</script>
+</head>
+<body class="claro">
+<div>
+	<h1>Remote Scripting Exercises</h1>
+
+</div>
+<div>
+	<h1>Result:</h1>
+	<pre id="result"></pre>
+</div>
+<div>	
+	<h1>Object Dumps:</h1>
+	<div id="objects"></div>
+
+</div>
+
+ <button data-dojo-type="dijit/form/Button" id="buttonOne">Hide Me!</button> <button data-dojo-type="dijit/form/Button" id="buttonTwo">Show Me!</button>
+<div id="findMe">Hiya!</div>
+</body>
+</html>

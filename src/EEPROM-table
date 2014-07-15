@@ -1,0 +1,103 @@
+drop table if exists sys_product;
+drop table if exists sys_eep_program;
+drop table if exists sys_eep_verify;
+drop table if exists sys_employee;
+drop table if exists sys_wo;
+drop table if exists sys_customer;
+
+create table sys_product(
+id bigint auto_increment,
+org varchar(50),
+customer_name  varchar(100),
+pn     varchar(100),
+customer_pn  varchar(100),
+rev     varchar(50),
+team    varchar(50),
+wo      varchar(100),
+sn      varchar(100),
+customer_sn  varchar(100),
+timestamp   varchar(100),
+status      varchar(100),
+mac_address  varchar(100),
+pn_label     varchar(100),
+rev_label    varchar(100),
+hasprogram  bool,
+program_id   varchar(50),
+hasverify   bool,
+verify_id    varchar(50),
+onship       bool,
+constraint pk_sys_product primary key(id)  
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+create index idx_sys_product_id on sys_product(id);
+create index idx_sys_product_customer_sn on sys_product(customer_sn);
+
+create table sys_eep_program(
+id  bigint auto_increment,
+customer_sn   varchar(100),
+product_id    bigint,
+timestamp    varchar(100),
+status      bool,
+constraint pk_sys_eep_program primary key(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+create index idx_sys_eep_program_id on sys_eep_program(id);
+create index idx_sys_eep_program_customer_sn on sys_eep_program(customer_sn);
+
+
+create table sys_eep_verify(
+id  bigint auto_increment,
+customer_sn    varchar(100),
+timestamp      varchar(100),
+status         bool,
+constraint pk_sys_eep_verify primary key(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+create index idx_sys_eep_verify_id on sys_eep_verify(id);
+create index idx_sys_eep_program_customer_sn on sys_eep_verify(customer_sn);
+
+create table sys_eep_config(
+id bigint auto_imcrement,
+filepath   varchar,
+primary key(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table sys_wo(
+id bigint auto_increment,
+wo_number  varchar(100),
+customer_id  varchar(100),
+pn          varchar(100),
+opentime   varchar(100),
+duetime    varchar(100),
+endtime    varchar(100),
+constraint pk_sys_wo primary key(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+create index idx_sys_wo_id on sys_wo(id);
+
+create table sys_customer(
+id bigint auto_increment,
+customer_name varchar(100),
+country      varchar(50),
+contact      varchar(50),
+email        varchar(100),
+csr    varchar(100),
+pm     varchar(100),
+pe      varchar(100),
+constraint pk_sys_customer primary key(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table sys_employee(
+id bigint auto_increment,
+emp_number  varchar(50),
+name   varchar(100),
+en_name  varchar(100),
+gender   varchar(10),
+job      varchar(100),
+title    varchar(50),
+dept_name  varchar(50),
+dept_number  varchar(50),
+leader_id   bigint,
+desk_phone   varchar(50),
+moblie_phone  varchar(50),
+email        varchar(100),
+available    bool,
+constraint pk_sys_employee primary key(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+create index idx_sys_employee_id on sys_employee(id);

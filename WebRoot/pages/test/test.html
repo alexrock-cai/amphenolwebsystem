@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<link rel="stylesheet" href="../../pages/apps/demo.css" type="text/css" />
+	<script type="text/javascript">
+		dojoConfig = {
+			//async: true,
+			pareOnLoad:true,
+			isDebug:true
+		};
+	</script>
+	<script type="text/javascript" src="../../js/dojo-release-1.10.0/dojo/dojo.js"></script>
+	<script type="text/javascript" src="../../pages/apps/src.js" charset="utf-8"></script>
+	<script type="text/javascript">
+	function example1(){
+							alert("example11 it is work");
+
+							alert("io bind it is work");
+							dojo.require(['dojo/io'],function(io){
+									io.bind({
+									url:"/test",
+									mimetype:"text/json",
+									timeoutSeconds:3000,
+									transport:"XMLHTTPTransport",
+									load:function(type,data,evt){alert(data);},
+									error:function(type,error){alert(error.message);},
+									timeout:function(type){alert("time out!");}
+								});
+							
+								});
+	}
+	function doExample(e)
+	{
+		dojo.stopEvent(e);
+		var exampleId=Number(dojo.byId("exId").value);
+		if(window["example"+exampleId])
+		{
+		var resultNode = dojo.byId("result");
+		resultNode.innerHTML="";
+		dojo.toggleClass(resultNode,"error",false);
+		dojo.byId("objects").innerHTML="";
+		
+		window["example"+exampleId]();
+		}
+		else
+		{
+			alert("Invalid example identifier provided.Try again");
+		}
+	}
+	
+	dojo.addOnLoad(function(){
+		
+		dojo.connect(dojo.byId("exTrigger"),"click",doExample);
+	
+	});	
+
+</script>
+</head>
+<body class="claro">
+<div>
+	<h1>Remote Scripting Exercises</h1>
+	<form><p>
+	Example Identifier:
+	<input id="exId" type="text" size="2" maxLength="2" name="exId">
+	<input id="exTrigger" type="submit" name="exTrigger" value="Go!">
+	
+	</p></form>
+</div>
+<div>
+	<h1>Result:</h1>
+	<pre id="result"></pre>
+</div>
+<div>	
+	<h1>Object Dumps:</h1>
+	<div id="objects"></div>
+
+</div>
+
+</body>
+</html>

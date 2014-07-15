@@ -1,0 +1,50 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>jQuery EasyUI</title>
+	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+	<script type="text/javascript" src="../../jquery.min.js"></script>
+	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+	<!--
+	<script type="text/javascript">
+        //split属性：如果设置为true将显示一个分隔条，用户可以拖动分隔条来改变布局面板的尺寸。
+        //href属性：在指定区域内加载页面的body中的部分，其他不加载
+        //在panel框架中我们可以看到这样一个正则选择（可根据自己需求进行更改）：
+        //        extractor: function (data) {
+        //            var pattern = /<body[^>]*>((.|[\n\r])*)<\/body>/im;
+        //            var matches = pattern.exec(data);
+        //            if (matches) {
+        //                return matches[1]; // only extract body content
+        //            } else {
+        //                return data;
+        //            }
+        //        }
+        //panel属性：返回特定的布局面板，'region'参数的可取值为：'north','south','east','west','center'。
+        function getPanel() {
+            var southPanel = $("#layoutbody").layout('panel', 'south');
+            //获得panel的属性 
+            var attributes = southPanel.panel('options');
+            console.info(attributes); //可以看到其中的各个属性，浏览器调试，这里说明下：使用这种框架和使用js自己书写前台代码，浏览器调试是必不可少的：火狐或者谷歌
+        }
+    </script>
+    -->
+</head>
+<body id="layoutbody" class="easyui-layout">
+    <div data-options="region:'north',title:'North Title',split:true" style="height: 100px;">
+    </div>
+    <div data-options="region:'south',title:'South Title',split:true" style="height: 100px;">
+    </div>
+    <div data-options="region:'east',iconCls:'icon-reload',title:'East',split:true" style="width: 100px;">
+    </div>
+    <div data-options="region:'west',title:'West',split:true" style="width: 100px;">
+        <input type="button" value="获取panel" onclick="getPanel();" />
+    </div>
+    <div data-options="region:'center',title:'center title'" href="basc.html" style="padding: 5px;
+        background: #eee;">
+        <input type="button" value="获取panel" onclick="getPanel();" /><!--如果这里指定了href属性，那么我们自己在这个部分写的代码将不会被现实-->
+    </div>
+</body>
+</html>
+</html>
