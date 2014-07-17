@@ -9,6 +9,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 文件操作工具类
+ * 能够根据给定的路径扫描该路径下所有的文件，并返回List。
+ * 提供文件夹拷贝功能
+ * 提供单个文件复制功能
+ * @author rocky
+ *
+ */
 public class FileScanner 
 {
 	private List<File> files=new ArrayList<File>();
@@ -234,6 +242,28 @@ public class FileScanner
        return flag;
    }
 	
+   public boolean cutFile(String oldPath, String newPath)
+   {
+	   File file=new File(oldPath);
+	   if(file.exists())
+	   {
+		   if(copyFile(file, newPath))
+			   file.delete();
+		   return true;
+	   }
+		   return false;
+   }
+   
+   public boolean cutFile(File file,String newPath)
+   {
+	   if(file.exists())
+	   {
+		   if(copyFile(file,newPath))
+			    return file.delete();
+	   }
+	   return false;
+   }
+   
 	public static void main(String[] args) 
 	{
 		FileScanner s=new FileScanner();

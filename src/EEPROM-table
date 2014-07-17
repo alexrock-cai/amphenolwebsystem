@@ -55,7 +55,8 @@ create index idx_sys_eep_program_customer_sn on sys_eep_verify(customer_sn);
 
 create table sys_eep_config(
 id bigint auto_imcrement,
-filepath   varchar,
+filepath   varchar(500),
+function   varchar(50),
 primary key(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -101,3 +102,12 @@ available    bool,
 constraint pk_sys_employee primary key(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 create index idx_sys_employee_id on sys_employee(id);
+
+create table sys_eep_log(
+id bigint auto_increment,
+timestamp  varchar(100),
+customer_sn  varchar(100),
+type       varchar(50),
+content    varchar(1024),
+constraint pk_sys_eep_log primary key(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -51,4 +51,15 @@ public class ProductModel extends Model<ProductModel>
 		return ProductModel.dao.find(sql);
 	}
 	
+	public ProductModel findByCustomerSn(String sn)
+	{
+		String sql="select * from sys_product where customer_sn = ?";
+		
+		return ProductModel.dao.findFirst(sql, sn);
+	}
+	
+	public Long getProductIdByCustomerSn(String sn)
+	{
+		return findByCustomerSn(sn).getLong("id");
+	}
 }

@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.amphenol.agis.util.FileScanner;
+
 public class TxtReaderTest 
 {
 	public static void read(InputStream inputStream) throws IOException
@@ -90,4 +92,17 @@ public class TxtReaderTest
 //			}
 //		}
 //	}
+	
+	public static void main(String[] args)
+	{
+		File f = new File("/Users/rocky/Desktop/EEPROM SYS/LOG_FILE/Verify/118/Verify log/X912332413_062114_100328.txt");
+		System.out.println(f.getParent().substring("/Users/rocky/Desktop/EEPROM SYS".length()));
+		System.out.println(File.separator);
+		FileScanner s = new FileScanner();
+		List<File> files = s.getFileList(f);
+		for(File file : files)
+		{
+			System.out.println(file.getAbsolutePath());
+		}
+	}
 }

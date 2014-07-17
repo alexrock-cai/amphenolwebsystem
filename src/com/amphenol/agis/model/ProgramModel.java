@@ -37,4 +37,10 @@ public class ProgramModel extends Model<ProgramModel>
 		String sql = "select * from sys_eep_program";
 		return ProgramModel.dao.find(sql);
 	}
+	
+	public ProgramModel findByCustomerSn(String sn)
+	{
+		String sql ="select * from sys_eep_program where customer_sn = ?";
+		return ProgramModel.dao.findFirst(sql, sn);
+	}
 }

@@ -16,6 +16,9 @@ public class Config
 	public static final String LOGIN_NAME="username";
 	public static final String LOGIN_PASSWORD="password";
 	
-	
+	public static final String LOG_TYPE_ERROR = "error";
+	public static final String LOG_TYPE_WARNING = "warning";
+	public static final String LOG_TYPE_NOTIFY ="notify";
+	public static final String LOG_TYPE_HANDLE ="handle";
 
 }

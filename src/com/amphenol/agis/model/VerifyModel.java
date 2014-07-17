@@ -33,5 +33,10 @@ public class VerifyModel extends Model<VerifyModel>
 		String sql = "select * from sys_eep_verify";
 		return VerifyModel.dao.find(sql);
 	}
-
+	
+	public VerifyModel findByCustomerSn(String sn)
+	{
+		String sql="select * from sys_eep_verify where customer_sn = ?";
+		return VerifyModel.dao.findFirst(sql,sn);
+	}
 }
