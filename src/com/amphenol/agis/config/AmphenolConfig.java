@@ -4,16 +4,26 @@ import com.amphenol.UrlConfig;
 import com.amphenol.agis.controller.AuthenticationController;
 import com.amphenol.agis.controller.CommonController;
 import com.amphenol.agis.controller.DCCFileController;
+import com.amphenol.agis.controller.EEPROMController;
 import com.amphenol.agis.controller.EpromVerifyController;
 import com.amphenol.agis.controller.ResourceModelController;
 import com.amphenol.agis.controller.RoleModelController;
 import com.amphenol.agis.controller.UserModelController;
 import com.amphenol.agis.controller.WIViewController;
+import com.amphenol.agis.model.CustomerModel;
 import com.amphenol.agis.model.DCCListModel;
+import com.amphenol.agis.model.EepConfigModel;
+import com.amphenol.agis.model.EepLogModel;
+import com.amphenol.agis.model.EmployeeModel;
 import com.amphenol.agis.model.OrganizationModel;
+import com.amphenol.agis.model.ProductModel;
+import com.amphenol.agis.model.ProgramModel;
 import com.amphenol.agis.model.ResourceModel;
 import com.amphenol.agis.model.RoleModel;
+import com.amphenol.agis.model.ShipdataModel;
 import com.amphenol.agis.model.UserModel;
+import com.amphenol.agis.model.VerifyModel;
+import com.amphenol.agis.model.WOModel;
 import com.amphenol.agis.shiro.SessionHandler;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -56,6 +66,7 @@ public class AmphenolConfig extends JFinalConfig
 		me.add("/resource",ResourceModelController.class);
 		me.add("/dcc",DCCFileController.class);
 		me.add("/wi",WIViewController.class);
+		me.add("/eeprom",EEPROMController.class);
 		
 	}
 
@@ -72,6 +83,15 @@ public class AmphenolConfig extends JFinalConfig
 		arp.addMapping("sys_resource", ResourceModel.class);
 		arp.addMapping("sys_organization", OrganizationModel.class);
 		arp.addMapping("sys_dcc",DCCListModel.class);
+		arp.addMapping("sys_eep_config",EepConfigModel.class);
+		arp.addMapping("sys_product",ProductModel.class);
+		arp.addMapping("sys_eep_program", ProgramModel.class);
+		arp.addMapping("sys_eep_verify", VerifyModel.class);
+		arp.addMapping("sys_eep_log", EepLogModel.class);
+		arp.addMapping("sys_wo",WOModel.class);
+		arp.addMapping("sys_employee", EmployeeModel.class);
+		arp.addMapping("sys_customer", CustomerModel.class);
+		arp.addMapping("sys_shipdata", ShipdataModel.class);
 		}
 
 	@Override

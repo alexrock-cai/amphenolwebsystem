@@ -34,14 +34,14 @@ public class EepConfigModel extends Model<EepConfigModel>
 	
 	public String getHandledPath()
 	{
-		String sql="select * from sys_eep_config where function = handled ";
+		String sql="select * from sys_eep_config where function = 'handled' ";
 		return EepConfigModel.dao.findFirst(sql).getStr("filepath");
 		
 	}
 	
 	public String getWorkPath()
 	{
-		String sql= "select * from sys_eep_config where function = work";
+		String sql= "select * from sys_eep_config where function = 'work'";
 		return EepConfigModel.dao.findFirst(sql).getStr("filepath");
 	}
 }

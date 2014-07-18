@@ -22,6 +22,7 @@ import com.amphenol.agis.model.EepConfigModel;
 import com.amphenol.agis.model.EepLogModel;
 import com.amphenol.agis.model.ProductModel;
 import com.amphenol.agis.model.ProgramModel;
+import com.amphenol.agis.model.ShipdataModel;
 import com.amphenol.agis.model.VerifyModel;
 
 /**
@@ -69,7 +70,7 @@ public class FileReader
 		
 	}
 
-	private void readText(File file) throws Exception 
+	public void readText(File file) throws Exception 
 	{
 		// TODO Auto-generated method stub
 		String path = file.getParent().substring(EepConfigModel.dao.getWorkPath().length());
@@ -83,7 +84,7 @@ public class FileReader
 			readVerifyLog(file,path);
 		}
 	}
-	private void readVerifyLog(File file, String path) throws Exception 
+	public void readVerifyLog(File file, String path) throws Exception 
 	{
 		// TODO Auto-generated method stub
 		in=new FileInputStream(file);
@@ -113,6 +114,7 @@ public class FileReader
 					verify.set("timestamp",temp[1]+temp[2].substring(0,5));
 					if(str.endsWith("PASS"))
 						verify.set("status",true);
+					verify.set("verify_times",1);
 					verify.save();
 				}
 				break;
@@ -172,7 +174,7 @@ public class FileReader
 	 * @param path
 	 * @throws Exception
 	 */
-	private void readProgramLog(File file,String path) throws Exception 
+	public void readProgramLog(File file,String path) throws Exception 
 	{
 		// TODO Auto-generated method stub
 		in=new FileInputStream(file);
@@ -200,7 +202,8 @@ public class FileReader
 					program.set("customer_sn", s[2]);
 					program.set("timestamp", s[0]);
 					program.set("status",true);
-					program.set("product_id", ProductModel.dao.getProductIdByCustomerSn(s[2]));
+					if(ProductModel.dao.getProductIdByCustomerSn(s[2])!=null)
+						program.set("product_id", ProductModel.dao.getProductIdByCustomerSn(s[2]));
 					program.set("program_times",1);
 					program.set("last_timestamp",s[0]);
 					
@@ -262,7 +265,11 @@ public class FileReader
 					p.set("customer_sn", temp[0]);
 					p.set("timestamp",s[0]);
 					p.set("last_timestamp", s[0]);
-					p.set("product_id", ProductModel.dao.findByCustomerSn(temp[0]));
+					if(ProductModel.dao.getProductIdByCustomerSn(temp[0])!=null)
+					{
+						//System.out.println(ProductModel.dao.findByCustomerSn(temp[0]));
+						p.set("product_id", ProductModel.dao.getProductIdByCustomerSn(temp[0]));
+					}
 					p.set("program_times", 1);
 					
 					p.save();
@@ -368,13 +375,19 @@ public class FileReader
 	{
 		// TODO Auto-generated method stub
 		String custSn=row.getCell(7).getRichStringCellValue().getString();
+		ShipdataModel ship=new ShipdataModel();
+		if(row.getCell(1)!=null)
+			ship.set("customer_name", row.getCell(1).getRichStringCellValue().getString());
+		if(row.getCell(3)!=null)
+			ship.set("pn", row.getCell(3).getRichStringCellValue().getString());
+		if(row.getCell(9)!=null)
+			ship.set("wo", row.getCell(9).getRichStringCellValue().getString());
+		if(custSn!=null)
+			ship.set("customer_sn",custSn);
+		boolean flag=ship.save();
 		ProductModel p = ProductModel.dao.findByCustomerSn(custSn) ;
-		if( p !=null)
-		{
-			p.set("onship", true);
-			return p.update();
-		}
-		else
+
+		if(p==null)
 		{
 			EepLogModel log = new EepLogModel();
 			log.set("customer_sn", custSn);
@@ -384,32 +397,124 @@ public class FileReader
 			
 			log.save();
 		}
-		return false;
+		return flag;
 		
 	}
 
 	private boolean saveProduct(Row row) 
 	{
 		ProductModel product = new ProductModel();
-		
-		product.set("org", row.getCell(0));
-		product.set("customer_name",row.getCell(1));
-		product.set("pn",row.getCell(2));
-		product.set("customer_pn",row.getCell(3));
-		product.set("rev",row.getCell(4));
-		product.set("team",row.getCell(5));
-		product.set("wo",row.getCell(6));
-		product.set("sn",row.getCell(7));
-		product.set("customer_sn",row.getCell(8));
-		product.set("timestamp",row.getCell(9));
-		product.set("status",row.getCell(10));
-		product.set("mac_address",row.getCell(11));
-		product.set("pn_label",row.getCell(12));
-		product.set("rev_label",row.getCell(13));
+		if(row.getCell(0)!=null)
+			product.set("org", row.getCell(0).getRichStringCellValue().getString());
+		if(row.getCell(1)!=null)
+			product.set("customer_name",row.getCell(1).getRichStringCellValue().getString());
+		if(row.getCell(2)!=null)
+			product.set("pn",row.getCell(2).getRichStringCellValue().getString());
+		if(row.getCell(3)!=null)
+			product.set("customer_pn",row.getCell(3).getRichStringCellValue().getString());
+		if(row.getCell(4)!=null)
+			product.set("rev",row.getCell(4).getRichStringCellValue().getString());
+		if(row.getCell(5)!=null)
+			product.set("team",row.getCell(5).getRichStringCellValue().getString());
+		if(row.getCell(6)!=null)
+			product.set("wo",row.getCell(6).getRichStringCellValue().getString());
+		if(row.getCell(7)!=null)
+			product.set("sn",row.getCell(7).getRichStringCellValue().getString());
+		if(row.getCell(8)!=null)
+			product.set("customer_sn",row.getCell(8).getRichStringCellValue().getString());
+		if(row.getCell(9)!=null)
+			product.set("timestamp",row.getCell(9).getRichStringCellValue().getString());
+		if(row.getCell(10)!=null)
+			product.set("status",row.getCell(10).getRichStringCellValue().getString());
+		if(row.getCell(11)!=null)
+			product.set("mac_address",row.getCell(11).getRichStringCellValue().getString());
+		if(row.getCell(12)!=null)
+			product.set("pn_label",row.getCell(12).getRichStringCellValue().getString());
+		if(row.getCell(13)!=null)
+			product.set("rev_label",row.getCell(13).getRichStringCellValue().getString());
 		
 		return product.save();
 		
 	}
 	
+	public void checkStatus()
+	{
+		List<ProductModel> products=ProductModel.dao.findAll();
+		List<ShipdataModel> shipdatas=ShipdataModel.dao.findAll();
+		for(ProductModel product : products)
+		{
+			String custSn=product.getStr("customer_sn");
+			ProgramModel program = ProgramModel.dao.findByCustomerSn(custSn);
+			VerifyModel verify = VerifyModel.dao.findByCustomerSn(custSn);
+//			ShipdataModel shipdata=ShipdataModel.dao.findByCustomerSn(custSn);
+			//System.out.println(product.getStr("customer_sn"));
+			//System.out.println(shipdata.getStr("customer_sn"));
+			if(program!=null)
+			{
+				if(program.getBoolean("status"))
+				{
+					product.set("hasprogram", true);
+					product.set("program_id", program.getLong("id"));
+					
+				}
+				else if(program.getBoolean("left_status")&program.getBoolean("right_status"))
+				{
+					product.set("hasprogram", true);
+					product.set("program_id", program.getLong("id"));
+				}
+			}
+			if(verify !=null)
+			{
+				if(verify.getBoolean("status"))
+				{
+					product.set("hasverify",true);
+					product.set("verify_id",verify.getLong("id"));
+				}
+			}
+//			if(shipdata!=null)
+//			{
+//				product.set("onship", true);
+//				//System.out.println(shipdata.getStr("pn"));
+//			}
+			product.update();
+		}
+		
+		for(ShipdataModel shipdata : shipdatas)
+		{
+			String custSn= shipdata.getStr("customer_sn");
+			ProgramModel program = ProgramModel.dao.findByCustomerSn(custSn);
+			VerifyModel verify = VerifyModel.dao.findByCustomerSn(custSn);
+			ProductModel p= ProductModel.dao.findByCustomerSn(custSn);
+			//System.out.println(custSn);
+			//System.out.println(p);
+			if(program !=null)
+			{
+				if(program.getBoolean("status"))
+				{
+					shipdata.set("hasprogram", true);
+					shipdata.set("program_id", program.getLong("id"));
+				}
+				else if(program.getBoolean("left_status")&program.getBoolean("right_status"))
+				{
+					shipdata.set("hasprogram", true);
+					shipdata.set("program_id", program.getLong("id"));
+				}
+			}
+			if(verify !=null)
+			{
+				if(verify.getBoolean("status"))
+				{
+					shipdata.set("hasverify", true);
+					shipdata.set("verify_id",verify.getLong("id"));
+				}
+			}
+			if(p!=null)
+			{
+				p.set("onship",true);
+				p.update();
+			}
+			shipdata.update();
+		}
 
+	}
 }

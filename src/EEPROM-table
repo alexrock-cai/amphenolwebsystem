@@ -111,3 +111,17 @@ type       varchar(50),
 content    varchar(1024),
 constraint pk_sys_eep_log primary key(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table sys_shipdata(
+id bigint auto_increment,
+customer_name  varchar(100),
+customer_sn varchar(100),
+pn          varchar(100),
+wo          varchar(100),
+hasprogram  bool default false,
+program_id  bigint,
+hasverify   bool default false,
+verify_id   bigint,
+mark_content  varchar(500),
+constraint pk_sys_shipdata primary key(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

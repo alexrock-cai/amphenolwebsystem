@@ -60,6 +60,9 @@ public class ProductModel extends Model<ProductModel>
 	
 	public Long getProductIdByCustomerSn(String sn)
 	{
-		return findByCustomerSn(sn).getLong("id");
+		if(findByCustomerSn(sn) !=null)
+			return findByCustomerSn(sn).getLong("id");
+		else
+			return null;
 	}
 }
