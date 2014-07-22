@@ -60,7 +60,7 @@ public class ScanFile
 			
 			SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			System.out.println(f.format(new Date(files.get(i).lastModified())));
-			System.out.println(files.get(i).getParent()+"----"+files.get(i).getParent().endsWith("ORACLE"));
+			System.out.println(files.get(i).getAbsolutePath()+"----"+files.get(i).getAbsolutePath().endsWith(".pdf"));
 		}
 //		FileUtil.getFiles(file);
 //		Map<String, String> map=FileUtil.getMap();

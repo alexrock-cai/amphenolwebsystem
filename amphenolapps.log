@@ -4081,3 +4081,102 @@ Caused by: java.lang.OutOfMemoryError: PermGen space
 
 2014-07-18 15:47:39
 [WARN]-[Thread: qtp694926166-24]-[com.jfinal.core.ActionHandler.handle()]: 401 Unauthorized: /main
+
+2014-07-18 18:10:52
+[WARN]-[Thread: main]-[net.sf.ehcache.store.disk.DiskStorageFactory.<init>()]: The index for data file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.data is out of date, probably due to an unclean shutdown. Deleting index file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.index
+
+2014-07-18 18:12:14
+[WARN]-[Thread: qtp694926166-21]-[com.jfinal.core.ActionHandler.handle()]: 401 Unauthorized: /main
+
+2014-07-18 18:50:56
+[ERROR]-[Thread: JFinal-Scanner]-[org.apache.shiro.web.env.EnvironmentLoader.initEnvironment()]: Shiro environment initialization failed
+org.apache.shiro.config.ConfigurationException: Unable to set property 'cacheManager' with value [org.apache.shiro.cache.ehcache.EhCacheManager@7d28e01f] on object of type org.apache.shiro.web.mgt.DefaultWebSecurityManager.  If 'org.apache.shiro.cache.ehcache.EhCacheManager@7d28e01f' is a reference to another (previously defined) object, prefix it with '$' to indicate that the referenced object should be used as the actual value.  For example, $org.apache.shiro.cache.ehcache.EhCacheManager@7d28e01f
+	at org.apache.shiro.config.ReflectionBuilder.setProperty(ReflectionBuilder.java:501)
+	at org.apache.shiro.config.ReflectionBuilder.applyProperty(ReflectionBuilder.java:450)
+	at org.apache.shiro.config.ReflectionBuilder.applyProperty(ReflectionBuilder.java:562)
+	at org.apache.shiro.config.ReflectionBuilder.applySingleProperty(ReflectionBuilder.java:206)
+	at org.apache.shiro.config.ReflectionBuilder.applyProperty(ReflectionBuilder.java:167)
+	at org.apache.shiro.config.ReflectionBuilder.buildObjects(ReflectionBuilder.java:124)
+	at org.apache.shiro.config.IniSecurityManagerFactory.buildInstances(IniSecurityManagerFactory.java:161)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createSecurityManager(IniSecurityManagerFactory.java:124)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createSecurityManager(IniSecurityManagerFactory.java:102)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createInstance(IniSecurityManagerFactory.java:88)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createInstance(IniSecurityManagerFactory.java:46)
+	at org.apache.shiro.config.IniFactorySupport.createInstance(IniFactorySupport.java:123)
+	at org.apache.shiro.util.AbstractFactory.getInstance(AbstractFactory.java:47)
+	at org.apache.shiro.web.env.IniWebEnvironment.createWebSecurityManager(IniWebEnvironment.java:203)
+	at org.apache.shiro.web.env.IniWebEnvironment.configure(IniWebEnvironment.java:99)
+	at org.apache.shiro.web.env.IniWebEnvironment.init(IniWebEnvironment.java:92)
+	at org.apache.shiro.util.LifecycleUtils.init(LifecycleUtils.java:45)
+	at org.apache.shiro.util.LifecycleUtils.init(LifecycleUtils.java:40)
+	at org.apache.shiro.web.env.EnvironmentLoader.createEnvironment(EnvironmentLoader.java:221)
+	at org.apache.shiro.web.env.EnvironmentLoader.initEnvironment(EnvironmentLoader.java:133)
+	at org.apache.shiro.web.env.EnvironmentLoaderListener.contextInitialized(EnvironmentLoaderListener.java:58)
+	at org.eclipse.jetty.server.handler.ContextHandler.callContextInitialized(ContextHandler.java:771)
+	at org.eclipse.jetty.servlet.ServletContextHandler.callContextInitialized(ServletContextHandler.java:424)
+	at org.eclipse.jetty.server.handler.ContextHandler.startContext(ContextHandler.java:763)
+	at org.eclipse.jetty.servlet.ServletContextHandler.startContext(ServletContextHandler.java:249)
+	at org.eclipse.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1250)
+	at org.eclipse.jetty.server.handler.ContextHandler.doStart(ContextHandler.java:706)
+	at org.eclipse.jetty.webapp.WebAppContext.doStart(WebAppContext.java:492)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at com.jfinal.server.JettyServer$1.onChange(JettyServer.java:106)
+	at com.jfinal.server.Scanner.compare(Scanner.java:87)
+	at com.jfinal.server.Scanner.working(Scanner.java:56)
+	at com.jfinal.server.Scanner.access$0(Scanner.java:54)
+	at com.jfinal.server.Scanner$1.run(Scanner.java:93)
+	at java.util.TimerThread.mainLoop(Timer.java:555)
+	at java.util.TimerThread.run(Timer.java:505)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.commons.beanutils.PropertyUtils.setSimpleProperty(PropertyUtils.java:1789)
+	at org.apache.commons.beanutils.PropertyUtils.setNestedProperty(PropertyUtils.java:1684)
+	at org.apache.commons.beanutils.PropertyUtils.setProperty(PropertyUtils.java:1713)
+	at org.apache.commons.beanutils.BeanUtils.setProperty(BeanUtils.java:1019)
+	at org.apache.shiro.config.ReflectionBuilder.setProperty(ReflectionBuilder.java:493)
+	... 35 more
+Caused by: java.lang.OutOfMemoryError: PermGen space
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:800)
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:449)
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:71)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:361)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at org.eclipse.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:421)
+	at com.jfinal.server.JFinalClassLoader.loadClass(JFinalClassLoader.java:53)
+	at java.lang.Class.getDeclaredMethods0(Native Method)
+	at java.lang.Class.privateGetDeclaredMethods(Class.java:2531)
+	at java.lang.Class.privateGetPublicMethods(Class.java:2651)
+	at java.lang.Class.getMethods(Class.java:1467)
+	at net.sf.ehcache.config.BeanHandler.chooseSetMethod(BeanHandler.java:322)
+	at net.sf.ehcache.config.BeanHandler.setAttribute(BeanHandler.java:263)
+	at net.sf.ehcache.config.BeanHandler.startElement(BeanHandler.java:113)
+	at com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.startElement(AbstractSAXParser.java:509)
+	at com.sun.org.apache.xerces.internal.impl.dtd.XMLDTDValidator.startElement(XMLDTDValidator.java:745)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanStartElement(XMLDocumentFragmentScannerImpl.java:1362)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$ContentDriver.scanRootElementHook(XMLDocumentScannerImpl.java:1292)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:3122)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:880)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:606)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:510)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:848)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:777)
+	at com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:649)
+	at com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl.parse(SAXParserImpl.java:333)
+
+2014-07-18 19:41:43
+[WARN]-[Thread: qtp694926166-23]-[com.jfinal.core.ActionHandler.handle()]: 401 Unauthorized: /main
+
+2014-07-22 11:05:54
+[WARN]-[Thread: main]-[net.sf.ehcache.store.disk.DiskStorageFactory.<init>()]: The index for data file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.data is out of date, probably due to an unclean shutdown. Deleting index file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.index
+
+2014-07-22 11:06:05
+[WARN]-[Thread: qtp694926166-20]-[com.jfinal.core.ActionHandler.handle()]: 401 Unauthorized: /main

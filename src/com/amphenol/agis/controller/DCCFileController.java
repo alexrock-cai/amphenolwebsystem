@@ -30,6 +30,7 @@ public class DCCFileController extends Controller
 		for(File file : wilist)
 		{
 			String p=file.getAbsolutePath().substring(path.length()).substring(UrlConfig.WI_PATH.length()+1);
+			System.out.println(p);
 			
 			DCCListModel dccModel=new DCCListModel();
 			

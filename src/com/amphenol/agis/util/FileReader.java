@@ -74,12 +74,13 @@ public class FileReader
 	{
 		// TODO Auto-generated method stub
 		String path = file.getParent().substring(EepConfigModel.dao.getWorkPath().length());
+		System.out.println("readText Path="+path);
 		//判断此文件是程序烧录日志文件还是验证日志文件
-		if(path.startsWith(File.separator+"LOG_FILE"+File.separator+"Program"))
+		if(path.startsWith("/LOG_FILE/Program"))
 		{
 			readProgramLog(file,path);
 		}
-		if(path.startsWith(File.separator+"LOG_FILE"+File.separator+"Verify"))
+		if(path.startsWith("/LOG_FILE/Verify"))
 		{
 			readVerifyLog(file,path);
 		}

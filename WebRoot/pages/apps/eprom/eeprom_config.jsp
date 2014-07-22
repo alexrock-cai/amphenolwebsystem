@@ -116,7 +116,7 @@
 
 		<!-- 编辑用户对话框 -->
 		<div id="EepConfigEditDialog" data-dojo-type="dijit/Dialog" data-dojo-props="title:'Edit Config'" style="display:none;">
-			<form id="EepConfigEditForm">
+			<form id="EepConfigEditForm" data-dojo-type="dijit/form/Form">
 				<div class="dijitDialogPaneContentArea">
 					
 					<table>

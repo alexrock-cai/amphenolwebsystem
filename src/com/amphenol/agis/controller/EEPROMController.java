@@ -36,12 +36,31 @@ public class EEPROMController extends Controller
 	
 	public void configUpdate()
 	{
-		
+		EepConfigModel config=EepConfigModel.dao.findById(getPara("configid"));
+		config.set("filepath", getPara("filepath"));
+		config.set("function",getPara("function"));
+		if(config.update())
+		{
+			setAttr("status", "保存成功");
+		}
+		else
+		{
+			setAttr("status","保存失败");
+		}
+		renderJson();
 	}
 	
 	public void configDelete()
 	{
-		
+		if(EepConfigModel.dao.deleteById(getParaToLong("configid")))
+		{
+			setAttr("status", "保存成功");
+		}
+		else
+		{
+			setAttr("status","保存失败");
+		}
+		renderJson();
 	}
 	
 	public void configView()
@@ -75,7 +94,17 @@ public class EEPROMController extends Controller
 	{
 		startScanFile();
 		List<ShipdataModel> noEEPROM= ShipdataModel.dao.getNoEEPROMList();
-		new EmailService().sendNoEepromList(noEEPROM);
-		renderText("邮件发送成功");
+		if(new EmailService().sendNoEepromList(noEEPROM))
+		{
+			System.out.println("邮件发送成功");
+		}
+		else
+		{
+			System.out.println("邮件发送失败");
+		}
+		setAttr("noEepromList",noEEPROM);
+		setAttr("total",noEEPROM.size());
+		render("/pages/apps/eprom/no_eeprom_list.jsp");
+
 	}
 }
