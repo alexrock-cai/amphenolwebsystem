@@ -42,7 +42,7 @@ public class EmailService
 			StringBuilder sb=new StringBuilder();
 			for(ShipdataModel ship : list)
 			{
-				sb.append("<p>customer_sn:"+ship.getStr("customer_sn")+"</p>");
+				sb.append("<p>customer_sn:"+ship.getStr("customer_sn")+"*******WO#:"+ship.getStr("wo")+"******PN#:"+ship.getStr("pn")+"</p>");
 			}
 			eml.setBody("这是一封测试邮件。 总共有："+list.size()+"块产品没有经过EEPROM，清单如下：详情请访问：http://131.101.208.5 查看。谢谢！"+sb.toString());
 			eml.send();
