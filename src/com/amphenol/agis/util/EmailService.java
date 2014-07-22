@@ -33,14 +33,18 @@ public class EmailService
 		{
 			Eml eml=new Eml("smtp.126.com", "amphenolmaster@126.com", "amphenolmaster@126.com", "test123");
 			eml.addTo("rocky.cai@amphenol-tcs.com");
-			eml.addTo("cww.jerry@gmail.com");
-			eml.addTo("cai.wenwen@hotmail.com");
+			eml.addTo("chris.zhang@amphenol-tcs.com");
+			eml.addTo("kevin.ding@amphenol-tcs.com");
+			eml.addTo("jackie.pan@amphenol-tcs.com");
+			eml.addTo("susan.fan@amphenol-tcs.com");
 			eml.setSubject("EEPROM 系统提示信息");
-			eml.setBody("总共有："+list.size()+"块产品没有经过EEPROM，清单如下：");
+			
+			StringBuilder sb=new StringBuilder();
 			for(ShipdataModel ship : list)
 			{
-				eml.setBody("customer_sn:"+ship.getStr("customer_sn")+"\n");
+				sb.append("<p>customer_sn:"+ship.getStr("customer_sn")+"</p>");
 			}
+			eml.setBody("这是一封测试邮件。 总共有："+list.size()+"块产品没有经过EEPROM，清单如下：详情请访问：http://131.101.208.5 查看。谢谢！"+sb.toString());
 			eml.send();
 		}
 		catch (MessagingException e)
