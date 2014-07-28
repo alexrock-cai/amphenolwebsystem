@@ -40,6 +40,8 @@ public class FileReader
 {
 	private FileScanner fileScanner = new FileScanner();
 	private InputStream in=null;
+	
+	
 	/**
 	 * 处理获取的所有文件
 	 * @param files
@@ -74,7 +76,7 @@ public class FileReader
 	{
 		// TODO Auto-generated method stub
 		String path = file.getParent().substring(EepConfigModel.dao.getWorkPath().length());
-		System.out.println("readText Path="+path);
+		//System.out.println("readText Path="+path);
 		//判断此文件是程序烧录日志文件还是验证日志文件
 		if(path.startsWith("/LOG_FILE/Program"))
 		{
@@ -168,6 +170,7 @@ public class FileReader
 		reader.close();
 		in.close();
 		fileScanner.cutFile(file, EepConfigModel.dao.getHandledPath()+path);
+		System.out.println("文件处理完毕："+ file.getAbsolutePath());
 	}
 	/**
 	 * 处理烧录程序log文件
@@ -281,6 +284,7 @@ public class FileReader
 		reader.close();
 		in.close();
 		fileScanner.cutFile(file, EepConfigModel.dao.getHandledPath()+path);
+		System.out.println("文件处理完毕："+ file.getAbsolutePath());
 	}
 
 	/**
@@ -336,7 +340,8 @@ public class FileReader
 					}
 				}
 				//将处理过的文件移到已经处理文件目录中
-				fileScanner.cutFile(file, EepConfigModel.dao.getHandledPath());				
+				fileScanner.cutFile(file, EepConfigModel.dao.getHandledPath());	
+				System.out.println("文件处理完毕："+ file.getAbsolutePath());
 				
 			}
 		}
@@ -458,9 +463,14 @@ public class FileReader
 					product.set("program_id", program.getLong("id"));
 					
 				}
-				else if(program.getBoolean("left_status")&program.getBoolean("right_status"))
+				else if(program.getBoolean("left_status")&&program.getBoolean("right_status"))
 				{
 					product.set("hasprogram", true);
+					product.set("program_id", program.getLong("id"));
+				}
+				else
+				{
+					product.set("hasprogram", false);
 					product.set("program_id", program.getLong("id"));
 				}
 			}
@@ -469,6 +479,11 @@ public class FileReader
 				if(verify.getBoolean("status"))
 				{
 					product.set("hasverify",true);
+					product.set("verify_id",verify.getLong("id"));
+				}
+				else
+				{
+					product.set("hasverify",false);
 					product.set("verify_id",verify.getLong("id"));
 				}
 			}

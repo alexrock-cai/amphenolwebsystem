@@ -127,4 +127,19 @@ public class UserModel extends Model<UserModel> {
 		
 		return resIds;
 	}
+	
+	public String getResourceNames()
+	{
+		StringBuilder names=new StringBuilder();
+		for(Long resId : getResourceIdList())
+		{
+			ResourceModel res=ResourceModel.dao.findById(resId);
+			if(res!=null)
+			{
+				names.append(res.getStr("name"));
+			}
+		}
+		
+		return names.toString();
+	}
 }

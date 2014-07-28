@@ -140,7 +140,7 @@ public class FileScanner
        try {
     	   
     	   (new File(newPath)).mkdirs();
-           int bytesum = 0; 
+          // int bytesum = 0; 
            int byteread = 0; 
            File oldfile = new File(oldPath); 
            if (oldfile.exists()) { //文件存在时 
@@ -150,8 +150,8 @@ public class FileScanner
                byte[] buffer = new byte[1444]; 
               // int length; 
                while ( (byteread = inStream.read(buffer)) != -1) { 
-                   bytesum += byteread; //字节数 文件大小 
-                   System.out.println(bytesum); 
+                   //bytesum += byteread; //字节数 文件大小 
+                   //System.out.println(bytesum); 
                    fs.write(buffer, 0, byteread); 
                } 
                inStream.close(); 
@@ -171,7 +171,7 @@ public class FileScanner
        try {
     	   
     	   (new File(newPath)).mkdirs();
-           int bytesum = 0; 
+          // int bytesum = 0; 
            int byteread = 0; 
            
            if (oldfile.exists()) { //文件存在时 
@@ -181,8 +181,8 @@ public class FileScanner
                byte[] buffer = new byte[1444]; 
               // int length; 
                while ( (byteread = inStream.read(buffer)) != -1) { 
-                   bytesum += byteread; //字节数 文件大小 
-                   System.out.println(bytesum); 
+                   //bytesum += byteread; //字节数 文件大小 
+                  // System.out.println(bytesum); 
                    fs.write(buffer, 0, byteread); 
                } 
                inStream.close(); 

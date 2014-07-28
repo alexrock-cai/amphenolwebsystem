@@ -2,6 +2,7 @@ package com.amphenol.agis.controller;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import com.amphenol.UrlConfig;
 import com.amphenol.agis.model.DCCListModel;
 import com.amphenol.agis.util.FileScanner;
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.upload.UploadFile;
 @RequiresAuthentication
 public class DCCFileController extends Controller 
@@ -68,15 +70,25 @@ public class DCCFileController extends Controller
 	
 	public void delete()
 	{
-		if(DCCListModel.dao.deleteById(getParaToLong("id")))
+		if(getParaToLong("id")!=null)
 		{
-			setAttr("status", "删除成功");
+			if(DCCListModel.dao.deleteById(getParaToLong("id")))
+			{
+				setAttr("statusCode", "200");
+				setAttr("message","删除成功");
+			
+			}
+			else
+			{
+				setAttr("statusCode", "300");
+				setAttr("message","删除失败");
+			}
 		}
 		else
 		{
-			setAttr("status","删除失败");
+			setAttr("statusCode", "300");
+			setAttr("message","删除失败");
 		}
-		
 		renderJson();
 	}
 	
@@ -113,6 +125,45 @@ public class DCCFileController extends Controller
 		setAttr("identifier", "id");
 		setAttr("items",list);
 		renderJson(new String[]{"items","identifier"});
+	}
+	
+	public void wiview()
+	{
+		int pageNumber=getParaToInt("pageNum");
+		int pageSize = getParaToInt("numPerPage");
+		List<DCCListModel> list= new ArrayList<DCCListModel>();
+	
+		Page<DCCListModel> pages=DCCListModel.dao.paginate(pageNumber, pageSize);
+		list=pages.getList();
+		int totalCount=pages.getTotalRow();
+		int numPerPage=pages.getPageSize();
+		int currentPage=pages.getPageNumber();
+		System.out.println("totalCount:"+totalCount+" numPerPage:"+numPerPage+"currentPage: "+currentPage);
+		setAttr("totalCount",totalCount);
+		setAttr("numPerPage",numPerPage);
+		setAttr("currentPage",currentPage);
+		setAttr("wilist",list);
+		render("/dwzpage/wi/wilist.jsp");
+	}
+	
+	public void search()
+	{
+		String key=getPara("key");
+		String words=getPara("words");
+		int pageNumber=getParaToInt("pageNum");
+		int pageSize = getParaToInt("numPerPage");
+		List<DCCListModel> list= new ArrayList<DCCListModel>();
+		Page<DCCListModel> pages=DCCListModel.dao.paginateByKeyWords(pageNumber, pageSize, key, words);
+		list=pages.getList();
+		int totalCount=pages.getTotalRow();
+		int numPerPage=pages.getPageSize();
+		int currentPage=pages.getPageNumber();
+		System.out.println("totalCount:"+totalCount+" numPerPage:"+numPerPage+"currentPage: "+currentPage);
+		setAttr("totalCount",totalCount);
+		setAttr("numPerPage",numPerPage);
+		setAttr("currentPage",currentPage);
+		setAttr("wilist",list);
+		render("/dwzpage/wi/wilist.jsp");
 	}
 	
 }

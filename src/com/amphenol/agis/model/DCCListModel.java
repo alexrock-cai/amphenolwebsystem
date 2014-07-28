@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jfinal.plugin.activerecord.Model;
+import com.jfinal.plugin.activerecord.Page;
 
 /**
  * 表 sys_dcc
@@ -54,5 +55,47 @@ public class DCCListModel extends Model<DCCListModel>
 		}
 		
 		return list;
+	}
+	/**
+	 * 分页查询
+	 * @param pageNumber
+	 * @param pageSize
+	 * @return
+	 */
+	public Page<DCCListModel> paginate(int pageNumber , int pageSize)
+	{
+		return paginate(pageNumber,pageSize,"select *","from sys_dcc order by id asc");
+	}
+	
+	/**
+	 * 
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param key
+	 * @param words
+	 * @return
+	 */
+	public Page<DCCListModel> paginateByKeyWords(int pageNumber, int pageSize,String key,String words)
+	{
+		StringBuilder sql= new StringBuilder("where 1=1 and ");
+		sql.append(key).append(" = '%").append(words).append("%' ");
+		return paginate(pageNumber,pageSize,"select *","from sys_dcc "+sql.toString()+"order by id asc");
+	}
+	
+	/**
+	 * 
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param key
+	 * @param words
+	 * @param orderDirection
+	 * @param orderField
+	 * @return
+	 */
+	public Page<DCCListModel> paginateByKeyWords(int pageNumber , int pageSize ,String key ,String words ,String orderDirection , String orderField)
+	{
+		StringBuilder sql=new StringBuilder("where 1=1 and ");
+		sql.append(key).append(" = '%").append(words).append("%' ");
+		return paginate(pageNumber,pageSize,"select *","from sys_dcc "+sql.toString()+"order by "+orderField+" "+orderDirection);
 	}
 }

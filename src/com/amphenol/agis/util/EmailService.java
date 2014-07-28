@@ -33,10 +33,10 @@ public class EmailService
 		{
 			Eml eml=new Eml("smtp.126.com", "amphenolmaster@126.com", "amphenolmaster@126.com", "test123");
 			eml.addTo("rocky.cai@amphenol-tcs.com");
-			eml.addTo("chris.zhang@amphenol-tcs.com");
-			eml.addTo("kevin.ding@amphenol-tcs.com");
-			eml.addTo("jackie.pan@amphenol-tcs.com");
-			eml.addTo("susan.fan@amphenol-tcs.com");
+			//eml.addTo("chris.zhang@amphenol-tcs.com");
+			//eml.addTo("kevin.ding@amphenol-tcs.com");
+			//eml.addTo("jackie.pan@amphenol-tcs.com");
+			//eml.addTo("susan.fan@amphenol-tcs.com");
 			eml.setSubject("EEPROM 系统提示信息");
 			
 			StringBuilder sb=new StringBuilder();

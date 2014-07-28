@@ -117,3 +117,14 @@ alter table PnInfoFromDTS add column verifyNum int default 0 after programNum;
 
 2014-7-12 调整数据库
 
+truncate table sys_product;
+truncate table sys_shipdata;
+truncate table sys_eep_program;
+truncate table sys_eep_verify;
+truncate table sys_eep_log;
+
+2014-7-25
+1、调整写入数据库判断规则，将日志文件中非PASSED结尾 但是记录中已经有的记录判断为false。（bug 如果扫描的又先后顺序可能会出现老的false覆盖掉新的，造成
+系统误报）
+2、需要增加功能，系统要能够设定对不需要做EEPROM 产品代码进行过滤。
+3、需要对扫描处理的产品提供处理记录功能。

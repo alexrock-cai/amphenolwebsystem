@@ -3,7 +3,7 @@ package com.amphenol;
 
 public class UrlConfig 
 {
-	public static final String INDEX_URL="/pages/apps/main/index.jsp";
+	public static final String INDEX_URL="/dwzpage/index.jsp";
 	
 	public static final String BASE="/pages";
 	
