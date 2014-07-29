@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.jfinal.plugin.activerecord.Model;
+import com.jfinal.plugin.activerecord.Page;
 /**
  * table sys_user
 +-----------------+--------------+------+-----+---------+----------------+
@@ -49,6 +50,20 @@ public class UserModel extends Model<UserModel> {
 		String sql="select * from sys_user";
 		return UserModel.dao.find(sql);
 	}
+	
+	public Page<UserModel> paginate(int pageNumber , int pageSize)
+	{
+		return paginate(pageNumber, pageSize,"select *","from sys_user order by id asc");
+	}
+	
+	public Page<UserModel> paginateByKeyWords(int pageNumber,int pageSize,String key,String words)
+	{
+		StringBuilder sql= new StringBuilder("where 1=1 and ");
+		sql.append(key).append(" = '").append(words).append("' ");
+		return paginate(pageNumber,pageSize,"select *","from sys_user "+sql.toString()+"order by id asc");
+	}
+	
+	
 	/**
 	 * 获取该用户的角色ID
 	 * @return
@@ -136,7 +151,7 @@ public class UserModel extends Model<UserModel> {
 			ResourceModel res=ResourceModel.dao.findById(resId);
 			if(res!=null)
 			{
-				names.append(res.getStr("name"));
+				names.append(res.getStr("name")).append(";");
 			}
 		}
 		
