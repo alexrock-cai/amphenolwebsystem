@@ -72,6 +72,7 @@ public class UserModelController extends Controller
 		UserModel u=UserModel.dao.findById(getPara("id"));
 		System.out.println(getPara("username"));
 		u.set("username", getPara("username"));
+		u.set("name", getPara("name"));
 		u.set("password",getPara("password"));
 		u.set("organization_id", 1);
 		u.set("role_ids", getPara("roleLookup.id"));

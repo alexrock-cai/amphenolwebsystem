@@ -133,12 +133,12 @@ $(function(){
 						
 							<table class="list" width="100%" >
 								<tr>
-									<td colspan="2" align="center"><img src="/static/faceimg/root.jpg" height="50%" width="50%"/></td> 
+									<td colspan="2" align="center"><img src="${user.getStr('img') }" height="50%" width="50%"/></td> 
 									
 								</tr>
 								<tr align="center">
 									<td>姓名 </td>
-									<td>${user.getStr('username')}</td>
+									<td>${user.getStr('name')}</td>
 								</tr>
 								<tr align="center">
 									<td>工号 </td>
@@ -160,6 +160,7 @@ $(function(){
 						</ul>
 						 -->
 					</div>
+					<shiro:hasAnyRoles name="root">
 					<div class="accordionHeader">
 						<h2><span>Folder</span>用户管理</h2>
 					</div>
@@ -170,6 +171,7 @@ $(function(){
 							<li><a href="${CONTEXT_PATH}/resource/resView?pageNum=1&numPerPage=20" target="navTab" rel="res_list" >权限列表</a></li>
 						</ul>
 					</div>
+					</shiro:hasAnyRoles>
 					<div class="accordionHeader">
 						<h2><span>Folder</span>关于</h2>
 					</div>

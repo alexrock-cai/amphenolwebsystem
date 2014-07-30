@@ -1,0 +1,3 @@
+alter table sys_user add column employee_id bigint after organization_id;
+alter table sys_user add column name  varchar(100) after role_ids;
+alter table sys_user add column img   varchar(500) after name;

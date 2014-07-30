@@ -50,6 +50,16 @@ public class FileScanner
 		return files;
 	}
 	
+	public List<File> getPdfFileList(File file)
+	{
+		List<File> list=new ArrayList<File>();
+		for(File f:getFileList(file))
+		{
+			if(f.getName().endsWith(".pdf"))
+				list.add(f);
+		}
+		return list;
+	}
 	public boolean copyDir(String file1,String file2) 
 	{
 		

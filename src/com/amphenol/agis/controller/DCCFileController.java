@@ -10,6 +10,7 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 
 import com.amphenol.UrlConfig;
 import com.amphenol.agis.model.DCCListModel;
+import com.amphenol.agis.model.UserModel;
 import com.amphenol.agis.util.FileScanner;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
@@ -28,23 +29,24 @@ public class DCCFileController extends Controller
 		FileScanner scanner = new FileScanner();
 		String path=getRequest().getServletContext().getRealPath("/");
 		SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		List<File> wilist=scanner.getFileList(new File(path+UrlConfig.WI_PATH));
+		List<File> wilist=scanner.getPdfFileList(new File(path+UrlConfig.WI_PATH));
 		for(File file : wilist)
 		{
 			String p=file.getAbsolutePath().substring(path.length()).substring(UrlConfig.WI_PATH.length()+1);
+			// "/xx/xx/xx/xx.pdf"
 			System.out.println(p);
-			
+			String pp=file.getAbsolutePath().substring(path.length());
 			DCCListModel dccModel=new DCCListModel();
-			
-			dccModel.set("customer",p.substring(0, p.indexOf("/")).toUpperCase());
+			String customer=p.substring(0, p.indexOf("/"));
+			dccModel.set("customer",customer.toUpperCase());
 			dccModel.set("type", "WI");
 			//获取PN number
 			if(p.substring(p.indexOf("/")+1).equals(file.getName()))
 			{
 				if(file.getName().indexOf("-")>0)
 				{
-					dccModel.set("pn",file.getName().substring(file.getName().indexOf("-")+1, file.getName().indexOf(" ")));
-					dccModel.set("rev",file.getName().substring(file.getName().indexOf(" "),file.getName().indexOf(".")));
+					dccModel.set("pn",file.getName().substring(file.getName().indexOf("-")+1, 10));
+					dccModel.set("rev",file.getName().substring(13,file.getName().indexOf(".")));
 				}
 			}
 			else 
@@ -52,19 +54,25 @@ public class DCCFileController extends Controller
 				p=p.substring(p.indexOf("/")+1);
 				if(p.substring(0, p.indexOf("/")).indexOf("-")>0)
 				{
-					dccModel.set("pn", p.substring(p.indexOf("-")+1,p.indexOf(" ")));
-					dccModel.set("rev",p.substring(p.indexOf(" "), p.indexOf("/")));
+					
+						dccModel.set("pn", p.substring(p.indexOf("-")+1,10));
+					
+					//dccModel.set("rev",p.substring(p.indexOf(" "), p.indexOf("/")));
 				}
 			}
 			
 			dccModel.set("filename", file.getName());
 			
-			dccModel.set("filepath", file.getPath());
+			dccModel.set("filepath", pp);
 			dccModel.set("lastmodify", f.format(new Date(file.lastModified())));
 			dccModel.set("operate", "<a href=\""+file.getAbsolutePath().substring(path.length())+"\" target=\"_brank\">"+"Open"+"</a>");
-			if(dccModel.save())
-				setAttr("status", "init finished");
+			dccModel.save();
+				
 		}
+		setAttr("statusCode", "200");
+		setAttr("message","更新成功");
+		setAttr("callbackType","closeCurrent");
+		setAttr("navTabId","wi_list");
 		renderJson();
 	}
 	
@@ -165,6 +173,42 @@ public class DCCFileController extends Controller
 		setAttr("words",words);
 		setAttr("wilist",list);
 		render("/dwzpage/wi/wilist.jsp");
+	}
+	
+	public void mywi()
+	{
+		UserModel user=(UserModel)getSessionAttr("user");
+		List<DCCListModel> dccList = new ArrayList<DCCListModel>();
+		boolean hasAllWI = false;
+		
+		List<String> list = new ArrayList<String>();
+		for(String s : user.getPermissionNameList())
+		{
+			//判断是否有wi的权限
+			if(s.split(":")[0].equals("wi"))
+			{
+				if(s.split(":")[1].equals("*"))
+				{
+					hasAllWI=true;
+					break;
+				}
+				else
+				{
+					list.add(s.split(":")[1]);
+				}
+			}
+			//System.out.println("s--->:"+s);
+			
+		}
+		if(hasAllWI)
+		{
+			dccList=DCCListModel.dao.findAll();
+		}
+		else
+		{
+			dccList= DCCListModel.dao.findByCustomer(list);
+		}
+		
 	}
 	
 }
