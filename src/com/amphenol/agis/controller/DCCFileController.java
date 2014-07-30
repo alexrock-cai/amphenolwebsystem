@@ -150,8 +150,8 @@ public class DCCFileController extends Controller
 	{
 		String key=getPara("key");
 		String words=getPara("words");
-		int pageNumber=getParaToInt("pageNum");
-		int pageSize = getParaToInt("numPerPage");
+		int pageNumber=1;
+		int pageSize =20; 
 		List<DCCListModel> list= new ArrayList<DCCListModel>();
 		Page<DCCListModel> pages=DCCListModel.dao.paginateByKeyWords(pageNumber, pageSize, key, words);
 		list=pages.getList();
@@ -162,6 +162,7 @@ public class DCCFileController extends Controller
 		setAttr("totalCount",totalCount);
 		setAttr("numPerPage",numPerPage);
 		setAttr("currentPage",currentPage);
+		setAttr("words",words);
 		setAttr("wilist",list);
 		render("/dwzpage/wi/wilist.jsp");
 	}

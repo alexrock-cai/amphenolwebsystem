@@ -1,10 +1,13 @@
 package com.amphenol.agis.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.amphenol.agis.model.RoleModel;
+import com.amphenol.agis.pojo.Role;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.ActiveRecordException;
+import com.jfinal.plugin.activerecord.Page;
 
 public class RoleModelController extends Controller 
 {
@@ -18,16 +21,20 @@ public class RoleModelController extends Controller
 		RoleModel r=getModel(RoleModel.class);
 		r.set("role", getPara("role"));
 		r.set("description",getPara("description"));
-		r.set("resource_ids",getPara("resource_ids"));
-		r.set("available", true);
+		r.set("resource_ids",getPara("resLookup.id"));
+		r.set("available", getParaToBoolean("available"));
 		try{
 			r.save();
-			setAttr("status", "保存成功");
+			setAttr("statusCode", "200");
+			setAttr("message","保存成功");
+			setAttr("callbackType","closeCurrent");
+			setAttr("navTabId","role_list");
 		}
 		catch(ActiveRecordException e)
 		{
 			e.printStackTrace();
-			setAttr("status","保存失败");
+			setAttr("statusCode", "300");
+			setAttr("message","保存失败");
 		}
 		
 		renderJson();
@@ -35,19 +42,23 @@ public class RoleModelController extends Controller
 	
 	public void update()
 	{
-		RoleModel r=RoleModel.dao.findById(getPara("roleid"));
+		RoleModel r=RoleModel.dao.findById(getPara("id"));
 		r.set("role", getPara("role"));
 		r.set("description",getPara("description"));
-		r.set("resource_ids",getPara("resource_ids"));
+		r.set("resource_ids",getPara("resLookup.id"));
 		r.set("available", true);
 		try{
 			r.update();
-			setAttr("status", "保存成功");
+			setAttr("statusCode", "200");
+			setAttr("message","保存成功");
+			setAttr("navTabId","role_list");
+			setAttr("callbackType","closeCurrent");
 		}
 		catch(ActiveRecordException e)
 		{
 			e.printStackTrace();
-			setAttr("status","保存失败");
+			setAttr("statusCode", "300");
+			setAttr("message","保存失败");
 		}
 		renderJson();
 	}
@@ -56,17 +67,21 @@ public class RoleModelController extends Controller
 	{
 		if(getParaToLong("id")==1)
 		{
-			setAttr("status","admin 为默认权限不能删除");
+			setAttr("statusCode", "300");
+			setAttr("message","默认权限不能删除");
 		}
 		else
 		{
 			if(RoleModel.dao.deleteById(getParaToLong("id")))
 			{
-				setAttr("status","删除成功");
+				setAttr("statusCode", "200");
+				setAttr("message","删除成功");
+				setAttr("navTabId","role_list");
 			}
 			else
 			{
-				setAttr("status","删除失败");
+				setAttr("statusCode", "300");
+				setAttr("message","删除失败");
 			}
 		}
 		renderJson();
@@ -81,6 +96,48 @@ public class RoleModelController extends Controller
 		setAttr("identifier", "id");
 		setAttr("items",list);
 		renderJson(new String[]{"items","identifier"});
+	}
+	
+	private void getRole()
+	{
+		List<Role> list=new ArrayList<Role>();
+		Page<RoleModel> pages=RoleModel.dao.paginate(getParaToInt("pageNum"), getParaToInt("numPerPage"));
+		for(RoleModel r:pages.getList())
+		{
+			list.add(new Role(r));
+		}
+		setAttr("totalCount",pages.getTotalRow());
+		setAttr("numPerPage",pages.getPageSize());
+		setAttr("currentPage",pages.getPageNumber());
+		setAttr("rolelist",list);
+		
+	}
+	
+	public void roleView()
+	{
+		getRole();
+		render("/dwzpage/user/rolelist.jsp");
+	}
+	/**
+	 * role 查找带回
+	 */
+	public void roleLookup()
+	{
+		getRole();
+		render("/dwzpage/user/rolelookup.jsp");
+	}
+	
+	public void openRoleForm()
+	{
+		if(getPara("id")==null)
+		{
+			render("/dwzpage/user/rolecreate.jsp");
+		}
+		else
+		{
+			setAttr("r",new Role(RoleModel.dao.findById(getParaToLong("id"))));
+			render("/dwzpage/user/roleedit.jsp");
+		}
 	}
 }
 

@@ -93,6 +93,16 @@ public class UserModel extends Model<UserModel> {
 		}
 		return roleNameList;
 	}
+	
+	public String getRoleNames()
+	{
+		StringBuilder names=new StringBuilder();
+		for(String roleName : getRoleNameList())
+		{
+			names.append(roleName).append(";");
+		}
+		return names.toString();
+	}
 	/**
 	 * 获取该用户的角色
 	 * @return

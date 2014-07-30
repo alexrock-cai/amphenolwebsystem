@@ -126,35 +126,48 @@ $(function(){
 
 				<div class="accordion" fillSpace="sidebar">
 					<div class="accordionHeader">
-						<h2><span>Folder</span>应用组件</h2>
+						<h2><span>Folder</span>作业指导书</h2>
 					</div>
 					<div class="accordionContent">
-						<ul class="tree treeFolder">
-							<li><a href="${CONTEXT_PATH}/dwzpage/main.html" target="navTab" rel="main" >主页</a></li>
-							<li><span>WI(作业指导书系统)</span>
-								<ul>
-									<li><a href="${CONTEXT_PATH}/dcc/wiview?pageNum=1&numPerPage=20" target="navTab" rel="wi_list">WI清单</a></li>
-									<li><a href="http://www.baidu.com" target="navTab" rel="page1">页面一(外部页面)</a></li>
-									<li><a href="demo_page2.html" target="navTab" rel="external" external="true">iframe navTab页面</a></li>
-									<li><a href="demo_page1.html" target="navTab" rel="page1" fresh="false">替换页面一</a></li>
-									<li><a href="demo_page2.html" target="navTab" rel="page2">页面二</a></li>
-									<li><a href="demo_page4.html" target="navTab" rel="page3" title="页面三（自定义标签名）">页面三</a></li>
-									<li><a href="demo_page4.html" target="navTab" rel="page4" fresh="false">测试页面（fresh="false"）</a></li>
-									<li><a href="w_editor.html" target="navTab">表单提交会话超时</a></li>
-									<li><a href="demo/common/ajaxTimeout.html" target="navTab">navTab会话超时</a></li>
-									<li><a href="demo/common/ajaxTimeout.html" target="dialog">dialog会话超时</a></li>
-									<li><a href="index_menu.html" target="_blank">横向导航条</a></li>
-								</ul>
-							</li>
-						</ul>
+						<!-- 用户信息面板 -->
 						
+							<table class="list" width="100%" >
+								<tr>
+									<td colspan="2" align="center"><img src="/static/faceimg/root.jpg" height="50%" width="50%"/></td> 
+									
+								</tr>
+								<tr align="center">
+									<td>姓名 </td>
+									<td>${user.getStr('username')}</td>
+								</tr>
+								<tr align="center">
+									<td>工号 </td>
+									<td>${user.getStr('username')}</td>
+								</tr>
+								<tr>
+									<td>认证技能 </td>
+									<td><a href="${CONTEXT_PATH}/dcc/wiview?pageNum=1&numPerPage=20" target="navTab" rel="wi_list" title="我的WI">${user.getResourceNames() }</a></td>
+								</tr>
+								<tr>
+									<td colspan="2" align="center"><a href="${CONTEXT_PATH}/dcc/wiview?pageNum=1&numPerPage=20" target="navTab" rel="wi_list">我的WI</a></td>
+								</tr>
+							</table>
+						
+						<!-- 功能菜单
+						<ul class="tree treeFolder collapse">
+							<li><a href="${CONTEXT_PATH}/dwzpage/main.html" target="navTab" rel="main" >主页</a></li>
+							<li></li>	
+						</ul>
+						 -->
 					</div>
 					<div class="accordionHeader">
-						<h2><span>Folder</span>登录信息</h2>
+						<h2><span>Folder</span>用户管理</h2>
 					</div>
 					<div class="accordionContent">
 						<ul class="tree">
-
+							<li><a href="${CONTEXT_PATH}/user/userView?pageNum=1&numPerPage=20" target="navTab" rel="user_list" >用户列表</a></li>
+							<li><a href="${CONTEXT_PATH}/role/roleView?pageNum=1&numPerPage=20" target="navTab" rel="role_list" >角色列表</a></li>
+							<li><a href="${CONTEXT_PATH}/resource/resView?pageNum=1&numPerPage=20" target="navTab" rel="res_list" >权限列表</a></li>
 						</ul>
 					</div>
 					<div class="accordionHeader">

@@ -44,8 +44,7 @@
 	
 	<table class="table" width="1200" 
 		<shiro:hasRole name="cicsouser">layoutH="85"</shiro:hasRole> 
-		<shiro:hasRole name="root">layoutH="110"</shiro:hasRole> 
-		>
+		<shiro:hasRole name="root">layoutH="110"</shiro:hasRole> >
 	
 		<thead>
 			<tr>

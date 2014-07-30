@@ -13,5 +13,11 @@ public class CommonController extends Controller
 	{
 		render(UrlConfig.INDEX_URL);
 	}
+	
+	public void timeout()
+	{
+		setAttr("statusCode",301);
+		setAttr("message","会话超时请重新登录");
+	}
 
 }

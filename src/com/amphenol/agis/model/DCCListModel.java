@@ -78,7 +78,8 @@ public class DCCListModel extends Model<DCCListModel>
 	public Page<DCCListModel> paginateByKeyWords(int pageNumber, int pageSize,String key,String words)
 	{
 		StringBuilder sql= new StringBuilder("where 1=1 and ");
-		sql.append(key).append(" = '%").append(words).append("%' ");
+		sql.append(key).append(" = '").append(words).append("' ");
+		System.out.println("from sys_dcc "+sql.toString()+"order by id asc");
 		return paginate(pageNumber,pageSize,"select *","from sys_dcc "+sql.toString()+"order by id asc");
 	}
 	

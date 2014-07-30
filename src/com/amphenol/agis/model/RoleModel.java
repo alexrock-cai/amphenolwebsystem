@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.jfinal.plugin.activerecord.Model;
+import com.jfinal.plugin.activerecord.Page;
 
 /**
  * 
@@ -40,6 +41,36 @@ public class RoleModel extends Model<RoleModel>
 		return RoleModel.dao.find(sql);
 	}
 
+	/**
+	 * 增加分页显示
+	 * @param pageNumber
+	 * @param pageSize
+	 * @return
+	 */
+	public Page<RoleModel> paginate(int pageNumber , int pageSize)
+	{
+		return paginate(pageNumber, pageSize, "select *", "from sys_role order by id asc");
+	}
+	
+	/**
+	 * 关键字查询分页显示
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param key
+	 * @param words
+	 * @return
+	 */
+	public Page<RoleModel> paginateByKeyWords(int pageNumber,int pageSize,String key,String words)
+	{
+		StringBuilder sql= new StringBuilder("where 1=1 and ");
+		sql.append(key).append(" = '").append(words).append("' ");
+		return paginate(pageNumber,pageSize,"select *","from sys_role "+sql.toString()+"order by id asc");
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Long> getResourceIdList()
 	{
 		List<Long> list=new ArrayList<Long>();
@@ -50,6 +81,20 @@ public class RoleModel extends Model<RoleModel>
 			list.add(Long.valueOf(resId));
 		}
 		return list;
+	}
+	
+	public String getResourceNames()
+	{
+		StringBuilder names=new StringBuilder();
+		for(Long resId: getResourceIdList())
+		{
+			ResourceModel r=ResourceModel.dao.findById(resId);
+			if(r!=null)
+			{
+				names.append(r.getStr("name")).append(";");
+			}
+		}
+		return names.toString();
 	}
 	public Collection<String> getPermissionNameList() {
 		List<String> list=new ArrayList<String>();

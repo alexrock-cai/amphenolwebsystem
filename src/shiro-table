@@ -6,10 +6,13 @@ drop table if exists sys_role;
 create table sys_user (
   id bigint auto_increment,
   organization_id bigint,
+  employee_id bigint,
   username varchar(100),
   password varchar(100),
   salt varchar(100),
   role_ids varchar(100),
+  name    varchar(100),
+  img     varchar(500),
   locked bool default false,
   constraint pk_sys_user primary key(id)
 ) charset=utf8 ENGINE=InnoDB;
