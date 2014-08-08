@@ -1,0 +1,6 @@
+WI 处理正则表达式匹配规则
+1、匹配如下Benchmark/WI-KT10032117 REV-.pdf  客户名称+WI名称 粗略匹配 目的筛选出没有分站的WI
+    正则  [a-zA-Z]+/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*[rR][Ee][vV]\\s*[\\-|\\w]\\.pdf
+    
+2、匹配如下 Brocade/WI-KG76400049 RevB/WI-KG76400049_ATB1.pdf
+    正则  [a-zA-Z]+/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*[rR][Ee][vV]\\s*[\\-|\\w]/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*\\-*\\w+\\.pdf

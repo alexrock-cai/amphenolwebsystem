@@ -27,24 +27,33 @@ public class EmailService
 		}
 
 	}
-	public boolean sendNoEepromList(List<ShipdataModel> list)
+	public boolean sendNoEepromList(List<ShipdataModel> list,List<ShipdataModel> notindts)
 	{
 		try
 		{
 			Eml eml=new Eml("smtp.126.com", "amphenolmaster@126.com", "amphenolmaster@126.com", "test123");
 			eml.addTo("rocky.cai@amphenol-tcs.com");
-			//eml.addTo("chris.zhang@amphenol-tcs.com");
-			//eml.addTo("kevin.ding@amphenol-tcs.com");
-			//eml.addTo("jackie.pan@amphenol-tcs.com");
-			//eml.addTo("susan.fan@amphenol-tcs.com");
+			eml.addTo("chris.zhang@amphenol-tcs.com");
+			eml.addTo("kevin.ding@amphenol-tcs.com");
+			eml.addTo("jackie.pan@amphenol-tcs.com");
+			eml.addTo("susan.fan@amphenol-tcs.com");
 			eml.setSubject("EEPROM 系统提示信息");
 			
 			StringBuilder sb=new StringBuilder();
+			sb.append("<p>没有经过EEPROM的清单</p>");
 			for(ShipdataModel ship : list)
 			{
 				sb.append("<p>customer_sn:"+ship.getStr("customer_sn")+"*******WO#:"+ship.getStr("wo")+"******PN#:"+ship.getStr("pn")+"</p>");
 			}
-			eml.setBody("这是一封测试邮件。 总共有："+list.size()+"块产品没有经过EEPROM，清单如下：详情请访问：http://131.101.208.5 查看。谢谢！"+sb.toString());
+			
+			sb.append("<p>如下是可能更换标签的产品</p>");
+			
+			for(ShipdataModel ship : notindts)
+			{
+				sb.append("<p>customer_sn:"+ship.getStr("customer_sn")+"*******WO#:"+ship.getStr("wo")+"******PN#:"+ship.getStr("pn")+"</p>");
+			}
+			
+			eml.setBody("这是一封测试邮件。 总共有："+list.size()+"块产品没有经过EEPROM，总共有"+notindts.size()+"块可能更换标签，因为在DTS中没有发现。清单如下：详情请访问：http://131.101.208.5 查看。谢谢！"+sb.toString());
 			eml.send();
 		}
 		catch (MessagingException e)

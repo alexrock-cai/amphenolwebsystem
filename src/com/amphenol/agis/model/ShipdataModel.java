@@ -29,4 +29,10 @@ public class ShipdataModel extends Model<ShipdataModel>
 		String sql = "select * from sys_shipdata where hasprogram = false or hasverify= false";
 		return ShipdataModel.dao.find(sql);
 	}
+	
+	public List<ShipdataModel> getNotOnDTSList()
+	{
+		String sql = "select * from sys_shipdata where on_dts=false";
+		return ShipdataModel.dao.find(sql);
+	}
 }

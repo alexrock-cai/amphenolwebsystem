@@ -35,7 +35,28 @@ public class UserModelController extends Controller
 			render("/dwzpage/user/useredit.jsp");
 		}
 	}
-	
+	/**
+	 * 修改密码
+	 */
+	public void changepwd()
+	{
+		UserModel user=(UserModel)getSessionAttr("user");
+		user.set("password", getPara("password"));
+		try
+		{
+			user.update();
+			setAttr("statusCode", "200");
+			setAttr("message","修改密码成功");
+			setAttr("callbackType","closeCurrent");
+		}
+		catch (Exception e) 
+		{
+			// TODO: handle exception
+			setAttr("statusCode", "300");
+			setAttr("message","修改密码失败");
+		}
+		renderJson();
+	}
 	/**
 	 * 新建用户
 	 */

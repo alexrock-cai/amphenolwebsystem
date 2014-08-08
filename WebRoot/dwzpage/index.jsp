@@ -80,7 +80,7 @@ $(function(){
 //		loginUrl:"login.html",	// 跳到登录页面
 		statusCode:{ok:200, error:300, timeout:301}, //【可选】
 		pageInfo:{pageNum:"pageNum", numPerPage:"numPerPage", orderField:"orderField", orderDirection:"orderDirection"}, //【可选】
-		debug:true,	// 调试模式 【true|false】
+		debug:false,	// 调试模式 【true|false】
 		callback:function(){
 			initEnv();
 			$("#themeList").theme({themeBase:"../../js/themes"}); // themeBase 相对于index页面的主题base路径
@@ -98,7 +98,7 @@ $(function(){
 				<a class="logo" href="http://www.ltd.amphenol-tcs.com">标志</a>
 				<ul class="nav">
 					<li><a><h2>欢迎 ${user.getStr('username')} 登录本系统</h2></a></li>
-					<li><a href="#" target="dialog" width="600">修改密码</a></li>
+					<li><a href="${CONTEXT_PATH}/dwzpage/user/changepwd.jsp" target="dialog" width="600">修改密码</a></li>
 					<li><a href="/logout">退出</a></li>
 				</ul>
 				<ul class="themeList" id="themeList">
@@ -172,15 +172,26 @@ $(function(){
 						</ul>
 					</div>
 					</shiro:hasAnyRoles>
+					<shiro:hasAnyRoles name="root,eeprom">
 					<div class="accordionHeader">
-						<h2><span>Folder</span>关于</h2>
+						<h2><span>Folder</span>EEPROM System</h2>
 					</div>
 					<div class="accordionContent">
 						<ul class="tree">
-							<li><a href="newPage1.html" target="dialog" rel="dlg_page">列表</a></li>
+							<li><a href="${CONTEXT_PATH}/eeprom/view?pageNum=1&numPerPage=20" target="navTab" rel="eeprom_list">EEPROM</a></li>
+						</ul>
+					</div>
+					</shiro:hasAnyRoles>
+					<div class="accordionHeader">
+						<h2><span>Folder</span>others</h2>
+					</div>
+					<div class="accordionContent">
+						<ul class="tree">
+							<li><a href="${CONTEXT_PATH}/dwzpage/testpage/testjs.html" target="dialog" rel="dlg_page">列表</a></li>
 							<li><a href="newPage1.html" target="dialog" rel="dlg_page2">列表</a></li>
 						</ul>
 					</div>
+						
 				</div>
 			</div>
 		</div>
@@ -206,11 +217,16 @@ $(function(){
 							
 						</div>
 						<div class="pageCentent">
-						
-							    <div style="width:50%;margin:0 300px;">   
-       								 <img src="/static/image/first_workshop.jpg" height="80%" width="100%" /> 
+								
+								<div style="position:absolute;top:40%;left:50%;margin:-100px 0 0 -100px;width:100%;height:400px">   
+       								 <span style="font-size:40px">Lean Factory</span>
+    							</div>
+							    <div style="position:absolute;top:50%;left:50%;margin:-100px 0 0 -350px;width:400px;height:300px">   
+       								 <img src="${CONTEXT_PATH}/static/image/aa.png" height="80%" width="80%" /> 
     							</div>   
-
+								<div style="position:absolute;top:50%;left:50%;margin:-100px 0 0 80px;width:400px;height:300px">   
+       								 <img src="${CONTEXT_PATH}/static/image/bb.png" height="80%" width="80%" /> 
+    							</div> 
 
 						
 						</div>

@@ -14,6 +14,7 @@ public class User
 	private String img;
 	private Boolean locked;
 	private String resourcenames;
+	private String station;
 	private UserModel usermodel;
 	
 	public User(){}
@@ -31,6 +32,7 @@ public class User
 		this.organizationid=u.getLong("organization_id");
 		this.img=u.getStr("img");
 		this.locked=u.getBoolean("locked");
+		this.station=u.getStr("station");
 	}
 	public long getId() {
 		return id;
@@ -98,6 +100,15 @@ public class User
 	public void setUsermodel(UserModel usermodel) {
 		this.usermodel = usermodel;
 	}
+	
+	public String getStation() {
+		return station;
+	}
+
+	public void setStation(String station) {
+		this.station = station;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

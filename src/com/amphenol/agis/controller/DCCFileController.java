@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 
@@ -30,6 +32,7 @@ public class DCCFileController extends Controller
 		String path=getRequest().getServletContext().getRealPath("/");
 		SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<File> wilist=scanner.getPdfFileList(new File(path+UrlConfig.WI_PATH));
+		
 		for(File file : wilist)
 		{
 			String p=file.getAbsolutePath().substring(path.length()).substring(UrlConfig.WI_PATH.length()+1);
@@ -72,6 +75,60 @@ public class DCCFileController extends Controller
 		setAttr("statusCode", "200");
 		setAttr("message","更新成功");
 		setAttr("callbackType","closeCurrent");
+		setAttr("navTabId","wi_list");
+		renderJson();
+	}
+	
+	public void regexInitWI()
+	{
+		FileScanner scanner = new FileScanner();
+		String path=getRequest().getServletContext().getRealPath("/");
+		SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		List<File> wilist=scanner.getPdfFileList(new File(path+UrlConfig.WI_PATH));
+		String regex1="([a-zA-Z]+)/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*([rR][Ee][vV]\\s*[\\-|\\w])/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*[\\-_]*(\\w+)\\.pdf";
+		String regex2="([a-zA-Z]+)/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*([rR][Ee][vV]\\s*[\\-|\\w])\\.pdf";
+		Pattern p1=Pattern.compile(regex1);
+		Pattern p2=Pattern.compile(regex2);
+		
+		for(File file : wilist)
+		{
+			Matcher m1=p1.matcher(file.getAbsolutePath());
+			Matcher m2=p2.matcher(file.getAbsolutePath());
+			DCCListModel dccModel=new DCCListModel();
+			if(m1.find())
+			{
+				
+				
+				dccModel.set("customer", m1.group(1).toUpperCase());
+				dccModel.set("station", m1.group(5).toUpperCase());
+				dccModel.set("pn", m1.group(2));
+				dccModel.set("rev",m1.group(3));
+					
+			}
+			else if(m2.find())
+			{
+				dccModel.set("customer", m2.group(1).toUpperCase());
+				dccModel.set("pn",m2.group(2));
+				dccModel.set("rev",m2.group(3));
+			}
+			// "/xx/xx/xx/xx.pdf"
+			
+			String pp=file.getAbsolutePath().substring(path.length());
+			
+			//获取PN number
+			
+			
+			dccModel.set("filename", file.getName());
+			
+			dccModel.set("filepath", pp);
+			dccModel.set("lastmodify", f.format(new Date(file.lastModified())));
+			dccModel.set("operate", "<a href=\""+file.getAbsolutePath().substring(path.length())+"\" target=\"_brank\">"+"Open"+"</a>");
+			dccModel.save();
+				
+		}
+		setAttr("statusCode", "200");
+		setAttr("message","更新成功");
+		
 		setAttr("navTabId","wi_list");
 		renderJson();
 	}

@@ -1,3 +1,19 @@
 alter table sys_user add column employee_id bigint after organization_id;
 alter table sys_user add column name  varchar(100) after role_ids;
 alter table sys_user add column img   varchar(500) after name;
+
+
+2014-8-06
+
+alter table sys_user add column station varchar(100) unique after employee_id;
+
+drop table if exists sys_station 
+create table sys_station (
+id bigint auto_increment,
+station varchar(100) not null unique,
+discription  varchar(250),
+constraint pk_sys_station primary key(id)
+
+)charset=utf8 ENGINE=InnoDB;
+
+create index idx_sys_station_id on sys_station(station);

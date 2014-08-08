@@ -76,13 +76,13 @@ public class FileReader
 	{
 		// TODO Auto-generated method stub
 		String path = file.getParent().substring(EepConfigModel.dao.getWorkPath().length());
-		//System.out.println("readText Path="+path);
+		System.out.println("readText Path="+path);
 		//判断此文件是程序烧录日志文件还是验证日志文件
-		if(path.startsWith("/LOG_FILE/Program"))
+		if(path.startsWith("LOG_FILE\\Program"))
 		{
 			readProgramLog(file,path);
 		}
-		if(path.startsWith("/LOG_FILE/Verify"))
+		if(path.startsWith("LOG_FILE\\Verify"))
 		{
 			readVerifyLog(file,path);
 		}
@@ -313,7 +313,9 @@ public class FileReader
 					for(int rowIndex=1;rowIndex<=sheet.getLastRowNum();rowIndex++)
 					{
 						Row row = sheet.getRow(rowIndex);
-						if(row == null) continue;
+						if(row==null) continue;
+						if(row.getCell(0) == null ) continue;
+						if(row.getCell(0).getRichStringCellValue().getString().trim().equals("")) continue;
 						
 						saveProduct(row);
 						//showRow(row);
@@ -333,7 +335,9 @@ public class FileReader
 					for(int rowIndex=1;rowIndex<=sheet.getLastRowNum();rowIndex++)
 					{
 						Row row = sheet.getRow(rowIndex);
-						if(row == null) continue;
+						if(row==null) continue;
+						if(row.getCell(0) == null) continue;
+						if(row.getCell(0).getRichStringCellValue().getString().trim().equals("")) continue;
 						
 						saveShipData(row);
 						//showRow(row);
@@ -528,7 +532,9 @@ public class FileReader
 			{
 				p.set("onship",true);
 				p.update();
+				shipdata.set("on_dts", true);
 			}
+			
 			shipdata.update();
 		}
 

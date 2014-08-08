@@ -3,6 +3,7 @@ package com.amphenol.agis.model;
 import java.util.List;
 
 import com.jfinal.plugin.activerecord.Model;
+import com.jfinal.plugin.activerecord.Page;
 
 /**
  * 
@@ -32,6 +33,10 @@ public class EepConfigModel extends Model<EepConfigModel>
 		return EepConfigModel.dao.find(sql);
 	}
 	
+	public Page<EepConfigModel> paginate(int pageNumber , int pageSize)
+	{
+		return paginate(pageNumber,pageSize,"select *","from sys_eep_config order by id asc");
+	}
 	public String getHandledPath()
 	{
 		String sql="select * from sys_eep_config where function = 'handled' ";

@@ -51,6 +51,7 @@
 				<th width="3%"  >id</th>
 				<th width="10%" >登录名（工号）</th>
 				<th width="10%"   >姓名</th>
+				<th width="10%"   >站别</th>
 				<th width="10%" >拥有角色</th>
 				<th width="10%" >用户状态</th>
 				<th width="10%" >部门</th>
@@ -64,6 +65,7 @@
 				<td>${u.id }</td>
 				<td>${u.username }</td>
 				<td>${u.name }</td>
+				<td>${u.station }</td>
 				<td>${u.rolenames }</td>
 				<td>${u.locked }</td>
 				<td>${u.organizationid}</td>

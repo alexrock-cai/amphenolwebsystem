@@ -7,6 +7,7 @@ create table sys_user (
   id bigint auto_increment,
   organization_id bigint,
   employee_id bigint,
+  station varchar(100) unique,
   username varchar(100),
   password varchar(100),
   salt varchar(100),
