@@ -13438,3 +13438,6 @@ java.lang.NumberFormatException: For input string: "{sid_user}"
 	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
 	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
 	at java.lang.Thread.run(Thread.java:745)
+
+2014-08-18 16:40:59
+[WARN]-[Thread: main]-[net.sf.ehcache.store.disk.DiskStorageFactory.<init>()]: The index for data file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.data is out of date, probably due to an unclean shutdown. Deleting index file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.index
