@@ -21,6 +21,7 @@ import com.amphenol.agis.model.ProgramModel;
 import com.amphenol.agis.model.ResourceModel;
 import com.amphenol.agis.model.RoleModel;
 import com.amphenol.agis.model.ShipdataModel;
+import com.amphenol.agis.model.StationModel;
 import com.amphenol.agis.model.UserModel;
 import com.amphenol.agis.model.VerifyModel;
 import com.amphenol.agis.model.WOModel;
@@ -92,6 +93,7 @@ public class AmphenolConfig extends JFinalConfig
 		arp.addMapping("sys_employee", EmployeeModel.class);
 		arp.addMapping("sys_customer", CustomerModel.class);
 		arp.addMapping("sys_shipdata", ShipdataModel.class);
+		arp.addMapping("sys_station", StationModel.class);
 		}
 
 	@Override

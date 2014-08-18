@@ -8,6 +8,7 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import com.amphenol.agis.model.DCCListModel;
 import com.amphenol.agis.model.UserModel;
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Page;
 
 public class WIViewController extends Controller
 {
@@ -23,9 +24,15 @@ public class WIViewController extends Controller
 	{
 		
 		UserModel user=(UserModel)getSessionAttr("user");
+		int pageNumber=getParaToInt("pageNum");
+		int pageSize = getParaToInt("numPerPage");
+		String key = getPara("key");
+		String words = getPara("words");
 		List<DCCListModel> dccList = new ArrayList<DCCListModel>();
 		boolean hasAllWI = false;
-		
+		int totalCount;
+		int numPerPage;
+		int currentPage;
 		List<String> list = new ArrayList<String>();
 		for(String s : user.getPermissionNameList())
 		{
@@ -47,15 +54,58 @@ public class WIViewController extends Controller
 		}
 		if(hasAllWI)
 		{
-			dccList=DCCListModel.dao.findAll();
+			//dccList=DCCListModel.dao.findAll();
+			//判断是否是查询
+			if(words!=null)
+			{
+				Page<DCCListModel> pages=DCCListModel.dao.paginateByKeyWords(pageNumber, pageSize, key, words);
+				dccList=pages.getList();
+				totalCount=pages.getTotalRow();
+				numPerPage=pages.getPageSize();
+				currentPage=pages.getPageNumber();
+			}
+			else
+			{
+				Page<DCCListModel> pages=DCCListModel.dao.paginate(pageNumber, pageSize);
+				dccList=pages.getList();
+				totalCount=pages.getTotalRow();
+				numPerPage=pages.getPageSize();
+				currentPage=pages.getPageNumber();
+			}
+			
 		}
 		else
 		{
-			dccList= DCCListModel.dao.findByCustomer(list);
+			//dccList= DCCListModel.dao.findByCustomer(list);
+			if(words!=null)
+			{
+				Page<DCCListModel> pages=DCCListModel.dao.paginateByKeyWords(pageNumber, pageSize,"station",list,key,words);
+				dccList=pages.getList();
+				totalCount=pages.getTotalRow();
+				numPerPage=pages.getPageSize();
+				currentPage=pages.getPageNumber();
+			}
+			else
+			{
+				Page<DCCListModel> pages=DCCListModel.dao.paginateByKeyWords(pageNumber, pageSize,"station",list);
+				dccList=pages.getList();
+				totalCount=pages.getTotalRow();
+				numPerPage=pages.getPageSize();
+				currentPage=pages.getPageNumber();
+			}
+			
 		}
 		
-		setAttr("identifier", "id");
-		setAttr("items",dccList);
-		renderJson(new String[]{"items","identifier"});
+		//setAttr("identifier", "id");
+		//setAttr("items",dccList);
+		//renderJson(new String[]{"items","identifier"});
+		setAttr("words",words);
+		setAttr("totalCount",totalCount);
+		setAttr("numPerPage",numPerPage);
+		setAttr("currentPage",currentPage);
+		setAttr("wilist",dccList);
+		render("/dwzpage/wi/mywilist.jsp");
 	}
+	
+	
 }

@@ -146,10 +146,10 @@ $(function(){
 								</tr>
 								<tr>
 									<td>认证技能 </td>
-									<td><a href="${CONTEXT_PATH}/dcc/wiview?pageNum=1&numPerPage=20" target="navTab" rel="wi_list" title="我的WI">${user.getResourceNames() }</a></td>
+									<td><a href="${CONTEXT_PATH}/wi/myWi?pageNum=1&numPerPage=20" target="navTab" rel="wi_list" title="我的WI">${user.getResourceNames() }</a></td>
 								</tr>
 								<tr>
-									<td colspan="2" align="center"><a href="${CONTEXT_PATH}/dcc/wiview?pageNum=1&numPerPage=20" target="navTab" rel="wi_list">我的WI</a></td>
+									<td colspan="2" align="center"><a href="${CONTEXT_PATH}/wi/myWi?pageNum=1&numPerPage=20" target="navTab" rel="wi_list">我的WI</a></td>
 								</tr>
 							</table>
 						
@@ -160,15 +160,18 @@ $(function(){
 						</ul>
 						 -->
 					</div>
-					<shiro:hasAnyRoles name="root">
+					<shiro:hasAnyRoles name="root,admin_leader">
 					<div class="accordionHeader">
 						<h2><span>Folder</span>用户管理</h2>
 					</div>
 					<div class="accordionContent">
 						<ul class="tree">
 							<li><a href="${CONTEXT_PATH}/user/userView?pageNum=1&numPerPage=20" target="navTab" rel="user_list" >用户列表</a></li>
-							<li><a href="${CONTEXT_PATH}/role/roleView?pageNum=1&numPerPage=20" target="navTab" rel="role_list" >角色列表</a></li>
-							<li><a href="${CONTEXT_PATH}/resource/resView?pageNum=1&numPerPage=20" target="navTab" rel="res_list" >权限列表</a></li>
+							<shiro:hasRole name="root">
+								<li><a href="${CONTEXT_PATH}/role/roleView?pageNum=1&numPerPage=20" target="navTab" rel="role_list" >角色列表</a></li>
+								<li><a href="${CONTEXT_PATH}/resource/resView?pageNum=1&numPerPage=20" target="navTab" rel="res_list" >权限列表</a></li>
+							</shiro:hasRole>
+							<li><a href="${CONTEXT_PATH}/user/stationView?pageNum=1&numPerPage=20" target="navTab" rel="station_list" >站别列表</a></li>
 						</ul>
 					</div>
 					</shiro:hasAnyRoles>
@@ -179,6 +182,16 @@ $(function(){
 					<div class="accordionContent">
 						<ul class="tree">
 							<li><a href="${CONTEXT_PATH}/eeprom/view?pageNum=1&numPerPage=20" target="navTab" rel="eeprom_list">EEPROM</a></li>
+						</ul>
+					</div>
+					</shiro:hasAnyRoles>
+					<shiro:hasAnyRoles name="root">
+					<div class="accordionHeader">
+						<h2><span>Folder</span>Equipment PM System</h2>
+					</div>
+					<div class="accordionContent">
+						<ul class="tree">
+							<li><a href="${CONTEXT_PATH}/dwzpage/equipment/mgtboard.jsp" target="navTab" rel="mgtboard">Equipment Mgt Board</a></li>
 						</ul>
 					</div>
 					</shiro:hasAnyRoles>

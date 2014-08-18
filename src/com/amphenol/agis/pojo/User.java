@@ -27,7 +27,7 @@ public class User
 		this.username=u.getStr("username");
 		this.password=u.getStr("password");
 		this.roleids=u.getStr("role_ids");
-		this.rolenames=u.getRoleNames();
+		this.rolenames=u.getRoleDescriptions();
 		this.resourcenames=u.getResourceNames();
 		this.organizationid=u.getLong("organization_id");
 		this.img=u.getStr("img");

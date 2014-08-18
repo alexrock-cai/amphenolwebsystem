@@ -94,12 +94,34 @@ public class UserModel extends Model<UserModel> {
 		return roleNameList;
 	}
 	
+	public Set<String>  getRoleDescriptionList()
+	{
+		Set<String> roleDescriptionList=new HashSet<String>();
+		for(Long roleId : getRoleIdList())
+		{
+			RoleModel role=RoleModel.dao.findById(roleId);
+			if(role!=null)
+				roleDescriptionList.add(role.getStr("description"));
+		}
+		return roleDescriptionList;
+	}
+	
 	public String getRoleNames()
 	{
 		StringBuilder names=new StringBuilder();
 		for(String roleName : getRoleNameList())
 		{
 			names.append(roleName).append(";");
+		}
+		return names.toString();
+	}
+	
+	public String getRoleDescriptions()
+	{
+		StringBuilder names=new StringBuilder();
+		for(String name : getRoleDescriptionList())
+		{
+			names.append(name).append(";");
 		}
 		return names.toString();
 	}

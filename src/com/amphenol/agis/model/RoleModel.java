@@ -75,10 +75,14 @@ public class RoleModel extends Model<RoleModel>
 	{
 		List<Long> list=new ArrayList<Long>();
 		String resIdsStr=getStr("resource_ids");
-		String[] resIds=resIdsStr.split(",");
-		for(String resId : resIds)
-		{
-			list.add(Long.valueOf(resId));
+		if(!resIdsStr.trim().equals(""))
+		{	
+			String[] resIds=resIdsStr.split(",");
+		
+			for(String resId : resIds)
+			{
+				list.add(Long.valueOf(resId));
+			}
 		}
 		return list;
 	}
@@ -107,5 +111,27 @@ public class RoleModel extends Model<RoleModel>
 			}
 		}
 		return list;
+	}
+	
+	public RoleModel findByRole(String role)
+	{
+		String sql ="select * from sys_role where role=?";
+		return findFirst(sql,role);
+	}
+	
+	public boolean deleteByRole(String role)
+	{
+		if(findByRole(role)!=null)
+		{
+			return deleteById(findByRole(role).getLong("id"));
+		}
+		else
+			return false;
+	}
+	
+	public List<RoleModel> findAllWIRole()
+	{
+		String sql ="select * from sys_role where role like '%WIUser%'";
+		return find(sql);
 	}
 }

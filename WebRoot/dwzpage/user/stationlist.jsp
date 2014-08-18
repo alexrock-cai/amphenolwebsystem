@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<form id="pagerForm" method="post" action="${CONTEXT_PATH}/user/userView">
+<form id="pagerForm" method="post" action="${CONTEXT_PATH}/user/stationView">
 	<input type="hidden" name="pageNum" value="1" />
 	<input type="hidden" name="numPerPage" value="${param.numPerPage}" />
 	<input type="hidden" name="orderField" value="${param.orderField}" />
 	<input type="hidden" name="orderDirection" value="${param.orderDirection}" />
 </form>
-
-<div id="testdiv" class="pageHeader">
+<!--  
+<div class="pageHeader">
 	<form onsubmit="return navTabSearch(this)" action="${CONTEXT_PATH}/user/search" method="post">
 	<div class="searchBar">
 		<table class="searchContent">
@@ -28,58 +28,42 @@
 	</div>
 	</form>
 </div>
-
+-->
 <div class="pageContent">
    <shiro:hasAnyRoles name="root,admin_leader,admin_widatauser">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="${CONTEXT_PATH}/user/openUserForm" target="dialog" rel="user_add"><span>添加</span></a></li>
-			<shiro:hasRole name="root" >
-			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" href="${CONTEXT_PATH}/user/delete" class="delete"><span>批量删除</span></a></li>			
-			<li><a class="edit" href="${CONTEXT_PATH}/user/openUserForm?id={sid_user}" target="navTab" warn="请选择一个用户"><span>修改</span></a></li>
-			
+			<li><a class="add" href="${CONTEXT_PATH}/user/openStationForm" target="dialog" rel="station_add"><span>添加</span></a></li>		
+			<li><a class="edit" href="${CONTEXT_PATH}/user/openStationForm?id={sid_station}" target="dialog" warn="请选择一个站别"><span>修改</span></a></li>
 			<li class="line">line</li>
-			<li><a class="add" href="${CONTEXT_PATH}/main/initUser" target="ajaxTodo"  title="批量创建用户"><span>批量创建用户</span></a></li>
-			</shiro:hasRole>
-			<li><a class="add" href="${CONTEXT_PATH}/user/authenticationDialog?id={sid_user}" target="dialog" warn="请选择一个用户" rel="auth_user"><span>认证作业员</span></a></li>
+			
 		</ul>
 	</div>
 	</shiro:hasAnyRoles>
 	
-	<table class="table" width="1200" 
-		<shiro:hasAnyRoles name="admin_leader,admin_widatauser">layoutH="110"</shiro:hasAnyRoles> 
-		<shiro:hasRole name="root">layoutH="110"</shiro:hasRole> >
-	
+	<table class="table" width="1200"  layoutH="75" >
+
 		<thead>
 			<tr>
 				<th width="2%"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
 				<th width="3%"  >id</th>
-				<th width="10%" >登录名（工号）</th>
-				<th width="10%"   >姓名</th>
-				<th width="10%"   >站别</th>
-				<th width="10%" >拥有角色</th>
-				<th width="10%" >用户状态</th>
-				<th width="10%" >部门</th>
+				<th width="10%" >站别</th>
+				<th width="10%"   >描述</th>
+				
 				<th width="10%" >操作</th>
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${userlist}" var="u">
-			<tr target="sid_user" rel="${u.id }">
-				<td><input name="ids" value="${u.id }" type="checkbox"></td>
-				<td>${u.id }</td>
-				<td>${u.username }</td>
-				<td>${u.name }</td>
-				<td>${u.station }</td>
-				<td>${u.rolenames }</td>
-				<td>${u.locked }</td>
-				<td>${u.organizationid}</td>
-				
-				
+		<c:forEach items="${stationlist}" var="station">
+			<tr target="sid_station" rel="${station.id }">
+				<td><input name="ids" value="${station.id }" type="checkbox"></td>
+				<td>${station.id }</td>
+				<td>${station.station }</td>
+				<td>${station.discription }</td>								
 				<td>
 					
-					<a title="删除" target="ajaxTodo" href="${CONTEXT_PATH}/user/delete?id=${u.id }" class="btnDel" >删除</a>
-					<a title="编辑" target="dialog" rel="user_edit" href="${CONTEXT_PATH}/user/openUserForm?id=${u.id }" class="btnEdit">编辑</a>
+					<a title="删除" target="ajaxTodo" href="${CONTEXT_PATH}/user/deleteStation?id=${station.id }" class="btnDel" >删除</a>
+					<a title="编辑" target="dialog" rel="user_edit" href="${CONTEXT_PATH}/user/openStationForm?id=${station.id }" class="btnEdit">编辑</a>
 				</td>
 				
 			</tr>

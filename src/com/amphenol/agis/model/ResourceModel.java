@@ -39,6 +39,21 @@ public class ResourceModel extends Model<ResourceModel>
 		return ResourceModel.dao.find(sql);
 	}
 	
+	public ResourceModel findByPermission(String permission)
+	{
+		String sql="select * from sys_resource where permission=?";
+		return findFirst(sql,permission);
+	}
+	
+	public boolean deleteByPermission(String permission)
+	{
+		if(findByPermission(permission) !=null)
+		{
+			 return deleteById(findByPermission(permission).getLong("id"));
+		}
+		else
+			return false;
+	}
 	public Page<ResourceModel> paginate(int pageNumber , int pageSize)
 	{
 		return paginate(pageNumber, pageSize,"select *","from sys_resource order by id asc");

@@ -83,6 +83,29 @@ public class DCCListModel extends Model<DCCListModel>
 		return paginate(pageNumber,pageSize,"select *","from sys_dcc "+sql.toString()+"order by id asc");
 	}
 	
+	public Page<DCCListModel> paginateByKeyWords(int pageNumber,int pageSize,String key,List<String> words)
+	{
+		StringBuilder sql= new StringBuilder("where 1=2 ");
+		for(String word:words)
+		{
+			sql.append("or ").append(key).append(" = '").append(word).append("' ");
+		}
+		return paginate(pageNumber,pageSize,"select *","from sys_dcc "+sql.toString()+"order by id asc");
+	}
+	
+	public Page<DCCListModel> paginateByKeyWords(int pageNumber,int pageSize,String column,List<String> stations,String key,String words)
+	{
+		StringBuilder sql = new StringBuilder("where ");
+		sql.append("(").append(key).append(" like '%").append(words).append("%') and (");
+		for(String station : stations)
+		{
+			sql.append(column).append(" = '").append(station).append("' or ");
+			
+		}
+		sql.append(" 1=2 ) ");
+		System.out.println("from sys_dcc "+sql.toString()+"order by id asc");
+		return paginate(pageNumber,pageSize,"select *","from sys_dcc "+sql.toString()+"order by id asc");
+	}
 	/**
 	 * 
 	 * @param pageNumber

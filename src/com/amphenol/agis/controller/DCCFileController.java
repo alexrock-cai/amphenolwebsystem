@@ -10,9 +10,10 @@ import java.util.regex.Pattern;
 
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 
+
 import com.amphenol.UrlConfig;
 import com.amphenol.agis.model.DCCListModel;
-import com.amphenol.agis.model.UserModel;
+
 import com.amphenol.agis.util.FileScanner;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
@@ -232,40 +233,6 @@ public class DCCFileController extends Controller
 		render("/dwzpage/wi/wilist.jsp");
 	}
 	
-	public void mywi()
-	{
-		UserModel user=(UserModel)getSessionAttr("user");
-		List<DCCListModel> dccList = new ArrayList<DCCListModel>();
-		boolean hasAllWI = false;
-		
-		List<String> list = new ArrayList<String>();
-		for(String s : user.getPermissionNameList())
-		{
-			//判断是否有wi的权限
-			if(s.split(":")[0].equals("wi"))
-			{
-				if(s.split(":")[1].equals("*"))
-				{
-					hasAllWI=true;
-					break;
-				}
-				else
-				{
-					list.add(s.split(":")[1]);
-				}
-			}
-			//System.out.println("s--->:"+s);
-			
-		}
-		if(hasAllWI)
-		{
-			dccList=DCCListModel.dao.findAll();
-		}
-		else
-		{
-			dccList= DCCListModel.dao.findByCustomer(list);
-		}
-		
-	}
+	
 	
 }
