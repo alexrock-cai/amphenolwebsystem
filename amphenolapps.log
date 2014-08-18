@@ -13316,3 +13316,6 @@ java.lang.NullPointerException
 
 2014-08-18 14:30:53
 [WARN]-[Thread: qtp1207291995-23]-[com.jfinal.core.ActionHandler.handle()]: 401 Unauthorized: /main
+
+2014-08-18 14:51:53
+[WARN]-[Thread: main]-[net.sf.ehcache.store.disk.DiskStorageFactory.<init>()]: The index for data file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.data is out of date, probably due to an unclean shutdown. Deleting index file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.index

@@ -59,7 +59,7 @@ public class UserModel extends Model<UserModel> {
 	public Page<UserModel> paginateByKeyWords(int pageNumber,int pageSize,String key,String words)
 	{
 		StringBuilder sql= new StringBuilder("where 1=1 and ");
-		sql.append(key).append(" = '").append(words).append("' ");
+		sql.append(key).append(" like '%").append(words).append("%' ");
 		return paginate(pageNumber,pageSize,"select *","from sys_user "+sql.toString()+"order by id asc");
 	}
 	

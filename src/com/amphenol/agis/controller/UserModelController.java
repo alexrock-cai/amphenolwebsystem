@@ -175,7 +175,18 @@ public class UserModelController extends Controller
 	{
 		List<User> list=new ArrayList<User>();
 		Subject curretUser= SecurityUtils.getSubject();
-		Page<UserModel> pages=UserModel.dao.paginate(getParaToInt("pageNum"), getParaToInt("numPerPage"));
+		String key = getPara("key");
+		String words = getPara("words");
+		Page<UserModel> pages;
+		if(words!=null)
+		{
+			pages=UserModel.dao.paginateByKeyWords(getParaToInt("pageNum"), getParaToInt("numPerPage"), key, words);
+		}
+		else
+		{
+			pages=UserModel.dao.paginate(getParaToInt("pageNum"), getParaToInt("numPerPage"));
+		}
+		
 		for(UserModel u: pages.getList())
 		{
 			if(u.getStr("username").equals("root"))

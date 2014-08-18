@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<form id="pagerForm" method="post" action="${CONTEXT_PATH}/user/userView">
+
+<div id="userBox" class="unitBox">
+<div class="pageHeader">
+	<form id="pagerForm" onsubmit="return divSearch(this,'userBox');" action="${CONTEXT_PATH}/user/userView" method="post">
 	<input type="hidden" name="pageNum" value="1" />
 	<input type="hidden" name="numPerPage" value="${param.numPerPage}" />
 	<input type="hidden" name="orderField" value="${param.orderField}" />
 	<input type="hidden" name="orderDirection" value="${param.orderDirection}" />
-</form>
-
-<div id="testdiv" class="pageHeader">
-	<form onsubmit="return navTabSearch(this)" action="${CONTEXT_PATH}/user/search" method="post">
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>
@@ -89,7 +88,7 @@
 	<div class="panelBar">
 		<div class="pages">
 			<span>显示</span>
-			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value});">
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value},'userBox')">
 				<option value="10" <c:if test="${numPerPage == '10'}">selected</c:if> >10</option>
 				<option value="15" <c:if test="${numPerPage == '15'}">selected</c:if> >15</option>
 				<option value="20" <c:if test="${numPerPage == '20'}">selected</c:if> >20</option>
@@ -98,7 +97,8 @@
 			<span>条，共${totalCount}条</span>
 		</div>
 		
-		<div class="pagination" targetType="navTab" totalCount="${totalCount }" numPerPage="${numPerPage }" pageNumShown="10" currentPage="${currentPage }"></div>
+		<div class="pagination" rel="userBox" targetType="navTab" totalCount="${totalCount }" numPerPage="${numPerPage }" pageNumShown="10" currentPage="${currentPage }"></div>
 
 	</div>
+</div>
 </div>
