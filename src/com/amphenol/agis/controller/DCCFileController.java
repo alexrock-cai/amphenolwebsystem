@@ -88,13 +88,15 @@ public class DCCFileController extends Controller
 		List<File> wilist=scanner.getPdfFileList(new File(path+UrlConfig.WI_PATH));
 		String regex1="([a-zA-Z]+)/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*([rR][Ee][vV]\\s*[\\-|\\w])/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*[\\-_]*(\\w+)\\.pdf";
 		String regex2="([a-zA-Z]+)/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*([rR][Ee][vV]\\s*[\\-|\\w])\\.pdf";
+		String regex3="([a-zA-Z]+)/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})[\\-_]([a-zA-Z]+\\s*[a-zA-Z]*)[\\-_]([rR][Ee][vV]\\s*[\\-|\\w])\\.pdf";
 		Pattern p1=Pattern.compile(regex1);
 		Pattern p2=Pattern.compile(regex2);
-		
+		Pattern p3=Pattern.compile(regex3);
 		for(File file : wilist)
 		{
 			Matcher m1=p1.matcher(file.getAbsolutePath());
 			Matcher m2=p2.matcher(file.getAbsolutePath());
+			Matcher m3=p3.matcher(file.getAbsolutePath());
 			DCCListModel dccModel=new DCCListModel();
 			if(m1.find())
 			{
@@ -111,6 +113,13 @@ public class DCCFileController extends Controller
 				dccModel.set("customer", m2.group(1).toUpperCase());
 				dccModel.set("pn",m2.group(2));
 				dccModel.set("rev",m2.group(3));
+			}
+			else if(m3.find())
+			{
+				dccModel.set("customer", m3.group(1).toUpperCase());
+				dccModel.set("pn", m3.group(3));
+				dccModel.set("station", m3.group(4).toUpperCase());
+				dccModel.set("rev", m3.group(5));
 			}
 			// "/xx/xx/xx/xx.pdf"
 			

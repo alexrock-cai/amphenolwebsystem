@@ -18,7 +18,8 @@ public class RegxTest
 		{
 			String filename=file.getAbsolutePath().substring(path.length()+1);
 			//String regex="([a-zA-Z]+)/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*([rR][Ee][vV]\\s*[\\-|\\w])/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*[\\-_]*(\\w+)\\.pdf";
-			String regex="([a-zA-Z]+)/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*([rR][Ee][vV]\\s*[\\-|\\w])\\.pdf";
+			//String regex="([a-zA-Z]+)/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*([rR][Ee][vV]\\s*[\\-|\\w])\\.pdf";
+			String regex="([a-zA-Z]+)/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})[\\-_]([a-zA-Z]+\\s*[a-zA-Z]*)[\\-_]([rR][Ee][vV]\\s*[\\-|\\w])\\.pdf";
 			Pattern p=Pattern.compile(regex);
 			Matcher m=p.matcher(file.getAbsolutePath());
 			//System.out.println("m.find():"+m.find());
@@ -27,7 +28,7 @@ public class RegxTest
 				//
 				System.out.println(m.groupCount());
 				for(int i=0;i<=m.groupCount();i++)
-					System.out.println("i="+i+"  "+m.group(i));
+					System.out.println("i="+i+"  "+m.group(i).toUpperCase());
 
 				System.out.println("-----------------------------------");
 			}

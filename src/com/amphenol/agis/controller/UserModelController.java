@@ -366,7 +366,7 @@ public class UserModelController extends Controller
 		render("/dwzpage/user/authenticationuser.jsp");
 		
 	}
-	@RequiresRoles("root,admin_leader,admin_widatauser")
+	@RequiresRoles(value={"root","admin_leader","admin_widatauser"},logical=Logical.OR)
 	public void saveAuthentica()
 	{
 		UserModel user= UserModel.dao.findById(getParaToLong("id"));
