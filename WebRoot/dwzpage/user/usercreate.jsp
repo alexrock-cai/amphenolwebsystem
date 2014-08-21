@@ -2,7 +2,7 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="pageContent">
-	<form method="post" action="${CONTEXT_PATH}/user/create" class="pageForm required-validate" enctype="multipart/form-data" onsubmit="return validateCallback(this, dialogAjaxDone);">
+	<form method="post" action="${CONTEXT_PATH}/user/create" class="pageForm required-validate" enctype="multipart/form-data" onsubmit="return iframeCallback(this, dialogAjaxDone);">
 		<div class="pageFormContent" layoutH="56">
 			<p>
 				<label>用户名：</label>
@@ -24,7 +24,7 @@
 				<label>用户角色：</label>
 				<input type="hidden" name="roleLookup.id" value=""/>
 				<input name="roleLookup.roleName" type="text" class="required" size="25" />
-				<a class="btnLook" href="${CONTEXT_PATH}/role/roleLookup?pageNum=1&numPerPage=20" lookupGroup="roleLookup">查找带回</a>		
+				<a class="btnLook" href="${CONTEXT_PATH}/role/roleLookup?pageNum=1&numPerPage=100" lookupGroup="roleLookup">查找带回</a>		
 			</p>
 			<p>
 				<label>上传照片：</label>

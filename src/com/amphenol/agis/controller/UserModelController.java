@@ -1,6 +1,7 @@
 package com.amphenol.agis.controller;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +16,13 @@ import com.amphenol.agis.model.RoleModel;
 import com.amphenol.agis.model.StationModel;
 import com.amphenol.agis.model.UserModel;
 import com.amphenol.agis.pojo.User;
+import com.amphenol.agis.util.FileUtil;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.ActiveRecordException;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.tx.Tx;
+import com.jfinal.upload.UploadFile;
 
 /**
  * sys_user 表进行 CRUD 操作类
@@ -75,12 +78,23 @@ public class UserModelController extends Controller
 	@RequiresRoles(value={"root","admin_leader","admin_widatauser"},logical=Logical.OR)
 	public void create()
 	{
+		 //获取上传的文件
+		UploadFile upfile=getFile("img");
+		File file=upfile.getFile();
+		String path=getRequest().getServletContext().getRealPath("/")+"/static/faceimg";
+		String newFileName=FileUtil.rename(file.getName(), getPara("username"));
+		System.out.println(path);
+		System.out.println(newFileName);
+		FileUtil.copyFile(file, path, getPara("username"));
+		//System.out.println(fileUtil.copyFile(file, path));
+		System.out.println(file.getAbsolutePath());
 		UserModel u=getModel(UserModel.class);
 		u.set("username", getPara("username"));
 		u.set("password",getPara("password"));
 		u.set("name", getPara("name"));
 		u.set("organization_id", 1);
 		u.set("role_ids",getPara("roleLookup.id"));
+		u.set("img", "/static/faceimg/"+newFileName);
 		try{
 			u.save();
 			setAttr("statusCode", "200");
