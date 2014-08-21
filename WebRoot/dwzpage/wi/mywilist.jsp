@@ -32,7 +32,7 @@
 	<shiro:hasRole name="root">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="${CONTEXT_PATH}/dcc/create" target="navTab"><span>添加</span></a></li>
+			<li><a class="add" href="${CONTEXT_PATH}/dcc/openWiForm" target="dialog"><span>上传WI</span></a></li>
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" href="${CONTEXT_PATH}/dcc/delete" class="delete"><span>批量删除</span></a></li>			
 			<li><a class="edit" href="${CONTEXT_PATH}/dcc/view?uid={sid_user}" target="navTab" warn="请选择一个用户"><span>修改</span></a></li>
 			<li class="line">line</li>

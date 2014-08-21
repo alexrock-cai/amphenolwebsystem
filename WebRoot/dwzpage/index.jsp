@@ -195,6 +195,18 @@ $(function(){
 						</ul>
 					</div>
 					</shiro:hasAnyRoles>
+					
+					<shiro:hasAnyRoles name="root">
+					<div class="accordionHeader">
+						<h2><span>Folder</span>WI Publish</h2>
+					</div>
+					<div class="accordionContent">
+						<ul class="tree">
+							<li><a href="${CONTEXT_PATH}/wi/myWi?pageNum=1&numPerPage=20" target="navTab" rel="wi_publish">WI 发布</a></li>
+						</ul>
+					</div>
+					</shiro:hasAnyRoles>
+					
 					<div class="accordionHeader">
 						<h2><span>Folder</span>others</h2>
 					</div>

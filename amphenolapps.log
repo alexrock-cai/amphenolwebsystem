@@ -14519,3 +14519,80 @@ Caused by: java.net.UnknownHostException: promote.cache-dns.local: nodename nor 
 
 2014-08-21 07:29:32
 [WARN]-[Thread: main]-[net.sf.ehcache.store.disk.DiskStorageFactory.<init>()]: The index for data file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.data is out of date, probably due to an unclean shutdown. Deleting index file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.index
+
+2014-08-21 09:01:57
+[WARN]-[Thread: main]-[net.sf.ehcache.store.disk.DiskStorageFactory.<init>()]: The index for data file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.data is out of date, probably due to an unclean shutdown. Deleting index file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.index
+
+2014-08-21 09:24:56
+[WARN]-[Thread: qtp1714659984-22]-[com.jfinal.core.ActionHandler.handle()]: 401 Unauthorized: /wi/myWi?pageNum=1&numPerPage=20&_=1408584296227
+
+2014-08-21 14:35:34
+[WARN]-[Thread: qtp1714659984-23]-[com.jfinal.core.ActionHandler.handle()]: 401 Unauthorized: /dcc/openWiForm?_=1408602934757
+
+2014-08-21 14:38:41
+[ERROR]-[Thread: qtp1714659984-23]-[com.jfinal.core.ActionHandler.handle()]: /dcc/create
+java.lang.NullPointerException
+	at com.amphenol.agis.controller.DCCFileController.create(DCCFileController.java:178)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at com.jfinal.core.ActionInvocation.invoke(ActionInvocation.java:55)
+	at com.jfinal.ext.plugin.shiro.ShiroInterceptor.intercept(ShiroInterceptor.java:50)
+	at com.jfinal.core.ActionInvocation.invoke(ActionInvocation.java:51)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:73)
+	at com.jfinal.ext.handler.ContextPathHandler.handle(ContextPathHandler.java:47)
+	at com.amphenol.agis.shiro.SessionHandler.handle(SessionHandler.java:16)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.apache.shiro.web.servlet.AbstractShiroFilter.executeChain(AbstractShiroFilter.java:449)
+	at org.apache.shiro.web.servlet.AbstractShiroFilter$1.call(AbstractShiroFilter.java:365)
+	at org.apache.shiro.subject.support.SubjectCallable.doCall(SubjectCallable.java:90)
+	at org.apache.shiro.subject.support.SubjectCallable.call(SubjectCallable.java:83)
+	at org.apache.shiro.subject.support.DelegatingSubject.execute(DelegatingSubject.java:383)
+	at org.apache.shiro.web.servlet.AbstractShiroFilter.doFilterInternal(AbstractShiroFilter.java:362)
+	at org.apache.shiro.web.servlet.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:125)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.content(AbstractHttpConnection.java:937)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.content(AbstractHttpConnection.java:998)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:856)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:240)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:745)
+
+2014-08-21 16:38:49
+[WARN]-[Thread: qtp1714659984-21]-[com.jfinal.core.ActionHandler.handle()]: 401 Unauthorized: /dcc/openWiForm?_=1408610329206
+
+2014-08-21 16:41:18
+[WARN]-[Thread: qtp1714659984-20]-[com.jfinal.core.ActionHandler.handle()]: 401 Unauthorized: /wi/myWi
+
+2014-08-21 18:28:49
+[WARN]-[Thread: qtp1714659984-21]-[com.jfinal.core.ActionHandler.handle()]: 401 Unauthorized: /wi/myWi?pageNum=1&numPerPage=20&_=1408616929829
+
+2014-08-21 18:41:23
+[WARN]-[Thread: main]-[net.sf.ehcache.store.disk.DiskStorageFactory.<init>()]: The index for data file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.data is out of date, probably due to an unclean shutdown. Deleting index file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.index
+
+2014-08-21 19:14:28
+[WARN]-[Thread: main]-[net.sf.ehcache.store.disk.DiskStorageFactory.<init>()]: The index for data file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.data is out of date, probably due to an unclean shutdown. Deleting index file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.index
+
+2014-08-21 19:14:34
+[WARN]-[Thread: qtp1207291995-24]-[com.jfinal.core.ActionHandler.handle()]: 401 Unauthorized: /main
+
+2014-08-21 19:19:34
+[WARN]-[Thread: qtp1207291995-22]-[org.eclipse.jetty.server.handler.ContextHandler.getResource()]: Aliased resource: file:/Users/rocky/Workspaces/MyEclipse%2010/amphenolapps/WebRoot/static/WI/WIPRO/WI-TT16030049/WI_TT16030049_FNA_REV%20I.pdf~=file:/Users/rocky/Workspaces/MyEclipse%2010/amphenolapps/WebRoot/static/WI/Wipro/WI-TT16030049/WI_TT16030049_FNA_REV%20I.pdf

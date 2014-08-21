@@ -39,7 +39,12 @@ public class DCCListModel extends Model<DCCListModel>
 		String sql="select * from sys_dcc";
 		return DCCListModel.dao.find(sql);
 	}
-
+	
+	public List<DCCListModel> getCustomerList()
+	{
+		String sql = "select distinct customer from sys_dcc ";
+		return DCCListModel.dao.find(sql);
+	}
 	public List<DCCListModel> findByCustomer(String customer)
 	{
 		String sql="select * from sys_dcc where customer = ?";
