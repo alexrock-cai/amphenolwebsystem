@@ -100,6 +100,7 @@ public class WIViewController extends Controller
 		//setAttr("items",dccList);
 		//renderJson(new String[]{"items","identifier"});
 		setAttr("words",words);
+		setAttr("key",key);
 		setAttr("totalCount",totalCount);
 		setAttr("numPerPage",numPerPage);
 		setAttr("currentPage",currentPage);

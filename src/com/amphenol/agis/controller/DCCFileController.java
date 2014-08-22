@@ -17,7 +17,6 @@ import com.amphenol.agis.model.StationModel;
 
 import com.amphenol.agis.util.FileScanner;
 import com.amphenol.agis.util.FileUtil;
-import com.amphenol.agis.util.StringUtil;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.upload.UploadFile;
@@ -89,23 +88,30 @@ public class DCCFileController extends Controller
 		String path=getRequest().getServletContext().getRealPath("/");
 		SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<File> wilist=scanner.getPdfFileList(new File(path+UrlConfig.WI_PATH));
+		// customer/WI-KT12345678 REV/WI-KT12345678 REV A.pdf
 		String regex1="([a-zA-Z]+)/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*([rR][Ee][vV]\\s*[\\-|\\w])/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*[\\-_]*(\\w+)\\.pdf";
-		String regex2="([a-zA-Z]+)/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*([rR][Ee][vV]\\s*[\\-|\\w])\\.pdf";
-		String regex3="([a-zA-Z]+)/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})[\\-_]([a-zA-Z]+\\s*[a-zA-Z]*)[\\-_]([rR][Ee][vV]\\s*[\\-|\\w])\\s*\\.pdf";
+		// customer/WI-KT12345678 REV A.pdf
+		String regex2="([a-zA-Z]+)/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*([rR][Ee][vV]\\s*\\.*[\\-|\\w])\\.pdf";
+		//customer/WI-KT12345678/WI-KT12345678-STATION-REV A.pdf
+		String regex3="([a-zA-Z]+)/[wW]*[iI]*[\\-_]*([a-zA-Z]{2}\\d{8}|\\d{10})\\s*\\w*\\s*[-]*/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})\\s*[\\-_]*\\s*([a-zA-Z]+\\s*[a-zA-Z]*)[\\-_]*\\s*([rR][Ee][vV]\\s*\\.*[\\-|\\w])\\s*\\.pdf";
+		String regex4="([a-zA-Z]+)/[wW][iI][\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})/([\\w]+[-][\\w]+[-][\\w]+[-]*\\w*)\\s*([rR][Ee][vV]\\s*\\.*[\\-|\\w])\\s*\\.pdf";
+		
 		Pattern p1=Pattern.compile(regex1);
 		Pattern p2=Pattern.compile(regex2);
 		Pattern p3=Pattern.compile(regex3);
+		Pattern p4=Pattern.compile(regex4);
 		for(File file : wilist)
 		{
 			Matcher m1=p1.matcher(file.getAbsolutePath());
 			Matcher m2=p2.matcher(file.getAbsolutePath());
 			Matcher m3=p3.matcher(file.getAbsolutePath());
+			Matcher m4=p4.matcher(file.getAbsolutePath());
 			DCCListModel dccModel=new DCCListModel();
 			if(m1.find())
 			{
 				
 				
-				dccModel.set("customer", m1.group(1).toUpperCase());
+				dccModel.set("customer", m1.group(1));
 				dccModel.set("station", m1.group(5).toUpperCase());
 				dccModel.set("pn", m1.group(2));
 				dccModel.set("rev",m1.group(3));
@@ -113,16 +119,27 @@ public class DCCFileController extends Controller
 			}
 			else if(m2.find())
 			{
-				dccModel.set("customer", m2.group(1).toUpperCase());
+				dccModel.set("customer", m2.group(1));
 				dccModel.set("pn",m2.group(2));
 				dccModel.set("rev",m2.group(3));
 			}
 			else if(m3.find())
 			{
-				dccModel.set("customer", m3.group(1).toUpperCase());
+				dccModel.set("customer", m3.group(1));
 				dccModel.set("pn", m3.group(3));
 				dccModel.set("station", m3.group(4).toUpperCase());
 				dccModel.set("rev", m3.group(5));
+			}
+			else if(m4.find())
+			{
+				dccModel.set("customer", m4.group(1));
+				dccModel.set("pn", m4.group(2));
+				dccModel.set("station", "CHESS");
+				dccModel.set("rev", m4.group(4));
+			}
+			else
+			{
+				dccModel.set("station", "NoneStation");
 			}
 			// "/xx/xx/xx/xx.pdf"
 			
@@ -136,7 +153,16 @@ public class DCCFileController extends Controller
 			dccModel.set("filepath", pp);
 			dccModel.set("lastmodify", f.format(new Date(file.lastModified())));
 			dccModel.set("operate", "<a href=\""+file.getAbsolutePath().substring(path.length())+"\" target=\"_brank\">"+"Open"+"</a>");
-			dccModel.save();
+			try
+			{
+				dccModel.save();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				continue;
+			}
+			
 				
 		}
 		setAttr("statusCode", "200");
@@ -175,57 +201,54 @@ public class DCCFileController extends Controller
 	
 	public void create()
 	{
-		//设置文件保存路径
-		String path=getRequest().getServletContext().getRealPath("/");
-		SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		 //获取上传的文件
-		UploadFile upfile=getFile("wi");
-		File file=upfile.getFile();
-		String filename=file.getName();
-		System.out.println(file.getAbsolutePath()+"  "+filename);
 		DCCListModel dcc=new DCCListModel();
-		String regex="([wW][iI])[\\-_]([a-zA-Z]{2}\\d{8}|\\d{10})[\\-_]([a-zA-Z]+\\s*[a-zA-Z]*)[\\-_]([rR][Ee][vV]\\s*[\\-|\\w])\\s*\\.pdf";
-		Pattern p1=Pattern.compile(regex);
-		Matcher m1=p1.matcher(filename);
-		dcc.set("customer", getPara("customer").toUpperCase());
-		if(m1.find())
+		if(getFile("wi")!=null)
 		{
-			for(int i=0;i<=m1.groupCount();i++)
-			{
-				System.out.println("i="+i+" :"+m1.group(i));
-			}
-			String type=m1.group(1);
-			String pn=m1.group(2);
-			String rev = m1.group(4);
-			String wiPath=UrlConfig.WI_PATH+"/"+StringUtil.toUpperCaseFirstOne(getPara("customer").toLowerCase())+"/"+type.toUpperCase()+"-"+pn;
-			FileUtil.copyFile(file, path+wiPath);
-			file.delete();
-			dcc.set("pn",pn);
-			dcc.set("type",type);
-			dcc.set("rev",rev);
-			dcc.set("station",getPara("station").toUpperCase());
-			dcc.set("filepath",wiPath+"/"+filename);
-			dcc.set("filename", filename);
-			dcc.set("lastmodify",f.format(new Date()));
-			dcc.set("operate","<a href=\""+UrlConfig.WI_PATH+File.separator+getPara("customer")+File.separator+filename+"\" target=\"_brank\">"+"Open"+"</a>");
-			if(dcc.save())
-			{
-				setAttr("statusCode", "200");
-				setAttr("message","更新成功");
-				setAttr("callbackType","closeCurrent");
-				setAttr("navTabId","wi_publish");
-			}
-			else
-			{
-				setAttr("statusCode", "300");
-				setAttr("message","文件保存失败");
-			}
+			UploadFile upfile=getFile("wi");
+			File file=upfile.getFile();
+			String filename=file.getName();
+			System.out.println(file.getAbsolutePath()+"  "+filename);
+			//String path=getRequest().getServletContext().getRealPath("/");
+			SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+				dcc.set("customer", getPara("customer").toUpperCase());
+
+				String wiPath=UrlConfig.WI_PATH+"/"+getPara("customer")+"/"+getPara("type")+"-"+getPara("pn").toUpperCase();
+				String targetPath="H:\\Tomcat 7.0\\webapps\\static\\WI\\"+getPara("customer")+"\\"+getPara("type")+"-"+getPara("pn").toUpperCase();
+				//FileUtil.copyFile(file, path+wiPath);
+				FileUtil.copyFile(file, targetPath);
+				file.delete();
+				dcc.set("pn",getPara("pn").toUpperCase());
+				dcc.set("type",getPara("type"));
+				dcc.set("rev",getPara("rev"));
+				dcc.set("station",getPara("station").toUpperCase());
+				dcc.set("filepath",wiPath+"/"+filename);
+				dcc.set("filename", filename);
+				dcc.set("lastmodify",f.format(new Date()));
+				dcc.set("operate","<a href=\""+UrlConfig.WI_PATH+File.separator+getPara("customer")+File.separator+filename+"\" target=\"_brank\">"+"Open"+"</a>");
+				if(dcc.save())
+				{
+					setAttr("statusCode", "200");
+					setAttr("message","更新成功");
+					setAttr("callbackType","closeCurrent");
+					setAttr("navTabId","wi_publish");
+				}
+				else
+				{
+					setAttr("statusCode", "300");
+					setAttr("message","文件保存失败");
+				}
+			
+			
 		}
 		else
 		{
 			setAttr("statusCode", "300");
-			setAttr("message","文件名不规范");
+			setAttr("message","请上传文件");
 		}
+		
+		//设置文件保存路径
+		
 		
 		renderJson();
 			
@@ -279,6 +302,39 @@ public class DCCFileController extends Controller
 		render("/dwzpage/wi/wilist.jsp");
 	}
 	
+	public void update()
+	{
+		DCCListModel dcc = DCCListModel.dao.findById(getPara("id"));
+		if(dcc!=null)
+		{
+			System.out.println("hellw");
+			dcc.set("pn", getPara("pn"));
+			dcc.set("customer",getPara("customer"));
+			dcc.set("type",getPara("type"));
+			dcc.set("rev",getPara("rev"));
+			dcc.set("station",getPara("station"));
+			if(dcc.update())
+			{
+				setAttr("statusCode", "200");
+				setAttr("message","更新成功");
+				setAttr("callbackType","closeCurrent");
+				setAttr("navTabId","wi_publish");
+			}
+			else
+			{
+				setAttr("statusCode", "300");
+				setAttr("message","更新出错");
+			}
+		}
+		else
+		{
+			System.out.println("dddd");
+			setAttr("statusCode", "300");
+			setAttr("message","文件保存失败");
+		}
+		renderJson();
+	}
+	
 	public void getStationList()
 	{
 		List<StationModel> list=StationModel.dao.findAll();
@@ -302,7 +358,20 @@ public class DCCFileController extends Controller
 		}
 		else
 		{
+			DCCListModel dcc=DCCListModel.dao.findById(getPara("id"));
+			setAttr("did",getPara("id"));
+			System.out.println(dcc);
+			List<DCCListModel> customerList=DCCListModel.dao.getCustomerList();
+			List<StationModel> stationList=StationModel.dao.findAll();
 			
+			setAttr("dcc",customerList);
+			setAttr("stationList",stationList);
+			
+			setAttr("customer",dcc.get("customer"));
+			setAttr("pn",dcc.get("pn"));
+			setAttr("rev",dcc.get("rev"));
+			setAttr("station",dcc.get("station"));
+			render("/dwzpage/wi/updatewi.jsp");
 		}
 	}
 	

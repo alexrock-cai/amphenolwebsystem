@@ -17,3 +17,5 @@ constraint pk_sys_station primary key(id)
 )charset=utf8 ENGINE=InnoDB;
 
 create index idx_sys_station_id on sys_station(station);
+
+alter table sys_dcc modify column filename varchar(200) unique;

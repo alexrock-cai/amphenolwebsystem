@@ -16,10 +16,10 @@
 				</td>
 				<td>
 					<select class="combox" name="key">
-						<option value="pn">产品代码</option>
-						<option value="customer">客户</option>
-						<option value="station">站别</option>
-						<option value="filename">文件名</option>
+						<option value="pn" ${key eq "pn"?"selected":"" } >产品代码</option>
+						<option value="customer" ${key eq "customer"?"selected":"" } >客户</option>
+						<option value="station" ${key eq "station"?"selected":"" } >站别</option>
+						<option value="filename" ${key eq "filename"?"selected":"" } >文件名</option>
 					</select>
 				</td>
 				<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
@@ -34,7 +34,7 @@
 		<ul class="toolBar">
 			<li><a class="add" href="${CONTEXT_PATH}/dcc/openWiForm" target="dialog"><span>上传WI</span></a></li>
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" href="${CONTEXT_PATH}/dcc/delete" class="delete"><span>批量删除</span></a></li>			
-			<li><a class="edit" href="${CONTEXT_PATH}/dcc/view?uid={sid_user}" target="navTab" warn="请选择一个用户"><span>修改</span></a></li>
+			<li><a class="edit" href="${CONTEXT_PATH}/dcc/openWiForm?id={sid_user}" target="dialog" warn="请选择一个用户"><span>修改</span></a></li>
 			<li class="line">line</li>
 			<li><a class="icon" href="${CONTEXT_PATH}/dcc/regexInitWI"  target="ajaxTodo" title="初始化WI?"><span>初始化WI</span></a></li>
 		</ul>

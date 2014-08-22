@@ -1,5 +1,8 @@
 package com.amphenol.agis.shiro;
 
+import java.io.UnsupportedEncodingException;
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +16,12 @@ public class SessionHandler extends Handler
 	{
 		int index = target.indexOf(";jsessionid".toUpperCase());
 		if (index != -1) target = target.substring(0, index);
+		try {
+			target=new String(target.getBytes("ISO8859-1"),"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		nextHandler.handle(target, request, response, isHandled);
 	}
 }

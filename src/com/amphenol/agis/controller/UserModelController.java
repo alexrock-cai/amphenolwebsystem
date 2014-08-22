@@ -79,22 +79,30 @@ public class UserModelController extends Controller
 	public void create()
 	{
 		 //获取上传的文件
-		UploadFile upfile=getFile("img");
-		File file=upfile.getFile();
-		String path=getRequest().getServletContext().getRealPath("/")+"/static/faceimg";
-		String newFileName=FileUtil.rename(file.getName(), getPara("username"));
-		System.out.println(path);
-		System.out.println(newFileName);
-		FileUtil.copyFile(file, path, getPara("username"));
-		//System.out.println(fileUtil.copyFile(file, path));
-		System.out.println(file.getAbsolutePath());
+		
 		UserModel u=getModel(UserModel.class);
+		if(getFile("img")!=null)
+		{
+			UploadFile upfile=getFile("img");
+			File file=upfile.getFile();
+			
+			//String path=getRequest().getServletContext().getRealPath("/")+"\\static\\faceimg";
+			String path="H:\\Tomcat 7.0\\webapps\\static\\faceimg";
+			String newFileName=FileUtil.rename(file.getName(), getPara("username"));
+			System.out.println(path);
+			System.out.println(newFileName);
+			FileUtil.copyFile(file, path, getPara("username"));
+			//System.out.println(fileUtil.copyFile(file, path));
+			System.out.println(file.getAbsolutePath());
+			u.set("img", "/static/faceimg/"+newFileName);
+		}
+		
 		u.set("username", getPara("username"));
 		u.set("password",getPara("password"));
 		u.set("name", getPara("name"));
 		u.set("organization_id", 1);
 		u.set("role_ids",getPara("roleLookup.id"));
-		u.set("img", "/static/faceimg/"+newFileName);
+		
 		try{
 			u.save();
 			setAttr("statusCode", "200");
