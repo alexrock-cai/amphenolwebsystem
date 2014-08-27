@@ -229,7 +229,9 @@ public class DCCFileController extends Controller
 					DCCListModel.dao.deleteById(id);
 					setAttr("statusCode", "200");
 					setAttr("message","删除成功");
-				
+					setAttr("callbackType","closeCurrent");
+					setAttr("navTabId","wi_publish");
+					
 				}
 				else
 				{
