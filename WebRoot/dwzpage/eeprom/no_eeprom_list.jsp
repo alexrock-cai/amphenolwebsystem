@@ -3,9 +3,9 @@
 <div>
 	<h1>总共有${total}块产品未经过EEPROM，清单如下：</h1>
 </div>
-<div >
-	<table >
-		<tbody>
+<div class="pageContent">
+	<table class="table" width="1200" layoutH="85" >
+		<thead>
 			<tr>
 				<th width="4%">id</th>
 				<th width="5%">customer_name</th>
@@ -16,6 +16,8 @@
 				<th width="10%">hasverify</th>
 
 			</tr>
+		</thead>	
+		<tbody>
 			<c:forEach items="${noEepromList}" var="eeprom">
 			<tr>
 				<td style="text-align:left;"><c:out value="${eeprom.id}" default=""/></td>

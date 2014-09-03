@@ -12,4 +12,6 @@ public class UrlConfig
 	public static final String INDEX_ACTION="/main";
 	
 	public static final String WI_PATH="/static/WI";
+	
+	public static final String OBA_CHECKLIST_PATH="/static/OBA Check list";
 }

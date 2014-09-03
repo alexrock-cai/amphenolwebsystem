@@ -381,6 +381,93 @@ public class FileReader
 		
 	}
 
+	public void readExcel(File file,String filetype) 
+	{
+		
+		try
+		{
+			in= new FileInputStream(file);
+			Workbook wb = WorkbookFactory.create(in);
+			
+			if(filetype.equals("tagin"))
+			{
+				
+				//循环wb中所有的sheet
+				for(int sheetIndex=0;sheetIndex<wb.getNumberOfSheets();sheetIndex++)
+				{
+					Sheet sheet = wb.getSheetAt(sheetIndex);
+					//循环row
+					for(int rowIndex=1;rowIndex<=sheet.getLastRowNum();rowIndex++)
+					{
+						Row row = sheet.getRow(rowIndex);
+						if(row==null) continue;
+						if(row.getCell(0) == null ) continue;
+						if(row.getCell(0).getRichStringCellValue().getString().trim().equals("")) continue;
+						
+						saveProduct(row);
+						//showRow(row);
+					
+					}
+				}
+				//将处理过的文件移到已经处理文件目录中
+				
+			}
+			
+			if(filetype.equals("shipdata"))
+			{
+				
+				for(int sheetIndex=0;sheetIndex<wb.getNumberOfSheets();sheetIndex++)
+				{
+					Sheet sheet=wb.getSheetAt(sheetIndex);
+					for(int rowIndex=1;rowIndex<=sheet.getLastRowNum();rowIndex++)
+					{
+						Row row = sheet.getRow(rowIndex);
+						if(row==null) continue;
+						if(row.getCell(0) == null) continue;
+						if(row.getCell(0).getRichStringCellValue().getString().trim().equals("")) continue;
+						
+						saveShipData(row);
+						//showRow(row);
+					}
+				}
+				//将处理过的文件移到已经处理文件目录中
+				//fileScanner.cutFile(file, EepConfigModel.dao.getHandledPath());	
+				System.out.println("文件处理完毕："+ file.getAbsolutePath());
+				
+			}
+		}
+		catch (FileNotFoundException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		catch (InvalidFormatException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(in!=null)
+				{
+					in.close();
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
 	private boolean saveShipData(Row row) 
 	{
 		// TODO Auto-generated method stub

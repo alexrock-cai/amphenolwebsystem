@@ -60,6 +60,17 @@ public class FileScanner
 		}
 		return list;
 	}
+	
+	public List<File> getTxtFileList(File file)
+	{
+		List<File> list = new ArrayList<File>();
+		for(File f:getFileList(file))
+		{
+			if(f.getName().endsWith(".txt"))
+				list.add(f);
+		}
+		return list;
+	}
 	public boolean copyDir(String file1,String file2) 
 	{
 		

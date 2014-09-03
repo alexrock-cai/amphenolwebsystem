@@ -3,6 +3,7 @@ package com.amphenol.agis.model;
 import java.util.List;
 
 import com.jfinal.plugin.activerecord.Model;
+import com.jfinal.plugin.activerecord.Page;
 
 /**
  *
@@ -38,5 +39,17 @@ public class VerifyModel extends Model<VerifyModel>
 	{
 		String sql="select * from sys_eep_verify where customer_sn = ?";
 		return VerifyModel.dao.findFirst(sql,sn);
+	}
+	
+	public Page<VerifyModel> paginate(int pageNumber , int pageSize)
+	{
+		return paginate(pageNumber,pageSize,"select *","from sys_eep_verify order by id desc");
+	}
+	
+	public Page<VerifyModel> paginateByKeyWords(int pageNumber, int pageSize,String key,String words)
+	{
+		StringBuilder sql= new StringBuilder("where 1=1 and ");
+		sql.append(key).append(" like '%").append(words).append("%' ");
+		return paginate(pageNumber,pageSize,"select *","from sys_eep_verify "+sql.toString()+"order by id desc");
 	}
 }

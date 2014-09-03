@@ -6,7 +6,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -98,6 +100,7 @@ public class TxtReaderTest
 	{
 		File f = new File("/Users/rocky/Desktop/androidfiletransfer.dmg");
 		//System.out.println(f.getParent().substring("/Users/rocky/Desktop/EEPROM SYS".length()));
+		System.out.println(f.getAbsolutePath().replace("/", "\\\\"));
 		System.out.println(File.separator);
 		FileScanner s = new FileScanner();
 //		List<File> files = s.getFileList(f);
@@ -110,5 +113,7 @@ public class TxtReaderTest
 		System.out.println(System.getProperty("os.name"));
 		//System.out.println(System.getProperties());
 		System.out.println(File.separator);
+		SimpleDateFormat ff=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		System.out.println(ff.format(new Date()));
 	}
 }

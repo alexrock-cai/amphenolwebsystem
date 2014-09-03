@@ -175,13 +175,21 @@ $(function(){
 						</ul>
 					</div>
 					</shiro:hasAnyRoles>
-					<shiro:hasAnyRoles name="root,eeprom">
+					<shiro:hasAnyRoles name="root,eeprom_user,WIUser:EEPROM_PKG">
 					<div class="accordionHeader">
 						<h2><span>Folder</span>EEPROM System</h2>
 					</div>
 					<div class="accordionContent">
 						<ul class="tree">
-							<li><a href="${CONTEXT_PATH}/eeprom/view?pageNum=1&numPerPage=20" target="navTab" rel="eeprom_list">EEPROM</a></li>
+							<shiro:hasAnyRoles name="root,eeprom_user">
+							<li><a href="${CONTEXT_PATH}/eeprom/dashboard" target="navTab" rel="eeprom_list">EEPROM Dashboard</a></li>
+							<li><a href="${CONTEXT_PATH}/eeprom/echeckView?pageNum=1&numPerPage=20" target="navTab" rel="echeck_list">系统检测异常产品清单</a></li>
+							<li><a href="${CONTEXT_PATH}/eeprom/view?pageNum=1&numPerPage=20" target="navTab" rel="eeprom_list">EEPROM Log文件路径配置</a></li>
+							<li><a href="${CONTEXT_PATH}/eeprom/productView?pageNum=1&numPerPage=20" target="navTab" rel="product_list">已经上传TAG IN数据</a></li>
+							<li><a href="${CONTEXT_PATH}/eeprom/programView?pageNum=1&numPerPage=20" target="navTab" rel="program_list">已经上传Program Log数据</a></li>
+							<li><a href="${CONTEXT_PATH}/eeprom/verifyView?pageNum=1&numPerPage=20" target="navTab" rel="verify_list">已经上传Verify Log数据</a></li>
+							</shiro:hasAnyRoles>
+							<li><a href="${CONTEXT_PATH}/eeprom/openPkgInputPage?pageNum=1&numPerPage=20" target="navTab" rel="pkg_input">包装录入</a></li>
 						</ul>
 					</div>
 					</shiro:hasAnyRoles>
@@ -196,13 +204,13 @@ $(function(){
 					</div>
 					</shiro:hasAnyRoles>
 					
-					<shiro:hasAnyRoles name="root">
+					<shiro:hasAnyRoles name="root,admin_wipublish">
 					<div class="accordionHeader">
 						<h2><span>Folder</span>WI Publish</h2>
 					</div>
 					<div class="accordionContent">
 						<ul class="tree">
-							<li><a href="${CONTEXT_PATH}/wi/myWi?pageNum=1&numPerPage=20" target="navTab" rel="wi_publish">WI 发布</a></li>
+							<li><a href="${CONTEXT_PATH}/dcc/myWi?pageNum=1&numPerPage=20" target="navTab" rel="wi_publish">WI 发布</a></li>
 						</ul>
 					</div>
 					</shiro:hasAnyRoles>

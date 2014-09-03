@@ -12,10 +12,12 @@ import com.amphenol.agis.controller.UserModelController;
 import com.amphenol.agis.controller.WIViewController;
 import com.amphenol.agis.model.CustomerModel;
 import com.amphenol.agis.model.DCCListModel;
+import com.amphenol.agis.model.EcheckModel;
 import com.amphenol.agis.model.EepConfigModel;
 import com.amphenol.agis.model.EepLogModel;
 import com.amphenol.agis.model.EmployeeModel;
 import com.amphenol.agis.model.OrganizationModel;
+import com.amphenol.agis.model.PkgModel;
 import com.amphenol.agis.model.ProductModel;
 import com.amphenol.agis.model.ProgramModel;
 import com.amphenol.agis.model.ResourceModel;
@@ -94,6 +96,8 @@ public class AmphenolConfig extends JFinalConfig
 		arp.addMapping("sys_customer", CustomerModel.class);
 		arp.addMapping("sys_shipdata", ShipdataModel.class);
 		arp.addMapping("sys_station", StationModel.class);
+		arp.addMapping("sys_pkg",PkgModel.class);
+		arp.addMapping("sys_echeck", EcheckModel.class);
 		}
 
 	@Override

@@ -125,3 +125,34 @@ verify_id   bigint,
 mark_content  varchar(500),
 constraint pk_sys_shipdata primary key(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table sys_pkg(
+id bigint auto_increment,
+customer_name varchar(100),
+customer_sn varchar(100) unique,
+pn          varchar(100),
+wo          varchar(100),
+timestamp   varchar(500),
+hasprogram  bool,
+hasverify   bool,
+hastagin    bool,
+mark        varchar(500),
+constraint pk_sys_pkg primary key(id)
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+
+create table sys_echeck(
+id bigint auto_increment,
+customer_name varchar(100),
+customer_sn   varchar(100) unique,
+pn            varchar(100),
+wo            varchar(100),
+timestamp     varchar(500),
+hasprogram    bool,
+hasverify     bool,
+hastagin      bool,
+dealpeople    varchar(100),
+dealcontent   varchar(500),
+dealresult    bool,
+dealendtime   varchar(500),
+constraint pk_sys_echeck primary key(id)
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8;

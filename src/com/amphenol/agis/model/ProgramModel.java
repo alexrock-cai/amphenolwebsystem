@@ -3,6 +3,7 @@ package com.amphenol.agis.model;
 import java.util.List;
 
 import com.jfinal.plugin.activerecord.Model;
+import com.jfinal.plugin.activerecord.Page;
 
 /**
  * 
@@ -42,5 +43,17 @@ public class ProgramModel extends Model<ProgramModel>
 	{
 		String sql ="select * from sys_eep_program where customer_sn = ?";
 		return ProgramModel.dao.findFirst(sql, sn);
+	}
+	
+	public Page<ProgramModel> paginate(int pageNumber , int pageSize)
+	{
+		return paginate(pageNumber,pageSize,"select *","from sys_eep_program order by id desc");
+	}
+	
+	public Page<ProgramModel> paginateByKeyWords(int pageNumber, int pageSize,String key,String words)
+	{
+		StringBuilder sql= new StringBuilder("where 1=1 and ");
+		sql.append(key).append(" like '%").append(words).append("%' ");
+		return paginate(pageNumber,pageSize,"select *","from sys_eep_program "+sql.toString()+"order by id desc");
 	}
 }
