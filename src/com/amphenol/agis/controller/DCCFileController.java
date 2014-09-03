@@ -198,8 +198,13 @@ public class DCCFileController extends Controller
 		if(getParaToLong("id")!=null)
 		{
 			String filepath=DCCListModel.dao.findById(getParaToLong("id")).getStr("filepath");
-			filepath=filepath.replace("/", "\\\\");
+			// windows system code 
+			filepath=filepath.replace("/", "\\");
 			System.out.println("Delete filepath:"+filepath);
+			//windows system code 
+			System.out.println("Delete filepath2:"+"H:\\Tomcat 7.0\\webapps"+filepath);
+			File testfile = new File("H:\\Tomcat 7.0\\webapps"+filepath);
+			System.out.println(testfile.getAbsolutePath());
 			if(new File("H:\\Tomcat 7.0\\webapps"+filepath).delete())
 			//if(new File(getRequest().getServletContext().getRealPath("/")+filepath).delete())
 			{
@@ -207,43 +212,50 @@ public class DCCFileController extends Controller
 				DCCListModel.dao.deleteById(getParaToLong("id"));
 				setAttr("statusCode", "200");
 				setAttr("message","删除成功");
-			
+				setAttr("navTabId","wi_publish");
 			}
 			else
 			{
 				setAttr("statusCode", "300");
-				setAttr("message","删除失败");
+				setAttr("message","单个删除失败");
 			}
 		}
-		if(getPara("ids")!=null)
+		else if(getPara("ids")!=null)
 		{
 			String[] ids=getPara("ids").split(",");
+			boolean flag=false;
 			for (String id : ids) {
 				String filepath=DCCListModel.dao.findById(id).getStr("filepath");
-				filepath=filepath.replace("/", "\\\\");
+				//windows system code
+				filepath=filepath.replace("/", "\\");
 				System.out.println("Delete filepath:"+filepath);
+				//windows system code
 				if(new File("H:\\Tomcat 7.0\\webapps"+filepath).delete())
-				//if(new File(getRequest().getServletContext().getRealPath("/")+filepath).delete())
+				//if(new File(getRequest().getServletContext().getRealPath("/")+filepath).delete()) //linux ,mac os system code 
 				{
 					
-					DCCListModel.dao.deleteById(id);
-					setAttr("statusCode", "200");
-					setAttr("message","删除成功");
-					setAttr("callbackType","closeCurrent");
-					setAttr("navTabId","wi_publish");
+					flag=DCCListModel.dao.deleteById(id);
+					
 					
 				}
-				else
-				{
-					setAttr("statusCode", "300");
-					setAttr("message","删除失败");
-				}
+				
+			}
+			if(flag)
+			{
+				setAttr("statusCode", "200");
+				setAttr("message","批量删除成功");
+				setAttr("navTabId","wi_publish");
+			}
+			else
+			{
+				setAttr("statusCode", "300");
+				setAttr("message","批量删除失败");
 			}
 		}
 		else
 		{
 			setAttr("statusCode", "300");
-			setAttr("message","删除失败");
+			setAttr("message","id读取错误，删除失败");
 		}
 		renderJson();
 	}
@@ -262,14 +274,16 @@ public class DCCFileController extends Controller
 
 				dcc.set("customer", getPara("customer").toUpperCase());
 				String path=UrlConfig.WI_PATH+"/"+getPara("customer")+"/"+getPara("type")+"-"+getPara("pn").toUpperCase();
-				
+				//windows 系统代码
+				String targetPath="H:\\Tomcat 7.0\\webapps\\static\\"+getPara("type")+"\\"+getPara("customer")+"\\"+getPara("type")+"-"+getPara("pn").toUpperCase();
 				if(getPara("type").equals("OBA Check list"))
 				{
 					path=UrlConfig.OBA_CHECKLIST_PATH+"/"+getPara("customer");
+					targetPath="H:\\Tomcat 7.0\\webapps\\static\\"+getPara("type")+"\\"+getPara("customer");
 				}
 				 
 				//windows 系统代码
-				String targetPath="H:\\Tomcat 7.0\\webapps\\static\\"+getPara("type")+"\\"+getPara("customer")+"\\"+getPara("type")+"-"+getPara("pn").toUpperCase();
+				
 				//FileUtil.copyFile(file, path+wiPath);
 				
 				FileUtil.copyFile(file, targetPath);//windows 系统适用
@@ -285,7 +299,7 @@ public class DCCFileController extends Controller
 				if(dcc.save())
 				{
 					setAttr("statusCode", "200");
-					setAttr("message","更新成功");
+					setAttr("message","保存成功");
 					setAttr("callbackType","closeCurrent");
 					setAttr("navTabId","wi_publish");
 				}
@@ -309,7 +323,7 @@ public class DCCFileController extends Controller
 		renderJson();
 			
 	}
-	
+	//老代码废除
 	public void view()
 	{
 		List<DCCListModel> list=DCCListModel.dao.findAll();
@@ -317,7 +331,7 @@ public class DCCFileController extends Controller
 		setAttr("items",list);
 		renderJson(new String[]{"items","identifier"});
 	}
-	
+	//废除不用
 	public void wiview()
 	{
 		int pageNumber=getParaToInt("pageNum");
@@ -336,7 +350,7 @@ public class DCCFileController extends Controller
 		setAttr("wilist",list);
 		render("/dwzpage/wi/wilist.jsp");
 	}
-	
+	//废除不用
 	public void search()
 	{
 		String key=getPara("key");

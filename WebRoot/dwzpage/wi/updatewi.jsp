@@ -31,6 +31,7 @@
 				<select name="type" style="width:150px">
 						<option value="none" >请选择文件类型</option>
 						<option value="WI" ${type eq "WI"?"selected":""}>作业指导书</option>
+						<option value="OBA Check list" ${type eq "OBA Check list"?"selected":"" }>OBA Check list</option>
 				</select>
 			</p>
 			<p>

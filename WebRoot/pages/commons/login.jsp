@@ -26,6 +26,13 @@ $(document).ready(function(){
                  } 
 
           });
+          
+          $("#name,#pwd").keydown(function(e){
+          			
+          			if(e.which==13){
+          				$("#loginform").submit();
+          			}
+          });
            $("#btn_submit").click(function(){
                    $("#loginform").submit();
           }); 

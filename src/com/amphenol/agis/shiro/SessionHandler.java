@@ -16,8 +16,10 @@ public class SessionHandler extends Handler
 	{
 		int index = target.indexOf(";jsessionid".toUpperCase());
 		if (index != -1) target = target.substring(0, index);
+		//System.out.println("target:"+target);
 		try {
 			target=new String(target.getBytes("ISO8859-1"),"UTF-8");
+			//System.out.println("new target:"+target);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

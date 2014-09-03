@@ -31,6 +31,7 @@
 				<select name="type" style="width:150px">
 						<option value="none" >请选择文件类型</option>
 						<option value="WI">作业指导书</option>
+						<option value="OBA Check list">OBA Check list</option>
 				</select>
 			</p>
 			<p>

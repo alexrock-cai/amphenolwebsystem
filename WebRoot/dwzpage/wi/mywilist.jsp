@@ -29,21 +29,9 @@
 	</form>
 </div>
 <div class="pageContent">
-	<shiro:hasRole name="root">
-	<div class="panelBar">
-		<ul class="toolBar">
-			<li><a class="add" href="${CONTEXT_PATH}/dcc/openWiForm" target="dialog"><span>上传WI</span></a></li>
-			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" href="${CONTEXT_PATH}/dcc/delete" class="delete"><span>批量删除</span></a></li>			
-			<li><a class="edit" href="${CONTEXT_PATH}/dcc/openWiForm?id={sid_user}" target="dialog" warn="请选择一个用户"><span>修改</span></a></li>
-			<li class="line">line</li>
-			<li><a class="icon" href="${CONTEXT_PATH}/dcc/regexInitWI"  target="ajaxTodo" title="初始化WI?"><span>初始化WI</span></a></li>
-		</ul>
-	</div>
-	</shiro:hasRole>
 	
-	<table class="table" width="1200" 
-		<shiro:hasRole name="user">layoutH="85"</shiro:hasRole> 
-		<shiro:hasRole name="root">layoutH="110"</shiro:hasRole> >
+	
+	<table class="table" width="1200" layoutH="85" >
 	
 		<thead>
 			<tr>
@@ -72,7 +60,7 @@
 				<td>${wi.pn }</td>
 				<td>${wi.type }</td>
 				<td>${wi.rev }</td>
-				<td><a target="navTab" href="${wi.filepath }" external="true">查看WI</a></td>
+				<td><a target="navTab" href="${wi.filepath }" external="true" title="${wi.filename }">查看WI</a></td>
 				<td>${wi.filename }</td>
 				<td>${wi.lastmodify }</td>
 				<shiro:hasRole name="root">
@@ -91,9 +79,9 @@
 			<span>显示</span>
 			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value},'jbsxBox')">
 				<option value="10" <c:if test="${numPerPage == '10'}">selected</c:if> >10</option>
-				<option value="15" <c:if test="${numPerPage == '15'}">selected</c:if> >15</option>
 				<option value="20" <c:if test="${numPerPage == '20'}">selected</c:if> >20</option>
-				<option value="25" <c:if test="${numPerPage == '25'}">selected</c:if> >25</option>
+				<option value="30" <c:if test="${numPerPage == '30'}">selected</c:if> >30</option>
+				<option value="50" <c:if test="${numPerPage == '50'}">selected</c:if> >50</option>
 			</select>
 			<span>条，共${totalCount}条</span>
 		</div>
