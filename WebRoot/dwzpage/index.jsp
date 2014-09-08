@@ -183,6 +183,7 @@ $(function(){
 						<ul class="tree">
 							<shiro:hasAnyRoles name="root,eeprom_user">
 							<li><a href="${CONTEXT_PATH}/eeprom/dashboard" target="navTab" rel="eeprom_list">EEPROM Dashboard</a></li>
+							<li><a href="${CONTEXT_PATH}/eeprom/doEcheckView?pageNum=1&numPerPage=20" target="navTab" rel="echeck_log">系统检测日志</a></li>
 							<li><a href="${CONTEXT_PATH}/eeprom/echeckView?pageNum=1&numPerPage=20" target="navTab" rel="echeck_list">系统检测异常产品清单</a></li>
 							<li><a href="${CONTEXT_PATH}/eeprom/view?pageNum=1&numPerPage=20" target="navTab" rel="eeprom_list">EEPROM Log文件路径配置</a></li>
 							<li><a href="${CONTEXT_PATH}/eeprom/productView?pageNum=1&numPerPage=20" target="navTab" rel="product_list">已经上传TAG IN数据</a></li>
