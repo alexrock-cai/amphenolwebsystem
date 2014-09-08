@@ -52,6 +52,12 @@ public class ProductModel extends Model<ProductModel>
 		return ProductModel.dao.find(sql);
 	}
 	
+	public List<ProductModel> findNoProgramAndNoVerify()
+	{
+		String sql="select * from sys_product where program_id is null or verify_id is null";
+		return find(sql);
+	}
+	
 	public Page<ProductModel> paginate(int pageNumber , int pageSize)
 	{
 		return paginate(pageNumber,pageSize,"select *","from sys_product order by id desc");

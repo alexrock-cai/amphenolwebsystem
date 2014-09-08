@@ -444,6 +444,34 @@ public class EEPROMController extends Controller
 		setAttr("echeckList",echeckList);
 		render("/dwzpage/eeprom/echecklist.jsp");
 	}
+	
+	public void doEcheckView()
+	{
+		int pageNumber=getParaToInt("pageNum");
+		int pageSize = getParaToInt("numPerPage");
+		String key = getPara("key");
+		String words = getPara("words");
+		List<EcheckModel> doecheckList = new ArrayList<EcheckModel>();
+		
+		int totalCount;
+		int numPerPage;
+		int currentPage;		
+			
+				Page<EcheckModel> pages=EcheckModel.dao.getEcheckTimes(pageNumber, pageSize);
+				doecheckList=pages.getList();
+				totalCount=pages.getTotalRow();
+				numPerPage=pages.getPageSize();
+				currentPage=pages.getPageNumber();
+			
+			
+		setAttr("words",words);
+		setAttr("key",key);
+		setAttr("totalCount",totalCount);
+		setAttr("numPerPage",numPerPage);
+		setAttr("currentPage",currentPage);
+		setAttr("doecheckList",doecheckList);
+		render("/dwzpage/eeprom/doechecklog.jsp");
+	}
 	//发货扫描
 	public void checkShipdata()
 	{
@@ -457,6 +485,17 @@ public class EEPROMController extends Controller
 		{
 			reader.readFiles(files);
 			reader.checkStatus();
+		}
+		catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			setAttr("statusCode", "300");
+			setAttr("message","读取log文件失败，请重试");
+			renderJson();
+			return;
+		}
 			List<ShipdataModel> noEEPROM= ShipdataModel.dao.getNoEEPROMList();
 			List<ShipdataModel> notindts= ShipdataModel.dao.getNotOnDTSList();
 			for (ShipdataModel shipdataModel : noEEPROM) {
@@ -509,14 +548,8 @@ public class EEPROMController extends Controller
 				setAttr("message","邮件发送失败，请联系管理员");
 			}
 			
-		} 
-		catch (Exception e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			setAttr("statusCode", "300");
-			setAttr("message","读取log文件失败，请重试");
-		}
+		
+		
 		
 		
 		renderJson();
@@ -529,5 +562,11 @@ public class EEPROMController extends Controller
 		FileReader reader=new FileReader();
 		FileScanner scanner= new FileScanner();
 		List<File> files=scanner.getTxtFileList(new File(workPath));
+		try {
+			reader.readFiles(files);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
