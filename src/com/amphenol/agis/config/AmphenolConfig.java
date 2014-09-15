@@ -36,6 +36,7 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
 import com.jfinal.ext.handler.ContextPathHandler;
+import com.jfinal.ext.plugin.quartz.QuartzPlugin;
 import com.jfinal.ext.plugin.shiro.ShiroInterceptor;
 import com.jfinal.ext.plugin.shiro.ShiroPlugin;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
@@ -76,11 +77,16 @@ public class AmphenolConfig extends JFinalConfig
 	@Override
 	public void configPlugin(Plugins me) {
 		// TODO Auto-generated method stub
+		//创建C3p0数据库插件对象，配置数据库
 		C3p0Plugin c3p0Plugin=new C3p0Plugin(getProperty("jdbcUrl"),getProperty("user"),getProperty("password").trim());
 		me.add(c3p0Plugin);
+		//创建ActiveRecord插件对象
 		ActiveRecordPlugin arp=new ActiveRecordPlugin(c3p0Plugin);
 		me.add(arp);
 		me.add(new ShiroPlugin(this.routes));
+		//启用任务调度插件
+		QuartzPlugin quartzPlugin=new QuartzPlugin("job.properties");
+		me.add(quartzPlugin);
 		arp.addMapping("sys_user", UserModel.class);
 		arp.addMapping("sys_role",RoleModel.class);
 		arp.addMapping("sys_resource", ResourceModel.class);
