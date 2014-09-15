@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.amphenol.agis.model.DCCListModel;
 import com.amphenol.agis.model.EcheckModel;
 import com.amphenol.agis.model.EepConfigModel;
 import com.amphenol.agis.model.PkgModel;
@@ -21,7 +20,7 @@ import com.amphenol.agis.util.FileReader;
 import com.amphenol.agis.util.FileScanner;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.ActiveRecordException;
-import com.jfinal.plugin.activerecord.Model;
+
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.upload.UploadFile;
 
@@ -483,8 +482,7 @@ public class EEPROMController extends Controller
 		List<File> files=scanner.getTxtFileList(new File(workPath));
 		try
 		{
-			reader.readFiles(files);
-			reader.checkStatus();
+			reader.readFiles(files);	
 		}
 		catch (Exception e) 
 		{
@@ -496,6 +494,7 @@ public class EEPROMController extends Controller
 			renderJson();
 			return;
 		}
+		reader.checkStatus();
 			List<ShipdataModel> noEEPROM= ShipdataModel.dao.getNoEEPROMList();
 			List<ShipdataModel> notindts= ShipdataModel.dao.getNotOnDTSList();
 			for (ShipdataModel shipdataModel : noEEPROM) {
@@ -568,5 +567,140 @@ public class EEPROMController extends Controller
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		List<PkgModel> pkgProducts=PkgModel.dao.findNoProgramAndNoVerify();
+		if(pkgProducts !=null)
+		{
+			for(PkgModel pkgProduct:pkgProducts)
+			{
+				String custSn=pkgProduct.getStr("customer_sn");
+				ProgramModel program = ProgramModel.dao.findByCustomerSn(custSn);
+				VerifyModel verify = VerifyModel.dao.findByCustomerSn(custSn);
+				ProductModel product=ProductModel.dao.findByCustomerSn(custSn);
+				//判断是否有做过tag in
+				if(product !=null)
+				{
+					pkgProduct.set("hastagin", true);
+					//判断是否做过烧录，如果能查询到记录说明做过，查询不到则没有做过。
+					if(program !=null)
+					{
+						if(program.getBoolean("status"))
+						{
+							pkgProduct.set("hasprogram", true);
+							product.set("hasprogram", true);
+							product.set("program_id", program.getLong("id"));
+						
+						}
+						else if(program.getBoolean("left_status")&&program.getBoolean("right_status"))
+						{
+							pkgProduct.set("hasprogram", true);
+							product.set("hasprogram", true);
+							product.set("program_id", program.getLong("id"));
+						}
+						else
+						{
+							pkgProduct.set("hasprogram", false);
+							product.set("hasprogram", false);
+							product.set("program_id", program.getLong("id"));
+						}
+					}
+					
+					if(verify !=null)
+					{
+						pkgProduct.set("hasverify", verify.getBoolean("status"));
+						product.set("hasverify",verify.getBoolean("status"));
+						product.set("verify_id",verify.getLong("id"));
+					}
+					product.update();
+				}
+				else
+				{
+					pkgProduct.set("hastagin", false);
+					if(program !=null)
+					{
+						if(program.getBoolean("status"))
+						{
+							pkgProduct.set("hasprogram", true);
+							
+						}
+						else if(program.getBoolean("left_status")&&program.getBoolean("right_status"))
+						{
+							pkgProduct.set("hasprogram", true);
+						}
+						else
+						{
+							pkgProduct.set("hasprogram", false);
+						}
+					}
+					if(verify !=null)
+					{
+						pkgProduct.set("hasverify", verify.getBoolean("status"));
+					}
+				}
+				
+				pkgProduct.update();
+					
+			}
+		}
+		//开始检查没有EEPROM和Verify的
+		SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String startTime=f.format(new Date());
+		List<PkgModel> noEEPROM=PkgModel.dao.getNoEEPROMList();
+		List<PkgModel> noTagin =PkgModel.dao.getNoTagIn();
+		if(noEEPROM !=null)
+		{
+			for(PkgModel pkg:noEEPROM)
+			{
+				EcheckModel echeck = new EcheckModel();
+				echeck.set("customer_name", pkg.get("customer_name"));
+				echeck.set("customer_sn", pkg.get("customer_sn"));
+				echeck.set("pn", pkg.get("pn"));
+				echeck.set("wo", pkg.get("wo"));
+				echeck.set("hasprogram",pkg.get("hasprogram"));
+				echeck.set("hasverify",pkg.get("hasverify"));
+				echeck.set("hastagin",pkg.get("hastagin"));
+				echeck.set("timestamp",startTime);
+				try {
+					echeck.save();
+				} catch (ActiveRecordException e) {
+					// TODO: handle exception
+					continue;
+				}
+			}
+		}
+		if(noTagin !=null)
+		{
+			for(PkgModel pkg:noTagin)
+			{
+				EcheckModel echeck = new EcheckModel();
+				echeck.set("customer_name", pkg.get("customer_name"));
+				echeck.set("customer_sn", pkg.get("customer_sn"));
+				echeck.set("pn", pkg.get("pn"));
+				echeck.set("wo", pkg.get("wo"));
+				echeck.set("hasprogram",pkg.get("hasprogram"));
+				echeck.set("hasverify",pkg.get("hasverify"));
+				echeck.set("hastagin",pkg.get("hastagin"));
+				echeck.set("timestamp",startTime);
+				try {
+					echeck.save();
+				} catch (ActiveRecordException e) {
+					// TODO: handle exception
+					continue;
+				}
+			}
+		}
+		if(new EmailService().sendNoEEPROMAndNoTagin(noEEPROM, noTagin))
+		{
+			System.out.println("邮件发送成功");
+			
+			setAttr("statusCode", "200");
+			setAttr("message","邮件发送成功");
+		}
+		else
+		{
+			System.out.println("邮件发送失败");
+			setAttr("statusCode", "300");
+			setAttr("message","邮件发送失败，请联系管理员");
+		}
+		renderJson();
 	}
 }
