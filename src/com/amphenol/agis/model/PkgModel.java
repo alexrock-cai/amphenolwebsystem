@@ -27,6 +27,17 @@ public class PkgModel extends Model<PkgModel>
 		return find(sql);
 	}
 	
+	public List<PkgModel> getNoEEPROMList()
+	{
+		String sql = "select * from sys_pkg where hasprogram = false or hasverify = false";
+		return find(sql);
+	}
+	
+	public List<PkgModel> getNoTagIn()
+	{
+		String sql = "select * from sys_pkg where hastagin = false";
+		return find(sql);
+	}
 	public PkgModel findByCustomerSn(String sn)
 	{
 		String sql = "select * from sys_pkg where customer_sn = ?";
