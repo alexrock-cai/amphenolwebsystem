@@ -67,6 +67,7 @@ public class FileReader
 		}
 		if(filename.endsWith(".txt"))
 		{
+			System.out.println("日志文件："+file.getAbsolutePath());
 			readText(file);
 		}
 		
@@ -77,6 +78,8 @@ public class FileReader
 		// TODO Auto-generated method stub
 		String path = file.getParent().substring(EepConfigModel.dao.getWorkPath().length());
 		System.out.println("readText Path="+path);
+		System.out.println("path.startsWith('LOG_FILE\\Program')"+path.startsWith("LOG_FILE\\Program"));
+		System.out.println("path.startsWith(\"LOG_FILE\\Verify\")"+path.startsWith("LOG_FILE\\Verify"));
 		//判断此文件是程序烧录日志文件还是验证日志文件
 		if(path.startsWith("LOG_FILE\\Program"))
 		{
@@ -90,6 +93,7 @@ public class FileReader
 	public void readVerifyLog(File file, String path) throws Exception 
 	{
 		// TODO Auto-generated method stub
+		// System.out.println("readVerifyLog");
 		in=new FileInputStream(file);
 		String str=null;
 		BufferedReader reader= new BufferedReader(new InputStreamReader(in));
