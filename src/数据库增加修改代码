@@ -19,3 +19,121 @@ constraint pk_sys_station primary key(id)
 create index idx_sys_station_id on sys_station(station);
 
 alter table sys_dcc modify column filename varchar(200) unique;
+
+
+2014-10-9
+增加 设备PM管理系统数据库
+表 sys_equipment_pm_info  存储设备基本信息
+表 sys_monthly_pm_schedule 月PM计划
+表 sys_quarterly_pm_schedule 季度PM计划
+表 sys_yearly_pm_schedule 年度PM计划
+表 sys_pm_record PM记录保存
+
+drop table if exists sys_equipment_pm_info;
+create table sys_equipment_pm_info (
+id bigint auto_increment,
+equipmentID  varchar(100) not null unique,
+model  varchar(100),
+equipmentName  varchar(100),
+owner   varchar(100),
+ownerEmail  varchar(200),
+supervisor  varchar(100),
+supervisorEmail varchar(200),
+isMonthlyPM  bool,
+isQuerterlyPM bool,
+isYearlyPM   bool,
+primary key(id)
+)charset=utf8 ENGINE=InnoDB;
+
+create index idx_sys_equipment_pm_info_id on sys_equipment_pm_info(id);
+create index idx_sys_equipment_pm_info_equipmentID on sys_equipment_pm_info(equipmentID);
+
+表 sys_monthly_pm_schedule 月PM计划
+drop table if exists sys_monthly_pm_schedule;
+create table sys_monthly_pm_schedule(
+id bigint auto_increment,
+equipmentID varchar(100),
+year   varchar(100),
+janPMDay    varchar(100),
+febPMDay    varchar(100),
+marPMDay    varchar(100),
+aprPMDay    varchar(100),
+mayPMDay    varchar(100),
+junPMDay    varchar(100),
+julPMDay    varchar(100),
+augPMDay    varchar(100),
+sepPMDay    varchar(100),
+octPMDay    varchar(100),
+novPMDay    varchar(100),
+decPMDay    varchar(100),
+isJanPM  bool,
+isFebPM  bool,
+isMarPM  bool,
+isAprPM  bool,
+isMayPM  bool,
+isJunPM  bool,
+isJulPM  bool,
+isAugPM  bool,
+isSepPM  bool,
+isOctPM  bool,
+isNovPM  bool,
+isDecPM  bool,
+contents  varchar(500),
+primary key(id)
+)charset=utf8 ENGINE=InnoDB;
+
+create index idx_sys_monthly_pm_schedule_id on sys_monthly_pm_schedule(id);
+alter table sys_monthly_pm_schedule add unique key(equipmentID,year);
+
+表 sys_quarterly_pm_schedule 季度PM计划
+
+drop table if exists sys_quarterly_pm_schedule;
+create table sys_quarterly_pm_schedule(
+id bigint auto_increment,
+equipmentID  varchar(100),
+year  varchar(100),
+q1PMDay   varchar(100),
+q2PMDay   varchar(100),
+q3PMDay   varchar(100),
+q4PMDay   varchar(100),
+isQ1PM  bool,
+isQ2PM  bool,
+isQ3PM  bool,
+isQ4PM  bool,
+contents   varchar(500),
+primary key(id)
+)charset=utf8 ENGINE=InnoDB;
+
+create index idx_sys_quarterly_pm_schedule_id on sys_quarterly_pm_schedule(id);
+alter table sys_quarterly_pm_schedule add unique key(equipmentID,year);
+
+表 sys_yearly_pm_schedule 年度PM计划
+
+drop table if exists sys_yearly_pm_schedule;
+create table sys_yearly_pm_schedule(
+id bigint auto_increment,
+equipmentID varchar(100),
+year   varchar(100),
+yearPMDay varchar(100),
+isYearPM  bool,
+contents   varchar(500),
+primary key(id)
+)charset=utf8 ENGINE=InnoDB;
+
+create index idx_sys_yearly_pm_schedule_id on sys_yearly_pm_schedule(id);
+alter table sys_yearly_pm_schedule add unique key(equipmentID,year);
+
+表 sys_pm_record PM记录保存
+drop table if exists sys_pm_record;
+create table sys_pm_record(
+id bigint auto_increment,
+equipmentID varchar(100),
+PMOperator  varchar(100),
+PMTime    datetime,
+uploadBy   varchar(100),
+uploadTime  datetime,
+file       varchar(500),
+primary key(id)
+)charset=utf8 ENGINE=InnoDB; 
+
+create index idx_sys_pm_record_id on sys_pm_record(id);

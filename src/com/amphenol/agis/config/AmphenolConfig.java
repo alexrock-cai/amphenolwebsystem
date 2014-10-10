@@ -8,6 +8,7 @@ import com.amphenol.agis.controller.EEPROMController;
 import com.amphenol.agis.controller.EpromVerifyController;
 import com.amphenol.agis.controller.ResourceModelController;
 import com.amphenol.agis.controller.RoleModelController;
+import com.amphenol.agis.controller.TestController;
 import com.amphenol.agis.controller.UserModelController;
 import com.amphenol.agis.controller.WIViewController;
 import com.amphenol.agis.model.CustomerModel;
@@ -71,6 +72,8 @@ public class AmphenolConfig extends JFinalConfig
 		me.add("/dcc",DCCFileController.class);
 		me.add("/wi",WIViewController.class);
 		me.add("/eeprom",EEPROMController.class);
+		//测试功能模块
+		me.add("/test",TestController.class);
 		
 	}
 
