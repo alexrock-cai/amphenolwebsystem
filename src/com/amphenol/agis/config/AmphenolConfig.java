@@ -28,6 +28,11 @@ import com.amphenol.agis.model.StationModel;
 import com.amphenol.agis.model.UserModel;
 import com.amphenol.agis.model.VerifyModel;
 import com.amphenol.agis.model.WOModel;
+import com.amphenol.agis.pm.model.EquipmentPMInfoModel;
+import com.amphenol.agis.pm.model.MonthlyPMScheduleModel;
+import com.amphenol.agis.pm.model.PMRecordModel;
+import com.amphenol.agis.pm.model.QuarterlyPMScheduleModel;
+import com.amphenol.agis.pm.model.YearlyPMScheduleModel;
 import com.amphenol.agis.shiro.SessionHandler;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -90,6 +95,7 @@ public class AmphenolConfig extends JFinalConfig
 		//启用任务调度插件
 		QuartzPlugin quartzPlugin=new QuartzPlugin("job.properties");
 		me.add(quartzPlugin);
+		
 		arp.addMapping("sys_user", UserModel.class);
 		arp.addMapping("sys_role",RoleModel.class);
 		arp.addMapping("sys_resource", ResourceModel.class);
@@ -107,6 +113,14 @@ public class AmphenolConfig extends JFinalConfig
 		arp.addMapping("sys_station", StationModel.class);
 		arp.addMapping("sys_pkg",PkgModel.class);
 		arp.addMapping("sys_echeck", EcheckModel.class);
+		
+		//Equipment PM table Mapping
+		arp.addMapping("sys_equipment_pm_info", EquipmentPMInfoModel.class);
+		arp.addMapping("sys_monthly_pm_schedule", MonthlyPMScheduleModel.class);
+		arp.addMapping("sys_quarterly_pm_schedule", QuarterlyPMScheduleModel.class);
+		arp.addMapping("sys_yearly_pm_schedule", YearlyPMScheduleModel.class);
+		arp.addMapping("sys_pm_record", PMRecordModel.class);
+		
 		}
 
 	@Override
