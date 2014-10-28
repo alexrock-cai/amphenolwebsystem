@@ -36,7 +36,7 @@ public class EmailService
 			eml.addTo("rocky.cai@amphenol-tcs.com");
 			eml.addTo("chris.zhang@amphenol-tcs.com");
 			eml.addTo("kevin.ding@amphenol-tcs.com");
-			eml.addTo("jackie.pan@amphenol-tcs.com");
+			eml.addTo("John.tang@amphenol-tcs.com");
 			eml.addTo("susan.fan@amphenol-tcs.com");
 			eml.setSubject("EEPROM 系统提示信息");
 			
@@ -54,7 +54,7 @@ public class EmailService
 				sb.append("<p>customer_sn:"+ship.getStr("customer_sn")+"*******WO#:"+ship.getStr("wo")+"******PN#:"+ship.getStr("pn")+"</p>");
 			}
 			
-			eml.setBody("这是一封测试邮件。 总共有："+list.size()+"块产品没有经过EEPROM，总共有"+notindts.size()+"块可能更换标签，因为在DTS中没有发现。清单如下：详情请访问：http://131.101.208.5 查看。谢谢！"+sb.toString());
+			eml.setBody("总共有："+list.size()+"块产品没有经过EEPROM，总共有"+notindts.size()+"块可能更换标签，因为在DTS中没有发现。清单如下：详情请访问：http://131.101.208.5 查看。谢谢！"+sb.toString());
 			eml.send();
 		}
 		catch (MessagingException e)
@@ -73,7 +73,7 @@ public class EmailService
 			eml.addTo("rocky.cai@amphenol-tcs.com");
 			eml.addTo("chris.zhang@amphenol-tcs.com");
 			eml.addTo("kevin.ding@amphenol-tcs.com");
-			eml.addTo("jackie.pan@amphenol-tcs.com");
+			eml.addTo("John.tang@amphenol-tcs.com");
 			eml.addTo("susan.fan@amphenol-tcs.com");
 			eml.setSubject("EEPROM 系统提示信息");
 			
@@ -91,7 +91,7 @@ public class EmailService
 				sb.append("<p>customer_sn:"+ship.getStr("customer_sn")+"*******WO#:"+ship.getStr("wo")+"******PN#:"+ship.getStr("pn")+"</p>");
 			}
 			
-			eml.setBody("这是一封测试邮件。 总共有："+list.size()+"块产品没有经过EEPROM，总共有"+noTagin.size()+"块可能更换标签，因为在DTS中没有发现。清单如下：详情请访问：http://131.101.208.5 查看。谢谢！"+sb.toString());
+			eml.setBody("总共有："+list.size()+"块产品没有经过EEPROM，总共有"+noTagin.size()+"块可能更换标签，因为在DTS中没有发现。清单如下：详情请访问：http://131.101.208.5 查看。谢谢！"+sb.toString());
 			eml.send();
 		}
 		catch (MessagingException e)
