@@ -14,4 +14,10 @@ public class UrlConfig
 	public static final String WI_PATH="/static/WI";
 	
 	public static final String OBA_CHECKLIST_PATH="/static/OBA Check list";
+	
+	public static final String PM_INDEX="/pm";
+	
+	public static final String PM_LOGIN="/bs-admin-bcore/comm/login.jsp";
+	
+	
 }

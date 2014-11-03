@@ -76,6 +76,7 @@ $(document).ready(function(){
 			      <div id="inf">
                        <span class="inf_text">版本信息</span>
 					   <span class="copyright">Amphenol-GIS 生产管理信息系统 2014 v1.0</span>
+					   <span class="copyright"><a href="/pmLoginView">登录到设备PM监控管理系统</a></span>
 			      </div>
 			  </div>
 			  <div id="down_center"></div>		 

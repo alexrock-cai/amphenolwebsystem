@@ -97,6 +97,9 @@ $(function(){
 			<div class="headerNav">
 				<a class="logo" href="http://www.ltd.amphenol-tcs.com">标志</a>
 				<ul class="nav">
+					<shiro:hasPermission name="pm:*">
+					<li><a href="${CONTEXT_PATH}/pm">设备PM监控管理系统</a></li>
+					</shiro:hasPermission>
 					<li><a><h2>欢迎 ${user.getStr('username')} 登录本系统</h2></a></li>
 					<li><a href="${CONTEXT_PATH}/dwzpage/user/changepwd.jsp" target="dialog" width="600">修改密码</a></li>
 					<li><a href="/logout">退出</a></li>

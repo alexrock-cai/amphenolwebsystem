@@ -2,14 +2,19 @@ package com.amphenol.agis.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 
 import com.amphenol.UrlConfig;
 import com.amphenol.agis.model.UserModel;
+import com.amphenol.agis.pojo.TestData;
 import com.amphenol.agis.util.BatchCreateUser;
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Page;
 
 public class CommonController extends Controller 
 
@@ -20,6 +25,24 @@ public class CommonController extends Controller
 		render(UrlConfig.INDEX_URL);
 	}
 	
+	public void tt(){
+		render("/bootstrap/dashboard.jsp");
+	}
+	
+	public void pm(){
+		render("/bootstrap/pmdashboard.jsp");
+	}
+	public void bootgrid(){
+		int current=getParaToInt("current");
+		int rowCount=getParaToInt("rowCount");
+		Page<UserModel> pages=UserModel.dao.paginate(current, rowCount);
+		
+		setAttr("current", current);
+		setAttr("rowCount", rowCount);
+		setAttr("rows", pages.getList());
+		setAttr("total", pages.getTotalRow());
+		renderJson();
+	}
 	public void timeout()
 	{
 		setAttr("statusCode",301);

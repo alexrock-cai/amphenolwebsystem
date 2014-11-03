@@ -39,9 +39,9 @@ owner   varchar(100),
 ownerEmail  varchar(200),
 supervisor  varchar(100),
 supervisorEmail varchar(200),
-isMonthlyPM  bool,
-isQuerterlyPM bool,
-isYearlyPM   bool,
+isMonthlyPM  bool default false,
+isQuarterlyPM bool default false,
+isYearlyPM   bool default false,
 primary key(id)
 )charset=utf8 ENGINE=InnoDB;
 
@@ -66,18 +66,18 @@ sepPMDay    varchar(100),
 octPMDay    varchar(100),
 novPMDay    varchar(100),
 decPMDay    varchar(100),
-isJanPM  bool,
-isFebPM  bool,
-isMarPM  bool,
-isAprPM  bool,
-isMayPM  bool,
-isJunPM  bool,
-isJulPM  bool,
-isAugPM  bool,
-isSepPM  bool,
-isOctPM  bool,
-isNovPM  bool,
-isDecPM  bool,
+isJanPM  bool default false,
+isFebPM  bool default false,
+isMarPM  bool default false,
+isAprPM  bool default false,
+isMayPM  bool default false,
+isJunPM  bool default false,
+isJulPM  bool default false,
+isAugPM  bool default false,
+isSepPM  bool default false,
+isOctPM  bool default false,
+isNovPM  bool default false,
+isDecPM  bool default false,
 contents  varchar(500),
 primary key(id)
 )charset=utf8 ENGINE=InnoDB;
@@ -96,10 +96,10 @@ q1PMDay   varchar(100),
 q2PMDay   varchar(100),
 q3PMDay   varchar(100),
 q4PMDay   varchar(100),
-isQ1PM  bool,
-isQ2PM  bool,
-isQ3PM  bool,
-isQ4PM  bool,
+isQ1PM  bool default false,
+isQ2PM  bool default false,
+isQ3PM  bool default false,
+isQ4PM  bool default false,
 contents   varchar(500),
 primary key(id)
 )charset=utf8 ENGINE=InnoDB;
@@ -115,7 +115,7 @@ id bigint auto_increment,
 equipmentID varchar(100),
 year   varchar(100),
 yearPMDay varchar(100),
-isYearPM  bool,
+isYearPM  bool default false,
 contents   varchar(500),
 primary key(id)
 )charset=utf8 ENGINE=InnoDB;
@@ -128,6 +128,7 @@ drop table if exists sys_pm_record;
 create table sys_pm_record(
 id bigint auto_increment,
 equipmentID varchar(100),
+PMType    varchar(50),
 PMOperator  varchar(100),
 PMTime    datetime,
 uploadBy   varchar(100),
@@ -137,3 +138,13 @@ primary key(id)
 )charset=utf8 ENGINE=InnoDB; 
 
 create index idx_sys_pm_record_id on sys_pm_record(id);
+
+insert into sys_equipment_pm_info values(2,"SMT016","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
+insert into sys_equipment_pm_info values(3,"SMT017","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
+insert into sys_equipment_pm_info values(4,"SMT018","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
+insert into sys_equipment_pm_info values(5,"SMT019","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
+insert into sys_equipment_pm_info values(6,"SMT020","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
+insert into sys_equipment_pm_info values(7,"SMT021","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
+insert into sys_equipment_pm_info values(8,"SMT022","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
+insert into sys_equipment_pm_info values(9,"SMT023","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
+insert into sys_equipment_pm_info values(10,"SMT024","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);

@@ -1,6 +1,9 @@
 package com.amphenol.agis.util;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.mail.MessagingException;
 
@@ -101,6 +104,20 @@ public class EmailService
 		}
 		
 		return true;
+	}
+	
+	public void sendMail(Map<String, List<String>> mailMap) throws MessagingException{
+		Eml eml=new Eml("smtp.126.com", "amphenolmaster@126.com", "amphenolmaster@126.com", "test123");
+		eml.addTo("cww.jerry@gmail.com");
+		eml.setSubject("PM 提示");
+		StringBuilder sb=new StringBuilder();
+		Set<String> set=mailMap.keySet();
+		for(Iterator<String> it=set.iterator();it.hasNext();){
+			String s= it.next();
+			sb.append("<p> owner :"+s+"****"+mailMap.get(s).toString()+"</p>");
+		}
+		eml.setBody(sb.toString());
+		eml.send();
 	}
 	public static void main(String[] args)
 	{
