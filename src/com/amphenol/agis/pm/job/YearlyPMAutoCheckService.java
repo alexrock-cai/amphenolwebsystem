@@ -51,7 +51,9 @@ public class YearlyPMAutoCheckService implements Job {
 		//循环扫描年度PM计划列表
 		List<YearlyPMScheduleModel> yList = YearlyPMScheduleModel.dao.findAll();
 		for(int i=0;i<yList.size();i++){
+			
 			YearlyPMScheduleModel yModel=yList.get(i);
+			if(yModel.getStr("yearPMDay")==null) continue;
 			EquipmentPMInfoModel eInfoModel=EquipmentPMInfoModel.dao.findByEquipmentID(yModel.getStr("equipmentID"));
 			if(!yModel.getBoolean("isYearPM")){
 				String currentPMDayString=yModel.getStr("year")+"-"+yModel.getStr("yearPMDay");

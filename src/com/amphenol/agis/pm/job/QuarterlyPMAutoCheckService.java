@@ -53,6 +53,8 @@ public class QuarterlyPMAutoCheckService implements Job {
 			QuarterlyPMScheduleModel qModel=qList.get(i);
 			EquipmentPMInfoModel eInfoModel=EquipmentPMInfoModel.dao.findByEquipmentID(qModel.getStr("equipmentID"));
 			for(int q=0;q<4;q++){
+				//判断是否存在季度PM计划日期
+				if(qModel.getStr(qDays[q])==null) continue;
 				if(!qModel.getBoolean(isQuarterlyPM[q])){
 					//获取当前季度PM计划日期
 					String currentPMDayString=qModel.getStr("year")+"-"+qModel.getStr(qDays[q]);

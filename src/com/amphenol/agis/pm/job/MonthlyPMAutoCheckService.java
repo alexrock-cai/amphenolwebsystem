@@ -65,7 +65,7 @@ public class MonthlyPMAutoCheckService implements Job {
 			//遍历一个设备的当年所有月份的PM计划
 			for(int m=0;m<12;m++){
 				//判断PM日期是否为空，如果则跳过。
-				//if(mScheduleModel.getStr(mDays[m])==null) continue;
+				if(mScheduleModel.getStr(mDays[m])==null) continue;
 				//判断当月PM标记
 				if(!mScheduleModel.getBoolean(isMonthlPMs[m])){
 					//获取当前月度PM计划日期
