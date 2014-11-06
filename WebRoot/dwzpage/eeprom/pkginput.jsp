@@ -42,6 +42,8 @@
 				<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
 				<th width="22" orderField="id" >id</th>
 				<th width="130" >产品序列号</th>
+				<th width="80" >包装扫描时间</th>
+				<shiro:hasAnyRoles name="root">
 				<th width="120" >客户</th>
 				<th width="40"  >工单号</th>
 				<th width="80" >部件号</th>
@@ -49,7 +51,7 @@
 				<th width="70" >是否Verify</th>
 				<th width="70" >是否TAG IN</th>
 				
-				<shiro:hasAnyRoles name="root">
+				
 				<th width="70" orderField="operate">操作</th>
 				</shiro:hasAnyRoles>
 			</tr>
@@ -60,6 +62,8 @@
 				<td><input name="ids" value="${pkg.id }" type="checkbox"></td>
 				<td>${pkg.id }</td>
 				<td>${pkg.customer_sn }</td>
+				<td>${pkg.timestamp }</td>
+				<shiro:hasAnyRoles name="root">
 				<td>${pkg.customer_name }</td>
 				<td>${pkg.wo }</td>
 				<td>${pkg.pn }</td>
