@@ -23,14 +23,14 @@ public class EcheckModel extends Model<EcheckModel>
 	
 	public Page<EcheckModel> paginate(int pageNumber , int pageSize)
 	{
-		return paginate(pageNumber,pageSize,"select *","from sys_echeck order by id asc");
+		return paginate(pageNumber,pageSize,"select *","from sys_echeck order by id desc");
 	}
 	
 	public Page<EcheckModel> paginateByKeyWords(int pageNumber, int pageSize,String key,String words)
 	{
 		StringBuilder sql= new StringBuilder("where 1=1 and ");
 		sql.append(key).append(" like '%").append(words).append("%' ");
-		return paginate(pageNumber,pageSize,"select *","from sys_echeck "+sql.toString()+"order by id asc");
+		return paginate(pageNumber,pageSize,"select *","from sys_echeck "+sql.toString()+"order by id desc");
 	}
 
 	public Page<EcheckModel> getEcheckTimes(int pageNumber ,int pageSize)

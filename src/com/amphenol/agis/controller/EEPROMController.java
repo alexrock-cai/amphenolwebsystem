@@ -176,7 +176,11 @@ public class EEPROMController extends Controller
 		String regex="[xX]\\d{9}";
 		Pattern p=Pattern.compile(regex);
 		Matcher m=p.matcher(customerSn);
-		if(m.matches())
+		if(customerSn==null || "".equals(customerSn)){
+			openPkgInputPage();
+			return;
+		}
+		else if(m.matches())
 		{
 			
 			if(PkgModel.dao.findByCustomerSn(getPara("customer_sn"))!=null)
@@ -245,9 +249,20 @@ public class EEPROMController extends Controller
 	 * 获取EEPROM包装扫描输入的数据
 	 */
 	private void getPkgInfo() {
-		
+		int pageNumber=getParaToInt("pageNum");
+		int pageSize = getParaToInt("numPerPage");
+		int totalCount;
+		int numPerPage;
+		int currentPage;
 		List<PkgModel> list=new ArrayList<PkgModel>();
-		list=PkgModel.dao.findAll();
+		Page<PkgModel> pages=PkgModel.dao.paginate(pageNumber, pageSize);
+		list=pages.getList();
+		totalCount=pages.getTotalRow();
+		numPerPage=pages.getPageSize();
+		currentPage=pages.getPageNumber();
+		setAttr("totalCount",totalCount);
+		setAttr("numPerPage",numPerPage);
+		setAttr("currentPage",currentPage);
 		setAttr("pkglist",list);
 	}
 	/**
