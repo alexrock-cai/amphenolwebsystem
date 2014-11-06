@@ -139,12 +139,14 @@ primary key(id)
 
 create index idx_sys_pm_record_id on sys_pm_record(id);
 
-insert into sys_equipment_pm_info values(2,"SMT016","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
-insert into sys_equipment_pm_info values(3,"SMT017","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
-insert into sys_equipment_pm_info values(4,"SMT018","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
-insert into sys_equipment_pm_info values(5,"SMT019","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
-insert into sys_equipment_pm_info values(6,"SMT020","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
-insert into sys_equipment_pm_info values(7,"SMT021","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
-insert into sys_equipment_pm_info values(8,"SMT022","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
-insert into sys_equipment_pm_info values(9,"SMT023","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
-insert into sys_equipment_pm_info values(10,"SMT024","小设备","分板机","Jie zhou","jie.zhou@amphenol-tcs.com","hopestar Sun","hopestar.sun@amphenol-tcs.com",true,false,false);
+insert into sys_equipment_pm_info values(2,"SMT016","小设备","分板机","Jie zhou","rocky.cai@amphenol-tcs.com","rocky","cww.jerr@gmail.com",true,false,false);
+insert into sys_equipment_pm_info values(3,"SMT017","小设备","分板机","Jie zhou","rocky.cai@amphenol-tcs.com","rocky","cww.jerr@gmail.com",true,false,false);
+insert into sys_equipment_pm_info values(4,"SMT018","小设备","分板机","Jie zhou","rocky.cai@amphenol-tcs.com","rocky","cww.jerr@gmail.com",true,false,false);
+insert into sys_equipment_pm_info values(5,"SMT019","小设备","分板机","Jie zhou","rocky.cai@amphenol-tcs.com","rocky","cww.jerr@gmail.com",true,false,false);
+insert into sys_equipment_pm_info values(6,"SMT020","小设备","分板机","Jie zhou","rocky.cai@amphenol-tcs.com","rocky","cww.jerr@gmail.com",true,false,false);
+insert into sys_equipment_pm_info values(7,"SMT0160","小设备","分板机","Jie zhou","rocky.cai@amphenol-tcs.com","rocky","cww.jerr@gmail.com",true,false,false);
+insert into sys_equipment_pm_info values(8,"SMT0161","小设备","分板机","Jie zhou","rocky.cai@amphenol-tcs.com","rocky","cww.jerr@gmail.com",true,false,false);
+insert into sys_equipment_pm_info values(9,"SMT0162","小设备","分板机","Jie zhou","rocky.cai@amphenol-tcs.com","rocky","cww.jerr@gmail.com",true,false,false);
+insert into sys_equipment_pm_info values(10,"SMT0163","小设备","分板机","Jie zhou","rocky.cai@amphenol-tcs.com","rocky","cww.jerr@gmail.com",true,false,false);
+insert into sys_equipment_pm_info values(11,"SMT0164","小设备","分板机","Jie zhou","rocky.cai@amphenol-tcs.com","rocky","cww.jerr@gmail.com",true,false,false);
+insert into sys_equipment_pm_info values(12,"SMT0165","小设备","分板机","Jie zhou","rocky.cai@amphenol-tcs.com","rocky","cww.jerr@gmail.com",true,false,false);

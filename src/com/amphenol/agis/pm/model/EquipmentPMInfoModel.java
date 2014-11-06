@@ -48,6 +48,11 @@ public class EquipmentPMInfoModel extends Model<EquipmentPMInfoModel> {
 		return findFirst(sql, equipmentID);
 	}
 	
+	public String findSuperviorEmailWithOwnerEmail(String ownerEmail){
+		String sql = "select supervisorEmail from sys_equipment_pm_info where ownerEmail=?";
+		return findFirst(sql,ownerEmail).getStr("supervisorEmail");
+	}
+	
 	public List<String> findEquipmentIDs(String pmtype){
 		String sql = "select equipmentID from sys_equipment_pm_info where "+pmtype+" = true";
 		List<EquipmentPMInfoModel> list= find(sql);

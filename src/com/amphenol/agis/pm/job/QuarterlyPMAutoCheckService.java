@@ -26,6 +26,17 @@ public class QuarterlyPMAutoCheckService implements Job {
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 		// TODO Auto-generated method stub
+		LotusSendMail sender;
+		try {
+			sender=new LotusSendMail("PM_AutoCheckJob@amphenol-tcs.com");
+			sender.addTo("rocky.cai@amphenol-tcs.com");
+			sender.setSubject("QuarterlyPM AutoCheck Start");
+			sender.setBody("["+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"] Yearly PM AutoCheck Start.");
+			sender.send();
+		} catch (MessagingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		System.out.println("Quarterly PM Auto Check start........");
 		String[] isQuarterlyPM={"isQ1PM","isQ2PM","isQ3PM","isQ4PM"};
 		String[] qDays={"q1PMDay","q2PMDay","q3PMDay","q4PMDay"};
@@ -78,9 +89,9 @@ public class QuarterlyPMAutoCheckService implements Job {
 		System.out.println("Quarterly PM Auto Check stop........");
 		//发送邮件
 		Set<String> set=overTimeMailMap.keySet();
-		LotusSendMail sender;
 		
-			
+		//如果set为空说明没有过期的PM
+		if(!set.isEmpty()){	
 			
 			for(Iterator<String> it=set.iterator();it.hasNext();){
 				String ownerEmail= it.next();
@@ -112,11 +123,12 @@ public class QuarterlyPMAutoCheckService implements Job {
 				
 				System.out.println("****************************[QuarterlyPM]分隔符*********************************");
 			}
-			
+		}
 		
 			//***********发送提醒邮件******************************
 			set=alarmMailMap.keySet();
-			
+			//如果set为空说明没有提醒邮件。
+		if(!set.isEmpty()){	
 			for(Iterator<String> it=set.iterator();it.hasNext();){
 				String ownerEmail= it.next();
 				try {
@@ -145,7 +157,7 @@ public class QuarterlyPMAutoCheckService implements Job {
 				System.out.println("****************************[QuarterlyPM]提醒邮件**分隔符*********************************");
 			}
 		
-		
+		}
 	}
 
 }

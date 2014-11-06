@@ -26,6 +26,17 @@ public class YearlyPMAutoCheckService implements Job {
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 		// TODO Auto-generated method stub
+		LotusSendMail sender;
+		try {
+			sender=new LotusSendMail("PM_AutoCheckJob@amphenol-tcs.com");
+			sender.addTo("rocky.cai@amphenol-tcs.com");
+			sender.setSubject("YearlyPM AutoCheck Start");
+			sender.setBody("["+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"] Yearly PM AutoCheck Start.");
+			sender.send();
+		} catch (MessagingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		System.out.println("Yearly PM Auto Check start........");
 		Map<String, List<String>> overTimeMailMap=new HashMap<String, List<String>>();
 		Map<String, List<String>> alarmMailMap=new HashMap<String, List<String>>();
@@ -73,9 +84,9 @@ public class YearlyPMAutoCheckService implements Job {
 		System.out.println("Yearly PM Auto Check start........");
 		//发送邮件
 				Set<String> set=overTimeMailMap.keySet();
-				LotusSendMail sender;
 				
-					
+				
+				if(!set.isEmpty()){	
 					
 					for(Iterator<String> it=set.iterator();it.hasNext();){
 						String ownerEmail= it.next();
@@ -108,10 +119,10 @@ public class YearlyPMAutoCheckService implements Job {
 						System.out.println("****************************[YearlyPM]警告邮件分隔符*********************************");
 					}
 					
-				
+				}
 					//***********发送提醒邮件******************************
 					set=alarmMailMap.keySet();
-					
+				if(!set.isEmpty()){
 					for(Iterator<String> it=set.iterator();it.hasNext();){
 						String ownerEmail= it.next();
 						try {
@@ -139,6 +150,7 @@ public class YearlyPMAutoCheckService implements Job {
 						}
 						System.out.println("****************************[YearlyPM]提醒邮件**分隔符*********************************");
 					}
+				}
 	}
 
 }

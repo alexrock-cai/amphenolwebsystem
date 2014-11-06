@@ -9,7 +9,7 @@ import com.amphenol.agis.controller.EpromVerifyController;
 import com.amphenol.agis.controller.PMController;
 import com.amphenol.agis.controller.ResourceModelController;
 import com.amphenol.agis.controller.RoleModelController;
-import com.amphenol.agis.controller.TestController;
+//import com.amphenol.agis.controller.TestController;
 import com.amphenol.agis.controller.UserModelController;
 import com.amphenol.agis.controller.WIViewController;
 import com.amphenol.agis.model.CustomerModel;
@@ -80,7 +80,7 @@ public class AmphenolConfig extends JFinalConfig
 		me.add("/eeprom",EEPROMController.class);
 		me.add("/pm",PMController.class);
 		//测试功能模块
-		me.add("/test",TestController.class);
+		//me.add("/test",TestController.class);
 		
 	}
 

@@ -39,8 +39,9 @@ public final class Eml {
         props.put("mail.smtp.host", server);
         props.put("mail.smtp.auth", "true");
         props.put("mail.transport.protocol", "smtp");
-        Auth auth = new Auth(uid, pwd);
+       Auth auth = new Auth(uid, pwd);
         ssn = Session.getInstance(props, auth);
+        //ssn = Session.getInstance(props);
         message = new MimeMessage(ssn);
         InternetAddress fromAddress = new InternetAddress(eml);
         message.setFrom(fromAddress);

@@ -41,6 +41,8 @@ public class EmailService
 			eml.addTo("kevin.ding@amphenol-tcs.com");
 			eml.addTo("John.tang@amphenol-tcs.com");
 			eml.addTo("susan.fan@amphenol-tcs.com");
+			eml.addCc("CZBP_OQA@amphenol-tcs.com");
+			eml.addCc("guotai.yu@amphenol-tcs.com");
 			eml.setSubject("EEPROM 系统提示信息");
 			
 			StringBuilder sb=new StringBuilder();

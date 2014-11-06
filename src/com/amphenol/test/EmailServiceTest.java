@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 
 import com.amphenol.agis.model.ShipdataModel;
 import com.amphenol.agis.util.Eml;
+import com.amphenol.agis.util.LotusSendMail;
 
 
 
@@ -49,8 +50,24 @@ public class EmailServiceTest
 			e.printStackTrace();
 		}
 	}
-	public static void main(String[] args)
+	public static void main(String[] args) 
 	{
-		new EmailServiceTest().sendModifyPwdEmail("cww.jerry@gmail.com");
+		//new EmailServiceTest().sendModifyPwdEmail("cww.jerry@gmail.com");
+		LotusSendMail sender;
+		try {
+			sender = new LotusSendMail("test@amphenol-tcs.com");
+			sender.addTo("rocky.cai@amphenol-tcs.com");
+			sender.addCc("cww.jerry@gmail.com");
+			sender.setSubject("test new mail class");
+			sender.setBody("<h1>this is a test mail for mac air</h1>");
+			System.out.println("邮件发送中.........");
+			sender.send();
+			System.out.println("邮件发送成功。。。。。。。");
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("邮件发送失败..........");
+		}
+
 	}
 }
