@@ -69,7 +69,8 @@ public class QuarterlyPMAutoCheckService implements Job {
 						calendar.add(Calendar.DAY_OF_MONTH, 3);
 						Date over3DaysDate= calendar.getTime();
 						//如果PM过期超过三天，需要将报警邮件抄送Site Manager
-						if(over3DaysDate.after(currentDate)){
+						System.out.println("overPM3day: ["+sdf.format(over3DaysDate)+"] pmdate: ["+sdf.format(currentPMDate)+"] compare before :["+over3DaysDate.before(currentDate));
+						if(over3DaysDate.before(currentDate)){
 							String msg="<td>["+qModel.getStr("equipmentID")+"]</td><td> 在 ["+currentPMDayString+" ]的季度PM计划已经过期三天还没有执行 系统中没有发现PM记录 责任人是：</td><td>["+eInfoModel.getStr("owner")+"]</td>";
 							//从待发送的邮件列表中查找是否有该责任的人的邮件地址，如果有则添加一条信息，若干没有则新建一个。
 							if(over3DaysMailMap.get(eInfoModel.getStr("ownerEmail"))==null){
@@ -93,7 +94,7 @@ public class QuarterlyPMAutoCheckService implements Job {
 								overTimeMailMap.get(eInfoModel.getStr("ownerEmail")).add(msg);
 							}
 							
-						}else if(currentPMDate.compareTo(currentDate)>0&&alarmDate.compareTo(currentDate)<=0){
+						}else if(currentPMDate.compareTo(currentDate)>=0&&alarmDate.compareTo(currentDate)<=0){
 							String msg="<td>["+qModel.getStr("equipmentID")+"]</td><td> 将于 ["+currentPMDayString+" ]执行季度PM计划 请及时保养 责任人是：</td><td>["+eInfoModel.getStr("owner")+"]</td>";
 							if(alarmMailMap.get(eInfoModel.getStr("ownerEmail"))==null){
 								List<String> alarmPMList= new ArrayList<String>();
@@ -117,7 +118,7 @@ public class QuarterlyPMAutoCheckService implements Job {
 			for(Iterator<String> it=set.iterator();it.hasNext();){
 				String ownerEmail=it.next();
 				try {
-					sender=new LotusSendMail("YearlyPM_Monitor@amphenol-tcs.com");
+					sender=new LotusSendMail("Quarterly_Monitor@amphenol-tcs.com");
 					sender.addTo(ownerEmail);
 					sender.addCc("Elma.dan@amphenol-tcs.com");
 					sender.addCc(EquipmentPMInfoModel.dao.findSuperviorEmailWithOwnerEmail(ownerEmail));
@@ -125,7 +126,7 @@ public class QuarterlyPMAutoCheckService implements Job {
 					sender.addBcc("rocky.cai@amphenol-tcs.com");
 					StringBuilder sb=new StringBuilder();
 					sb.append("<p>严重警告！！你有过期3天的QuarterlyPM计划未执行，请及时完成！</p>").append("<table>");
-					for(String msg:over3DaysMailMap.get(over3DaysMailMap)){
+					for(String msg:over3DaysMailMap.get(ownerEmail)){
 						System.out.println(msg);
 						sb.append("<tr>").append(msg).append("</tr>");
 					}
@@ -196,7 +197,7 @@ public class QuarterlyPMAutoCheckService implements Job {
 					sender.addCc("Elma.dan@amphenol-tcs.com");
 					sender.addBcc("rocky.cai@amphenol-tcs.com");
 					//这是一份提醒邮件不需要发给主管
-					//sender.addCc(EquipmentPMInfoModel.dao.findSuperviorEmailWithOwnerEmail(ownerEmail));
+					sender.addCc(EquipmentPMInfoModel.dao.findSuperviorEmailWithOwnerEmail(ownerEmail));
 					StringBuilder sb=new StringBuilder();
 					sb.append("<p>提醒你！！你有即将到期的Quarterly PM计划要执行，请及时完成！</p>").append("<table>");
 					for(String msg:alarmMailMap.get(ownerEmail)){

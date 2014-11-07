@@ -88,9 +88,9 @@ public class MonthlyPMAutoCheckService implements Job {
 						//将当前日期经过格式化后的字符串转换为Date对象
 						Date currentDate=sdf.parse(nowDate);
 						//比较PM计划日期和当前日期，如果小于0 则表示该PM计划已经过期，需要发送警告邮件
-						System.out.println("pmDateis:"+sdf.format(pmDate)+" currentDate is:"+sdf.format(currentDate)+"alarmDate is:"+sdf.format(alarmDate)+"compare:"+alarmDate.compareTo(currentDate));
+						System.out.println("pmDateis:["+sdf.format(pmDate)+"] currentDate is: ["+sdf.format(currentDate)+"] alarmDate is: ["+sdf.format(alarmDate)+"]over3day is:["+sdf.format(over3DaysDate)+"]compare:"+alarmDate.compareTo(currentDate));
 						//如果PM过期超过三天，需要将报警邮件抄送Site Manager
-						if(over3DaysDate.after(currentDate)){
+						if(over3DaysDate.before(currentDate)){
 							String msg="<td>["+mScheduleModel.getStr("equipmentID")+"]</td><td> 在 ["+tempPMDayString+" ]的月度PM计划已经过期三天还没有执行 系统中没有发现PM记录 责任人是：</td><td>["+eInfoModel.getStr("owner")+"]</td>";
 							//从待发送的邮件列表中查找是否有该责任的人的邮件地址，如果有则添加一条信息，若干没有则新建一个。
 							if(over3DaysMailMap.get(eInfoModel.getStr("ownerEmail"))==null){
@@ -115,7 +115,7 @@ public class MonthlyPMAutoCheckService implements Job {
 							
 						}
 						//比较设定的报警日期与当前日期，如果报警日期等于或者超过当前日期，需要发送提醒邮件。
-						else if(pmDate.compareTo(currentDate)>0&&alarmDate.compareTo(currentDate)<=0){
+						else if(pmDate.compareTo(currentDate)>=0&&alarmDate.compareTo(currentDate)<=0){
 							String msg="<td>["+mScheduleModel.getStr("equipmentID")+"]</td><td> 将于 ["+tempPMDayString+"]执行月度PM 请按时执行 责任人是：</td><td>["+eInfoModel.getStr("owner")+"]</td>";
 							
 							if(alarmMailMap.get(eInfoModel.getStr("ownerEmail"))==null){
@@ -150,7 +150,7 @@ public class MonthlyPMAutoCheckService implements Job {
 					sender.addBcc("rocky.cai@amphenol-tcs.com");
 					StringBuilder sb=new StringBuilder();
 					sb.append("<p>严重警告！！你有过期3天的MonthlyPM计划未执行，请及时完成！</p>").append("<table>");
-					for(String msg:over3DaysMailMap.get(over3DaysMailMap)){
+					for(String msg:over3DaysMailMap.get(ownerEmail)){
 						System.out.println(msg);
 						sb.append("<tr>").append(msg).append("</tr>");
 					}
@@ -212,7 +212,7 @@ public class MonthlyPMAutoCheckService implements Job {
 					//这是一份提醒邮件不需要发给主管
 					sender.addCc("Elma.zhang@amphenol-tcs.com");
 					sender.addBcc("rocky.cai@amphenol-tcs.com");
-					//sender.addCc(EquipmentPMInfoModel.dao.findSuperviorEmailWithOwnerEmail(ownerEmail));
+					sender.addCc(EquipmentPMInfoModel.dao.findSuperviorEmailWithOwnerEmail(ownerEmail));
 					StringBuilder sb=new StringBuilder();
 					sb.append("<p>提醒你！！你有即将到期的Monthly PM计划要执行，请及时完成！</p>").append("<table>");
 					for(String msg:alarmMailMap.get(ownerEmail)){
