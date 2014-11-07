@@ -39993,3 +39993,15 @@ java.lang.OutOfMemoryError: PermGen space
 	at com.jfinal.server.Scanner.compare(Scanner.java:87)
 	at com.jfinal.server.Scanner.working(Scanner.java:56)
 	at com.jfinal.server.Scanner.access$0(Scanner.java:54)
+
+2014-11-07 20:41:32
+[WARN]-[Thread: main]-[net.sf.ehcache.store.disk.DiskStorageFactory.<init>()]: The index for data file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.data is out of date, probably due to an unclean shutdown. Deleting index file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.index
+
+2014-11-07 21:13:23
+[WARN]-[Thread: main]-[net.sf.ehcache.store.disk.DiskStorageFactory.<init>()]: The index for data file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.data is out of date, probably due to an unclean shutdown. Deleting index file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.index
+
+2014-11-07 21:16:54
+[WARN]-[Thread: qtp350090913-37]-[com.jfinal.core.ActionHandler.handle()]: 403 Forbidden: /pm/createMonthlyPM
+
+2014-11-07 21:56:56
+[WARN]-[Thread: qtp350090913-33]-[com.jfinal.core.ActionHandler.handle()]: 403 Forbidden: /pm/getRecord

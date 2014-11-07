@@ -22,7 +22,7 @@ import com.amphenol.agis.pm.model.MonthlyPMScheduleModel;
 import com.amphenol.agis.util.LotusSendMail;
 /**
  * 月度PM计划检查任务
- * 设定日期提前3天开始报警。
+ * 设定日期提前7天开始报警。
  * @author rocky
  *
  */
@@ -76,7 +76,7 @@ public class MonthlyPMAutoCheckService implements Job {
 						//将当前PM计划日期转换为Calendar
 						calendar.setTime(pmDate);
 						//将当前PM计划日期减去3天，也就是到期前三天开始报警。
-						calendar.add(Calendar.DAY_OF_MONTH, -3);
+						calendar.add(Calendar.DAY_OF_MONTH, -7);
 						//将报警日期转换为 Date 对象。
 						
 						Date alarmDate=calendar.getTime();
@@ -116,7 +116,7 @@ public class MonthlyPMAutoCheckService implements Job {
 						}
 						//比较设定的报警日期与当前日期，如果报警日期等于或者超过当前日期，需要发送提醒邮件。
 						else if(pmDate.compareTo(currentDate)>=0&&alarmDate.compareTo(currentDate)<=0){
-							String msg="<td>["+mScheduleModel.getStr("equipmentID")+"]</td><td> 将于 ["+tempPMDayString+"]执行月度PM 请按时执行 责任人是：</td><td>["+eInfoModel.getStr("owner")+"]</td>";
+							String msg="<td>["+mScheduleModel.getStr("equipmentID")+"]</td><td> 月度PM将于 ["+tempPMDayString+"]到期 请按时执行 责任人是：</td><td>["+eInfoModel.getStr("owner")+"]</td>";
 							
 							if(alarmMailMap.get(eInfoModel.getStr("ownerEmail"))==null){
 								List<String> alarmPMList= new ArrayList<String>();
@@ -144,18 +144,20 @@ public class MonthlyPMAutoCheckService implements Job {
 				try {
 					sender=new LotusSendMail("MonthlyPM_Monitor@amphenol-tcs.com");
 					sender.addTo(ownerEmail);
+					// QA
 					sender.addCc("Elma.dan@amphenol-tcs.com");
 					sender.addCc(EquipmentPMInfoModel.dao.findSuperviorEmailWithOwnerEmail(ownerEmail));
+					//site Manager
 					sender.addCc("Hudson.zhang@amphenol-tcs.com");
 					sender.addBcc("rocky.cai@amphenol-tcs.com");
 					StringBuilder sb=new StringBuilder();
-					sb.append("<p>严重警告！！你有过期3天的MonthlyPM计划未执行，请及时完成！</p>").append("<table>");
+					sb.append("<p>严重警告！！有过期3天的MonthlyPM计划未执行，请及时完成！</p>").append("<table>");
 					for(String msg:over3DaysMailMap.get(ownerEmail)){
 						System.out.println(msg);
 						sb.append("<tr>").append(msg).append("</tr>");
 					}
 					sb.append("</table>");
-					sender.setSubject("严重警告！！！你有MonthlyPM过期超过3天未执行");
+					sender.setSubject("严重警告！！！有MonthlyPM过期超过3天未执行");
 					sender.setBody(sb.toString());
 					System.out.println("["+nowDate+"][MonthlyPM][收件人："+ownerEmail+"]过期3天警告邮件发送中...............");
 					sender.send();
@@ -181,13 +183,13 @@ public class MonthlyPMAutoCheckService implements Job {
 					sender.addCc("Elma.dan@amphenol-tcs.com");
 					sender.addBcc("rocky.cai@amphenol-tcs.com");
 					StringBuilder sb=new StringBuilder();
-					sb.append("<p>警告！！你有过期的Monthly PM计划未执行，请及时完成！</p>").append("<table>");
+					sb.append("<p>警告！！有过期的Monthly PM计划未执行，请及时完成！</p>").append("<table>");
 					for(String msg:overTimeMailMap.get(ownerEmail)){
 						System.out.println(msg);
 						sb.append("<tr>").append(msg).append("</tr>");
 					}
 					sb.append("</table>");
-					sender.setSubject("警告！！！你有MonthlyPM过期未执行");
+					sender.setSubject("警告！！！有MonthlyPM过期未执行");
 					sender.setBody(sb.toString());
 					System.out.println("["+nowDate+"][MonthlyPM][收件人："+ownerEmail+"]警告邮件发送中...............");
 					sender.send();
@@ -211,16 +213,22 @@ public class MonthlyPMAutoCheckService implements Job {
 					sender.addTo(ownerEmail);
 					//这是一份提醒邮件不需要发给主管
 					sender.addCc("Elma.zhang@amphenol-tcs.com");
+					//添加IE部门邮件提醒
+					sender.addCc("barry.cheng@amphenol-tcs.com");
+					sender.addCc("Ivy.ding@amphenol-tcs.com");
+					sender.addCc("Fang-Lin.wu@amphenol-tcs.com");
+					sender.addCc("xi.zheng@amphenol-tcs.com");
+					
 					sender.addBcc("rocky.cai@amphenol-tcs.com");
-					sender.addCc(EquipmentPMInfoModel.dao.findSuperviorEmailWithOwnerEmail(ownerEmail));
+					//sender.addCc(EquipmentPMInfoModel.dao.findSuperviorEmailWithOwnerEmail(ownerEmail));
 					StringBuilder sb=new StringBuilder();
-					sb.append("<p>提醒你！！你有即将到期的Monthly PM计划要执行，请及时完成！</p>").append("<table>");
+					sb.append("<p>提醒你！！有即将到期的Monthly PM计划要执行，请及时完成！</p>").append("<table>");
 					for(String msg:alarmMailMap.get(ownerEmail)){
 						System.out.println(msg);
 						sb.append("<tr>").append(msg).append("</tr>");
 					}
 					sb.append("</table>");
-					sender.setSubject("提醒！！！你有MonthlyPM要到期");
+					sender.setSubject("提醒！！！有MonthlyPM要到期");
 					sender.setBody(sb.toString());
 					System.out.println("["+nowDate+"][MonthlyPM][收件人："+ownerEmail+"]提醒邮件发送中...............");
 					sender.send();

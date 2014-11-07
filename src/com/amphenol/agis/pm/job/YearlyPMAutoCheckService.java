@@ -60,8 +60,8 @@ public class YearlyPMAutoCheckService implements Job {
 				try {
 					//将PMday字符串转换为Date 格式
 					Date currentPMDate=sdf.parse(currentPMDayString);
-					//当前日期减去三天，获得报警日期
-					calendar.add(Calendar.DAY_OF_MONTH, -3);
+					//当前日期减去7天，获得报警日期
+					calendar.add(Calendar.DAY_OF_MONTH, -7);
 					Date alarmDate=calendar.getTime();
 					
 					calendar.setTime(currentPMDate);
@@ -99,7 +99,7 @@ public class YearlyPMAutoCheckService implements Job {
 						}
 						
 					}else if(currentPMDate.compareTo(currentDate)>=0&&alarmDate.compareTo(currentDate)<=0){
-						String msg="<td>["+yModel.getStr("equipmentID")+"]</td><td> 将于 ["+currentPMDayString+" ]执行年度PM计划 请及时保养 责任人是：</td><td>["+eInfoModel.getStr("owner")+"]</td>";
+						String msg="<td>["+yModel.getStr("equipmentID")+"]</td><td> 年度PM将于 ["+currentPMDayString+" ]到期 请及时保养 责任人是：</td><td>["+eInfoModel.getStr("owner")+"]</td>";
 						if(alarmMailMap.get(eInfoModel.getStr("ownerEmail"))==null){
 							List<String> alarmPMList= new ArrayList<String>();
 							alarmPMList.add(msg);
@@ -128,13 +128,13 @@ public class YearlyPMAutoCheckService implements Job {
 							sender.addCc("Hudson.zhang@amphenol-tcs.com");
 							sender.addBcc("rocky.cai@amphenol-tcs.com");
 							StringBuilder sb=new StringBuilder();
-							sb.append("<p>严重警告！！你有过期3天的YearlyPM计划未执行，请及时完成！</p>").append("<table>");
+							sb.append("<p>严重警告！！有过期3天的YearlyPM计划未执行，请及时完成！</p>").append("<table>");
 							for(String msg:over3DaysMailMap.get(ownerEmail)){
 								System.out.println(msg);
 								sb.append("<tr>").append(msg).append("</tr>");
 							}
 							sb.append("</table>");
-							sender.setSubject("严重警告！！！你有YearlyPM过期超过3天未执行");
+							sender.setSubject("严重警告！！！有YearlyPM过期超过3天未执行");
 							sender.setBody(sb.toString());
 							System.out.println("["+nowDate+"][YearlyPM][收件人："+ownerEmail+"]过期3天警告邮件发送中...............");
 							sender.send();
@@ -162,13 +162,13 @@ public class YearlyPMAutoCheckService implements Job {
 							sender.addCc(EquipmentPMInfoModel.dao.findSuperviorEmailWithOwnerEmail(ownerEmail));
 							sender.addBcc("rocky.cai@amphenol-tcs.com");
 							StringBuilder sb=new StringBuilder();
-							sb.append("<p>警告！！你有过期的YearlyPM计划未执行，请及时完成！</p>").append("<table>");
+							sb.append("<p>警告！！有过期的YearlyPM计划未执行，请及时完成！</p>").append("<table>");
 							for(String msg:overTimeMailMap.get(ownerEmail)){
 								System.out.println(msg);
 								sb.append("<tr>").append(msg).append("</tr>");
 							}
 							sb.append("</table>");
-							sender.setSubject("警告！！！你有YearlyPM过期未执行");
+							sender.setSubject("警告！！！有YearlyPM过期未执行");
 							sender.setBody(sb.toString());
 							System.out.println("["+nowDate+"][YearlyPM][收件人："+ownerEmail+"]警告邮件发送中...............");
 							sender.send();
@@ -196,16 +196,21 @@ public class YearlyPMAutoCheckService implements Job {
 							sender.addTo(ownerEmail);
 							//这是一份提醒邮件不需要发给主管
 							sender.addCc("Elma.dan@amphenol-tcs.com");
-							sender.addCc(EquipmentPMInfoModel.dao.findSuperviorEmailWithOwnerEmail(ownerEmail));
+							//添加IE部门邮件提醒
+							sender.addCc("barry.cheng@amphenol-tcs.com");
+							sender.addCc("Ivy.ding@amphenol-tcs.com");
+							sender.addCc("Fang-Lin.wu@amphenol-tcs.com");
+							sender.addCc("xi.zheng@amphenol-tcs.com");
+							//sender.addCc(EquipmentPMInfoModel.dao.findSuperviorEmailWithOwnerEmail(ownerEmail));
 							sender.addBcc("rocky.cai@amphenol-tcs.com");
 							StringBuilder sb=new StringBuilder();
-							sb.append("<p>提醒你！！你有即将到期的Yearly PM计划要执行，请及时完成！</p>").append("<table>");
+							sb.append("<p>提醒你！！有即将到期的Yearly PM计划要执行，请及时完成！</p>").append("<table>");
 							for(String msg:alarmMailMap.get(ownerEmail)){
 								System.out.println(msg);
 								sb.append("<tr>").append(msg).append("</tr>");
 							}
 							sb.append("</table>");
-							sender.setSubject("提醒！！！你有YearlyPM要到期");
+							sender.setSubject("提醒！！！有YearlyPM要到期");
 							sender.setBody(sb.toString());
 							System.out.println("["+nowDate+"][YearlyPM][收件人："+ownerEmail+"]提醒邮件发送中...............");
 							sender.send();
