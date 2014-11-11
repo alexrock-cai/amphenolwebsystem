@@ -62,6 +62,7 @@ public class MonthlyPMAutoCheckService implements Job {
 		for(int i=0;i<mList.size();i++){
 			MonthlyPMScheduleModel mScheduleModel=mList.get(i);
 			EquipmentPMInfoModel eInfoModel=EquipmentPMInfoModel.dao.findByEquipmentID(mScheduleModel.getStr("equipmentID"));
+			System.out.println("EquipmentPMInfo:"+eInfoModel.toJson());
 			//遍历一个设备的当年所有月份的PM计划
 			for(int m=0;m<12;m++){
 				//判断PM日期是否为空，如果则跳过。

@@ -55,6 +55,7 @@ public class YearlyPMAutoCheckService implements Job {
 			YearlyPMScheduleModel yModel=yList.get(i);
 			if(yModel.getStr("yearPMDay")==null) continue;
 			EquipmentPMInfoModel eInfoModel=EquipmentPMInfoModel.dao.findByEquipmentID(yModel.getStr("equipmentID"));
+			System.out.println("EquipmentPMInfo:"+eInfoModel.toJson());
 			if(!yModel.getBoolean("isYearPM")){
 				String currentPMDayString=yModel.getStr("year")+"-"+yModel.getStr("yearPMDay");
 				try {
@@ -114,7 +115,7 @@ public class YearlyPMAutoCheckService implements Job {
 				}
 			}
 		}//遍历结束
-		System.out.println("Yearly PM Auto Check start........");
+		System.out.println("Yearly PM Auto Check stop........");
 		//发送邮件
 				Set<String> set=over3DaysMailMap.keySet();
 				if(!set.isEmpty()){
