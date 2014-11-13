@@ -61,8 +61,11 @@ public class YearlyPMAutoCheckService implements Job {
 				try {
 					//将PMday字符串转换为Date 格式
 					Date currentPMDate=sdf.parse(currentPMDayString);
-					//当前日期减去7天，获得报警日期
+					//将当前PM计划日期转换为Calendar
+					calendar.setTime(currentPMDate);
+					//将当前PM计划日期减去7天，也就是到期前7天开始报警。
 					calendar.add(Calendar.DAY_OF_MONTH, -7);
+					//将报警日期转换为 Date 对象。
 					Date alarmDate=calendar.getTime();
 					
 					calendar.setTime(currentPMDate);
@@ -72,7 +75,7 @@ public class YearlyPMAutoCheckService implements Job {
 					//获取当前日期
 					Date currentDate = sdf.parse(nowDate);
 					//如果PM过期超过三天，需要将报警邮件抄送Site Manager
-					System.out.println("overPM3day:["+sdf.format(over3DaysDate)+"]pmdate: ["+sdf.format(currentPMDate)+"] compare before: ["+over3DaysDate.before(currentDate));
+					System.out.println("overPM3day:["+sdf.format(over3DaysDate)+"]pmdate: ["+sdf.format(currentPMDate)+"] alarmDate is :["+sdf.format(alarmDate)+"] over3days compare before: ["+over3DaysDate.before(currentDate));
 					if(over3DaysDate.before(currentDate)){
 						String msg="<td>["+yModel.getStr("equipmentID")+"]</td><td> 在 ["+currentPMDayString+" ]的年度PM计划已经过期三天还没有执行 系统中没有发现PM记录 责任人是：</td><td>["+eInfoModel.getStr("owner")+"]</td>";
 						//从待发送的邮件列表中查找是否有该责任的人的邮件地址，如果有则添加一条信息，若干没有则新建一个。
