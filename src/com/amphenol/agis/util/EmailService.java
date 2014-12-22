@@ -36,7 +36,7 @@ public class EmailService
 		try
 		{
 			//Eml eml=new Eml("smtp.126.com", "amphenolmaster@126.com", "amphenolmaster@126.com", "test123");
-			LotusSendMail  eml = new LotusSendMail("E///_EEPROM_ShipCheck@amphenol-tcs.com");
+			LotusSendMail  eml = new LotusSendMail("Ericsson_EEPROM_ShipCheck@amphenol-tcs.com");
 			eml.addTo("rocky.cai@amphenol-tcs.com");
 			eml.addTo("chris.zhang@amphenol-tcs.com");
 			eml.addTo("kevin.ding@amphenol-tcs.com");
@@ -78,7 +78,7 @@ public class EmailService
 		try
 		{
 			//Eml eml=new Eml("smtp.126.com", "amphenolmaster@126.com", "amphenolmaster@126.com", "test123");
-			LotusSendMail  eml = new LotusSendMail("E///_EEPROM_PkgCheck@amphenol-tcs.com");
+			LotusSendMail  eml = new LotusSendMail("Ericsson_EEPROM_PkgCheck@amphenol-tcs.com");
 			eml.addTo("rocky.cai@amphenol-tcs.com");
 			eml.addTo("chris.zhang@amphenol-tcs.com");
 			eml.addTo("kevin.ding@amphenol-tcs.com");
