@@ -35,15 +35,18 @@ public class EmailService
 	{
 		try
 		{
-			Eml eml=new Eml("smtp.126.com", "amphenolmaster@126.com", "amphenolmaster@126.com", "test123");
+			//Eml eml=new Eml("smtp.126.com", "amphenolmaster@126.com", "amphenolmaster@126.com", "test123");
+			LotusSendMail  eml = new LotusSendMail("E///_EEPROM_ShipCheck@amphenol-tcs.com");
 			eml.addTo("rocky.cai@amphenol-tcs.com");
 			eml.addTo("chris.zhang@amphenol-tcs.com");
 			eml.addTo("kevin.ding@amphenol-tcs.com");
 			eml.addTo("John.tang@amphenol-tcs.com");
 			eml.addTo("susan.fan@amphenol-tcs.com");
+			eml.addTo("zhen.ma@amphenol-tcs.com");
+			eml.addTo("Cai-Hong.li@amphenol-tcs.com");
 			eml.addCc("CZBP_OQA@amphenol-tcs.com");
 			eml.addCc("guotai.yu@amphenol-tcs.com");
-			eml.setSubject("EEPROM 系统提示信息");
+			eml.setSubject("Ericsson EEPROM Shipping Scan 系统提示信息");
 			
 			StringBuilder sb=new StringBuilder();
 			sb.append("<p>没有经过EEPROM的清单</p>");
@@ -74,13 +77,18 @@ public class EmailService
 	{
 		try
 		{
-			Eml eml=new Eml("smtp.126.com", "amphenolmaster@126.com", "amphenolmaster@126.com", "test123");
+			//Eml eml=new Eml("smtp.126.com", "amphenolmaster@126.com", "amphenolmaster@126.com", "test123");
+			LotusSendMail  eml = new LotusSendMail("E///_EEPROM_PkgCheck@amphenol-tcs.com");
 			eml.addTo("rocky.cai@amphenol-tcs.com");
 			eml.addTo("chris.zhang@amphenol-tcs.com");
 			eml.addTo("kevin.ding@amphenol-tcs.com");
 			eml.addTo("John.tang@amphenol-tcs.com");
 			eml.addTo("susan.fan@amphenol-tcs.com");
-			eml.setSubject("EEPROM 系统提示信息");
+			eml.addTo("zhen.ma@amphenol-tcs.com");
+			eml.addTo("Cai-Hong.li@amphenol-tcs.com");
+			eml.addCc("CZBP_OQA@amphenol-tcs.com");
+			eml.addCc("guotai.yu@amphenol-tcs.com");
+			eml.setSubject("Ercisson EEPROM Package Scan 系统提示信息");
 			
 			StringBuilder sb=new StringBuilder();
 			sb.append("<p>没有经过EEPROM的清单</p>");
