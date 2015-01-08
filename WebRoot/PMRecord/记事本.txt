@@ -1,0 +1,19 @@
+vmware
+
+win7  rocky/cair  !rockya8698 r0ckya8698
+win2008 server    rocky/administrator @r0ckya8698
+
+https://fs01.amphenol-tcs.com/LotusQuickr/ftp/Main.nsf/h_Toc/4df38292d748069d0525670800167212/?OpenDocument#{type=0&unid=E4A63245ECDCF0C885257CF300240F7A}
+
+			'gridx/modules/VirtualVScroller',
+			'gridx/modules/ColumnResizer',
+			'gridx/modules/extendedSelect/Row',
+			'gridx/modules/SingleSort',
+			'gridx/modules/RowHeader',
+			'gridx/modules/IndirectSelect',
+			'gridx/modules/Filter',
+			'gridx/modules/filter/FilterBar',
+			'gridx/modules/Pagination',
+			'gridx/modules/pagination/PaginationBar',
+			'gridx/modules/CellWidget',
+        	'gridx/modules/Edit', 	

@@ -97,44 +97,44 @@ public class ExcelReaderTest
 		}
 	}
 
-//	public static void main(String[] args)
-//	{
-//		InputStream inputStream = null;
-//		try
-//		{
-//			//读取文件流
-//			String str="5630889";
-//			inputStream=new FileInputStream(new File("/Users/rocky/Desktop/kvb118/"+str+".xlsx"));
-//			readxlsx(inputStream);
-//		}
-//		catch (FileNotFoundException e)
-//		{
-//			e.printStackTrace();
-//			System.out.println("文件未找到");
-//		}
-//		catch(InvalidFormatException e)
-//		{
-//			e.printStackTrace();
-//			System.out.println("文件格式不支持");
-//		}
-//		catch(IOException e)
-//		{
-//			e.printStackTrace();
-//			System.out.println("IO exception");
-//		}
-//		finally
-//		{
-//			try{
-//				if(inputStream !=null)
-//				{
-//					inputStream.close();
-//				}
-//			}
-//			catch(IOException e)
-//			{
-//				e.printStackTrace();
-//				System.out.println("file close error");
-//			}
-//		}
-//	}
+	public static void main(String[] args)
+	{
+		InputStream inputStream = null;
+		try
+		{
+			//读取文件流
+			String str="5630889";
+			inputStream=new FileInputStream(new File("/Users/rocky/Desktop/kvb118/"+str+".xlsx"));
+			readxlsx(inputStream);
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+			System.out.println("文件未找到");
+		}
+		catch(InvalidFormatException e)
+		{
+			e.printStackTrace();
+			System.out.println("文件格式不支持");
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+			System.out.println("IO exception");
+		}
+		finally
+		{
+			try{
+				if(inputStream !=null)
+				{
+					inputStream.close();
+				}
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+				System.out.println("file close error");
+			}
+		}
+	}
 }

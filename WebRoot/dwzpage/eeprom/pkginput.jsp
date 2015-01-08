@@ -57,7 +57,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${pkglist}" var="pkg">
+		<c:forEach items="${pkglist}" var="pkg" >
 			<tr target="pkg_id" rel="${pkg.id }">
 				<td><input name="ids" value="${pkg.id }" type="checkbox"></td>
 				<td>${pkg.id }</td>
@@ -70,7 +70,7 @@
 				<td>${pkg.hasprogram eq null?"未检查":pkg.hasprogram}</td>
 				<td>${pkg.hasverify eq null?"未检查":pkg.hasverify}</td>
 				<td>${pkg.hastagin eq null?"未检查":pkg.hastagin}</td>
-				<shiro:hasAnyRoles name="root">
+				
 				<td>
 					<a title="删除" target="ajaxTodo" href="${CONTEXT_PATH}/eeprom/deletePkgInput?id=${pkg.id }" class="btnDel" >删除</a>
 				</td>

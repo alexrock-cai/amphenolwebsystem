@@ -30,16 +30,16 @@ public class YearlyPMAutoCheckService implements Job {
 		/*
 		 * 任务运行发送提醒邮件
 		 */
-		try {
-			sender=new LotusSendMail("PM_AutoCheckJob@amphenol-tcs.com");
-			sender.addTo("rocky.cai@amphenol-tcs.com");
-			sender.setSubject("YearlyPM AutoCheck Start");
-			sender.setBody("["+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"] Yearly PM AutoCheck Start.");
-			sender.send();
-		} catch (MessagingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			sender=new LotusSendMail("PM_AutoCheckJob@amphenol-tcs.com");
+//			sender.addTo("rocky.cai@amphenol-tcs.com");
+//			sender.setSubject("YearlyPM AutoCheck Start");
+//			sender.setBody("["+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"] Yearly PM AutoCheck Start.");
+//			sender.send();
+//		} catch (MessagingException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		System.out.println("Yearly PM Auto Check start........");
 		Map<String, List<String>> overTimeMailMap=new HashMap<String, List<String>>();
 		Map<String, List<String>> alarmMailMap=new HashMap<String, List<String>>();
@@ -54,6 +54,7 @@ public class YearlyPMAutoCheckService implements Job {
 			
 			YearlyPMScheduleModel yModel=yList.get(i);
 			if(yModel.getStr("yearPMDay")==null) continue;
+			System.out.println("********"+yModel.getStr("equipmentID")+"********");
 			EquipmentPMInfoModel eInfoModel=EquipmentPMInfoModel.dao.findByEquipmentID(yModel.getStr("equipmentID"));
 			System.out.println("EquipmentPMInfo:"+eInfoModel.toJson());
 			if(!yModel.getBoolean("isYearPM")){
