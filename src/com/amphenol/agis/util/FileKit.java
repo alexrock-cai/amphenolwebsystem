@@ -121,16 +121,17 @@ public class FileKit {
 	 * @param oldFile
 	 * @param newName
 	 */
-	public static void renameFile(File oldFile,String newName){
+	public static File renameFile(File oldFile,String newName){
 		//检查新的文件名是否带后缀名
+		File newFile;
 		if(newName.lastIndexOf(".")>0){
-			File newFile=new File(oldFile.getParent()+File.separator+newName);
+			newFile=new File(oldFile.getParent()+File.separator+newName);
 			oldFile.renameTo(newFile);
 		}else{
-			File newFile=new File(oldFile.getParent()+File.separator+newName+getFileTypeString(oldFile));
+			newFile=new File(oldFile.getParent()+File.separator+newName+getFileTypeString(oldFile));
 			oldFile.renameTo(newFile);
 		}
-		
+		return newFile;
 	}
 	
 	/**

@@ -12,6 +12,7 @@ import com.amphenol.agis.pm.model.MonthlyPMScheduleModel;
 import com.amphenol.agis.pm.model.PMRecordModel;
 import com.amphenol.agis.pm.model.QuarterlyPMScheduleModel;
 import com.amphenol.agis.pm.model.YearlyPMScheduleModel;
+import com.amphenol.agis.util.FileKit;
 import com.amphenol.agis.util.FileUtil;
 import com.amphenol.agis.util.LotusSendMail;
 import com.jfinal.aop.Before;
@@ -534,8 +535,12 @@ public class PMController extends Controller {
 			String filename=file.getName();
 			SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String path=PathKit.getWebRootPath()+File.separator+"PMRecord";
+			String newFileName = getPara("equipmentID")+"_"+getPara("PMType")+"_"+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			//重命名文件
+			File newFile = FileKit.renameFile(file, newFileName);
+			System.out.println(newFile.getName());
 			System.out.println(file.getAbsolutePath()+"  "+filename);
-			FileUtil.copyFile(file, path);
+			FileUtil.copyFile(newFile, path);
 			//file.delete();
 			recordModel.set("equipmentID", getPara("equipmentID"));
 			recordModel.set("PMType", getPara("PMType"));
@@ -543,7 +548,7 @@ public class PMController extends Controller {
 			recordModel.set("PMOperator",getPara("PMOperator"));
 			recordModel.set("uploadBy",getPara("uploadBy"));
 			recordModel.set("uploadTime", f.format(new Date()));
-			recordModel.set("file", filename);
+			recordModel.set("file", newFile.getName());
 			try {
 				System.out.println("start save");
 				recordModel.save();
