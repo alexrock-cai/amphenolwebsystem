@@ -149,7 +149,7 @@ $(function(){
 								</tr>
 								<tr>
 									<td>认证技能 </td>
-									<td><a href="${CONTEXT_PATH}/wi/myWi?pageNum=1&numPerPage=20" target="navTab" rel="wi_list" title="我的WI">${user.getResourceNames() }</a></td>
+									<td height="50%"><a href="${CONTEXT_PATH}/wi/myWi?pageNum=1&numPerPage=20" target="navTab" rel="wi_list" title="我的WI">${user.getResourceNames() }</a></td>
 								</tr>
 								<tr>
 									<td colspan="2" align="center"><a href="${CONTEXT_PATH}/wi/myWi?pageNum=1&numPerPage=20" target="navTab" rel="wi_list">我的WI</a></td>

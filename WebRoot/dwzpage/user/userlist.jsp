@@ -40,7 +40,7 @@
 			<li class="line">line</li>
 			<li><a class="add" href="${CONTEXT_PATH}/main/initUser" target="ajaxTodo"  title="批量创建用户"><span>批量创建用户</span></a></li>
 			</shiro:hasRole>
-			<li><a class="add" href="${CONTEXT_PATH}/user/authenticationDialog?id={sid_user}" target="dialog" warn="请选择一个用户" rel="auth_user"><span>认证作业员</span></a></li>
+			<li><a class="add" href="${CONTEXT_PATH}/user/authenticationDialog?id={sid_user}" target="navTab" warn="请选择一个用户" rel="auth_user"><span>认证作业员</span></a></li>
 		</ul>
 	</div>
 	</shiro:hasAnyRoles>

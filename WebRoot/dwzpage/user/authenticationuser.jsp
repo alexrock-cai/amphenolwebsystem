@@ -2,7 +2,7 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="pageContent">
-	<form method="post" action="${CONTEXT_PATH}/user/saveAuthentica" class="pageForm required-validate"  onsubmit="return validateCallback(this, dialogAjaxDone);">
+	<form method="post" action="${CONTEXT_PATH}/user/saveAuthentica" class="pageForm required-validate"  onsubmit="return validateCallback(this, navTabAjaxDone);">
 		<div class="pageFormContent" layoutH="56">
 			<div style=" float:left; display:block; margin:10px; overflow:auto; width:200px; height:200px; overflow:auto; border:solid 1px #CCC; line-height:21px; background:#FFF;">
 			<p>工号：${u.username }</p>

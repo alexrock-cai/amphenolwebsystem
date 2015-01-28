@@ -134,4 +134,14 @@ public class RoleModel extends Model<RoleModel>
 		String sql ="select * from sys_role where role like '%WIUser%'";
 		return find(sql);
 	}
+	
+	/**
+	 * 根据关键字查询WI权限
+	 * @param key
+	 * @return
+	 */
+	public List<RoleModel> findWIRoleByString(String key){
+		String sql = "select * from (select * from sys_role where role like '%WIUser%') as a where role like '%"+key+"%'";
+		return find(sql);
+	}
 }

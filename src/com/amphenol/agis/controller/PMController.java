@@ -494,7 +494,8 @@ public class PMController extends Controller {
 			render("/bs-admin-bcore/pages/pm/newQuarterlyPMRecord.jsp");
 		}else if (pmtype.equals("YearlyPM")) {
 			List<String> years=YearlyPMScheduleModel.dao.findYearlyScheduleYears();
-			List<String> eIDs=YearlyPMScheduleModel.dao.findEquipmentIDsByYear(years.get(0));
+			//此处Bug 临时修改为获取第二个值，此处的值需要特殊处理
+			List<String> eIDs=YearlyPMScheduleModel.dao.findEquipmentIDsByYear(years.get(1));
 			setAttr("years",years);
 			setAttr("yeIDs", eIDs);
 			render("/bs-admin-bcore/pages/pm/newYearlyPMRecord.jsp");

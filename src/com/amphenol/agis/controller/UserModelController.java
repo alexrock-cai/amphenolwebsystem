@@ -381,7 +381,31 @@ public class UserModelController extends Controller
 	public void authenticationDialog()
 	{
 		UserModel user= UserModel.dao.findById(getParaToLong("id"));
-		List<RoleModel> roles= RoleModel.dao.findAllWIRole();
+		//List<RoleModel> roles= RoleModel.dao.findAllWIRole();
+		setAttr("u",user);
+		//setAttr("roles",roles);
+		//setAttr("roleids",user.getRoleIdList());
+		//render("/dwzpage/user/authenticationuser.jsp");
+		render("/dwzpage/user/authpartnumber.jsp");
+	}
+	
+	/*
+	 * 新增根据产品认证
+	 */
+	@RequiresRoles(value={"root","admin_leader","admin_widatauser"},logical=Logical.OR)
+	public void findAuthPartNumber(){
+		setAttr("statusCode", "200");
+		setAttr("callbackType","forward");
+		setAttr("forwardUrl","/user/openAuthNavTab?id="+getParaToLong("id")+"&authPartNumber="+getPara("authPartNumber"));
+		
+		renderJson();
+	}
+	
+	@RequiresRoles(value={"root","admin_leader","admin_widatauser"},logical=Logical.OR)
+	public void openAuthNavTab()
+	{
+		UserModel user = UserModel.dao.findById(getParaToLong("id"));
+		List<RoleModel> roles = RoleModel.dao.findWIRoleByString(getPara("authPartNumber"));
 		setAttr("u",user);
 		setAttr("roles",roles);
 		setAttr("roleids",user.getRoleIdList());

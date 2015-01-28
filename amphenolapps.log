@@ -41908,3 +41908,6 @@ Caused by: java.lang.NullPointerException
 	at com.amphenol.agis.pm.job.YearlyPMAutoCheckService.execute(YearlyPMAutoCheckService.java:59)
 	at org.quartz.core.JobRunShell.run(JobRunShell.java:216)
 	... 1 more
+
+2015-01-08 15:29:09
+[WARN]-[Thread: main]-[net.sf.ehcache.store.disk.DiskStorageFactory.<init>()]: The index for data file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.data is out of date, probably due to an unclean shutdown. Deleting index file /var/folders/2p/t2r_k67j5293dnqvvd00k_g80000gn/T/shiro-ehcache/shiro-activeSessionCache.index
