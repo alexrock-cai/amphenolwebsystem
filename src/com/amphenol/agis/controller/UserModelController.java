@@ -237,7 +237,7 @@ public class UserModelController extends Controller
 	/**
 	 * 站别设置
 	 */
-	@RequiresRoles(value={"root","admin_leader","admin_widatauser"},logical=Logical.OR)
+	@RequiresRoles(value={"root","admin_leader","admin_widatauser","WICert:supervisor","WICert:test","WICert:atb"},logical=Logical.OR)
 	public void stationView()
 	{
 		
@@ -249,7 +249,7 @@ public class UserModelController extends Controller
 		
 		render("/dwzpage/user/stationlist.jsp");
 	}
-	@RequiresRoles(value={"root","admin_leader","admin_widatauser"},logical=Logical.OR)
+	@RequiresRoles(value={"root","admin_leader","admin_widatauser","WICert:supervisor","WICert:test","WICert:atb"},logical=Logical.OR)
 	public void openStationForm()
 	{
 		if(getPara("id")==null)
@@ -263,7 +263,7 @@ public class UserModelController extends Controller
 		}
 	}
 	@Before(Tx.class)
-	@RequiresRoles(value={"root","admin_leader","admin_widatauser"},logical=Logical.OR)
+	@RequiresRoles(value={"root","admin_leader","admin_widatauser","WICert:supervisor","WICert:test","WICert:atb"},logical=Logical.OR)
 	public void stationCreate()
 	{
 		StationModel station = new StationModel();
@@ -381,12 +381,12 @@ public class UserModelController extends Controller
 	public void authenticationDialog()
 	{
 		UserModel user= UserModel.dao.findById(getParaToLong("id"));
-		//List<RoleModel> roles= RoleModel.dao.findAllWIRole();
+		List<RoleModel> roles= RoleModel.dao.findAllWIRole();
 		setAttr("u",user);
-		//setAttr("roles",roles);
-		//setAttr("roleids",user.getRoleIdList());
-		//render("/dwzpage/user/authenticationuser.jsp");
-		render("/dwzpage/user/authpartnumber.jsp");
+		setAttr("roles",roles);
+		setAttr("roleids",user.getRoleIdList());
+		render("/dwzpage/user/authenticationuser.jsp");
+		//render("/dwzpage/user/authpartnumber.jsp");
 	}
 	
 	/*
@@ -412,6 +412,12 @@ public class UserModelController extends Controller
 		render("/dwzpage/user/authenticationuser.jsp");
 		
 	}
+	
+	public void openNewAuthWI(){
+		
+	}
+	
+	
 	@RequiresRoles(value={"root","admin_leader","admin_widatauser"},logical=Logical.OR)
 	public void saveAuthentica()
 	{

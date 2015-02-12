@@ -14,6 +14,7 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import com.amphenol.UrlConfig;
 import com.amphenol.agis.model.DCCListModel;
 import com.amphenol.agis.model.StationModel;
+import com.amphenol.agis.model.UserDccCertModel;
 
 import com.amphenol.agis.util.FileScanner;
 import com.amphenol.agis.util.FileUtil;
@@ -210,6 +211,18 @@ public class DCCFileController extends Controller
 			{
 				
 				DCCListModel.dao.deleteById(getParaToLong("id"));
+				
+				//2015-2-1 新增加 删除DccList记录同事更新WI认证表，将对应的记录置为失效。
+				List<UserDccCertModel> dccCertModels=UserDccCertModel.dao.findByDccId(getParaToLong("id"));
+				System.out.println("DCC版本更新：ID【 "+getParaToLong("id")+"】,用户认证取消："+dccCertModels);
+				if(dccCertModels!=null){
+					
+					for(UserDccCertModel userDccCertModel : dccCertModels){
+						userDccCertModel.delete();
+					}
+				}
+				
+				//2015-2-1 新增代码结束
 				setAttr("statusCode", "200");
 				setAttr("message","删除成功");
 				setAttr("navTabId","wi_publish");
@@ -296,6 +309,7 @@ public class DCCFileController extends Controller
 				dcc.set("filename", filename);
 				dcc.set("lastmodify",f.format(new Date()));
 				dcc.set("operate","<a href=\""+UrlConfig.WI_PATH+File.separator+getPara("customer")+File.separator+filename+"\" target=\"_brank\">"+"Open"+"</a>");
+				dcc.set("uploadtime", f.format(new Date()));
 				if(dcc.save())
 				{
 					setAttr("statusCode", "200");

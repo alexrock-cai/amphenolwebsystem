@@ -3,15 +3,16 @@ package com.amphenol.agis.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.subject.Subject;
 
 import com.amphenol.UrlConfig;
+import com.amphenol.agis.model.StationModel;
 import com.amphenol.agis.model.UserModel;
-import com.amphenol.agis.pojo.TestData;
 import com.amphenol.agis.util.BatchCreateUser;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
@@ -22,6 +23,41 @@ public class CommonController extends Controller
 	@RequiresAuthentication
 	public void index()
 	{
+		Subject currentUser = SecurityUtils.getSubject();
+		List<StationModel> stationList=StationModel.dao.findAll();
+		List<StationModel> permittedStations = new ArrayList<StationModel>();
+		String temp;
+		
+		if(currentUser.isPermitted("wicert:supervisor")){
+			for(int i=0;i<stationList.size();i++){
+				temp = stationList.get(i).getStr("station");
+				if(temp.equalsIgnoreCase("ATB")||temp.equalsIgnoreCase("TOG")||temp.equalsIgnoreCase("TEST")||temp.equalsIgnoreCase("TST")){
+					continue;
+				}
+				permittedStations.add(stationList.get(i));
+			}
+		}
+		if(currentUser.isPermitted("wicert:test")){
+			
+			for(int i=0;i<stationList.size();i++){
+				temp = stationList.get(i).getStr("station");
+				if(temp.equalsIgnoreCase("TEST") || temp.equalsIgnoreCase("TST")){
+					permittedStations.add(stationList.get(i));
+				}
+			}
+			
+		}
+		if(currentUser.isPermitted("wicert:atb")){
+			
+			for(int i=0;i<stationList.size();i++){
+				temp = stationList.get(i).getStr("station");
+				if(temp.equalsIgnoreCase("ATB") || temp.equalsIgnoreCase("TOG")){
+					permittedStations.add(stationList.get(i));
+				}
+			}
+			
+		}
+		setAttr("station", permittedStations);
 		render(UrlConfig.INDEX_URL);
 	}
 	

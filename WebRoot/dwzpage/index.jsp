@@ -73,6 +73,8 @@
 -->
 <script src="/js/dwz/dwz.regional.zh.js" type="text/javascript"></script>
 
+<script src="/js/pdfobject.js"></script>
+
 <script type="text/javascript">
 $(function(){
 	DWZ.init("${CONTEXT_PATH}/dwzpage/dwz.frag.xml", {
@@ -152,10 +154,15 @@ $(function(){
 									<td height="50%"><a href="${CONTEXT_PATH}/wi/myWi?pageNum=1&numPerPage=20" target="navTab" rel="wi_list" title="我的WI">${user.getResourceNames() }</a></td>
 								</tr>
 								<tr>
-									<td colspan="2" align="center"><a href="${CONTEXT_PATH}/wi/myWi?pageNum=1&numPerPage=20" target="navTab" rel="wi_list">我的WI</a></td>
+									<td colspan="2" align="center"><a href="${CONTEXT_PATH}/wi/myWi?pageNum=1&numPerPage=20" target="navTab" rel="wi_list">旧版我的WI</a></td>
+								</tr>
+								<tr>
+									<td colspan="2" align="center"><a href="${CONTEXT_PATH}/wi/newMyWi?pageNum=1&numPerPage=20" target="navTab" rel="wi_list">新版认证我的WI</a></td>
 								</tr>
 							</table>
+							
 						
+
 						<!-- 功能菜单
 						<ul class="tree treeFolder collapse">
 							<li><a href="${CONTEXT_PATH}/dwzpage/main.html" target="navTab" rel="main" >主页</a></li>
@@ -163,18 +170,22 @@ $(function(){
 						</ul>
 						 -->
 					</div>
-					<shiro:hasAnyRoles name="root,admin_leader">
+					<shiro:hasAnyRoles name="root,admin_leader,WICert:supervisor,WICert:test,WICert:atb">
 					<div class="accordionHeader">
 						<h2><span>Folder</span>用户管理</h2>
 					</div>
 					<div class="accordionContent">
 						<ul class="tree">
+							<shiro:hasAnyRoles name="root,admin_leader">
 							<li><a href="${CONTEXT_PATH}/user/userView?pageNum=1&numPerPage=20" target="navTab" rel="user_list" >用户列表</a></li>
+							</shiro:hasAnyRoles>
 							<shiro:hasRole name="root">
 								<li><a href="${CONTEXT_PATH}/role/roleView?pageNum=1&numPerPage=20" target="navTab" rel="role_list" >角色列表</a></li>
 								<li><a href="${CONTEXT_PATH}/resource/resView?pageNum=1&numPerPage=20" target="navTab" rel="res_list" >权限列表</a></li>
 							</shiro:hasRole>
 							<li><a href="${CONTEXT_PATH}/user/stationView?pageNum=1&numPerPage=20" target="navTab" rel="station_list" >站别列表</a></li>
+							<li><a href="${CONTEXT_PATH}/userDccCert/openDccUserCertList?pageNum=1&numPerPage=20" target="navTab" rel="dccUserCert_list" >已认证用户列表</a></li>
+							<li><a href="${CONTEXT_PATH}/userDccCert/openNewDccUserCertList?pageNum=1&numPerPage=20" target="navTab" rel="newDccUserCert_list" >WI认证</a></li>
 						</ul>
 					</div>
 					</shiro:hasAnyRoles>

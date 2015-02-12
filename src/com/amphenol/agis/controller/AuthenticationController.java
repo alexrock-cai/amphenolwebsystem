@@ -1,5 +1,7 @@
 package com.amphenol.agis.controller;
 
+
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -53,6 +55,7 @@ public class AuthenticationController extends Controller
 				token.setRememberMe(true);
 				subject.login(token);
 				subject.getSession(true).setAttribute("user", UserModel.dao.findByName(getPara("username")));
+				
 			}
 			redirect(UrlConfig.INDEX_ACTION);
 		}

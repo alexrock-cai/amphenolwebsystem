@@ -9,6 +9,7 @@ import com.amphenol.agis.controller.EpromVerifyController;
 import com.amphenol.agis.controller.PMController;
 import com.amphenol.agis.controller.ResourceModelController;
 import com.amphenol.agis.controller.RoleModelController;
+import com.amphenol.agis.controller.UserDccCertController;
 //import com.amphenol.agis.controller.TestController;
 import com.amphenol.agis.controller.UserModelController;
 import com.amphenol.agis.controller.WIViewController;
@@ -26,6 +27,7 @@ import com.amphenol.agis.model.ResourceModel;
 import com.amphenol.agis.model.RoleModel;
 import com.amphenol.agis.model.ShipdataModel;
 import com.amphenol.agis.model.StationModel;
+import com.amphenol.agis.model.UserDccCertModel;
 import com.amphenol.agis.model.UserModel;
 import com.amphenol.agis.model.VerifyModel;
 import com.amphenol.agis.model.WOModel;
@@ -79,6 +81,7 @@ public class AmphenolConfig extends JFinalConfig
 		me.add("/wi",WIViewController.class);
 		me.add("/eeprom",EEPROMController.class);
 		me.add("/pm",PMController.class);
+		me.add("/userDccCert",UserDccCertController.class);
 		//测试功能模块
 		//me.add("/test",TestController.class);
 		
@@ -115,6 +118,8 @@ public class AmphenolConfig extends JFinalConfig
 		arp.addMapping("sys_station", StationModel.class);
 		arp.addMapping("sys_pkg",PkgModel.class);
 		arp.addMapping("sys_echeck", EcheckModel.class);
+		//2015-2-1新增加 用户WI认证记录表
+		arp.addMapping("sys_dcc_user_cert", UserDccCertModel.class);
 		
 		//Equipment PM table Mapping
 		arp.addMapping("sys_equipment_pm_info", EquipmentPMInfoModel.class);

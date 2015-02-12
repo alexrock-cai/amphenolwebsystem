@@ -30,7 +30,7 @@
 </div>
 -->
 <div class="pageContent">
-   <shiro:hasAnyRoles name="root,admin_leader,admin_widatauser">
+   <shiro:hasAnyRoles name="root,admin_leader,admin_widatauser,WICert:supervisor,WICert:atb,WICert:test">
 	<div class="panelBar">
 		<ul class="toolBar">
 			<li><a class="add" href="${CONTEXT_PATH}/user/openStationForm" target="dialog" rel="station_add"><span>添加</span></a></li>		

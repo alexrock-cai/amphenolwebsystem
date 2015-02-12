@@ -41,6 +41,11 @@ public class UserModel extends Model<UserModel> {
 		String sql="select * from sys_user where username=?";
 		return UserModel.dao.findFirst(sql,username);
 	}
+	
+	public List<UserModel> findByUserName(String username){
+		String sql="select * from sys_user where username like ?";
+		return find(sql,username);
+	}
 	/**
 	 * 查找所有的用户
 	 * @return List<UserModel>

@@ -68,3 +68,22 @@ create table sys_dcc(
   constraint pk_sys_dcc primary key(id)
 )charset=utf8 ENGINE=InnoDB;
 create index idx_sys_dcc_filename on sys_dcc(filename);
+
+记录用户WI认证信息的数据库
+字段说明：
+userId 用户表中的ID，与用户表建立关联
+dccId  WI文档路径表ID，与Wi文档建立关联
+certTime  记录认证时间
+validity  认证有效期
+certUser  认证人员ID，
+available 是否有效
+create table sys_dcc_user_cert(
+	id bigint auto_increment,
+	userId  bigint,
+	dccId   bigint,
+	certTime  varchar(100),
+	validity  int,
+	certUser  bigint,
+	available bool default true,
+	constraint pk_sys_dcc_user_cert primary key(id)
+)charset=utf8 ENGINE=InnoDB;
