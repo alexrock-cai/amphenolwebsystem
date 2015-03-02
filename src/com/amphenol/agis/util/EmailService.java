@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.mail.MessagingException;
 
+import com.amphenol.agis.config.MailSendToConfig;
 import com.amphenol.agis.model.PkgModel;
 import com.amphenol.agis.model.ShipdataModel;
 import com.amphenol.agis.util.Eml;
@@ -15,6 +16,20 @@ import com.amphenol.agis.util.Eml;
 
 public class EmailService 
 {
+	private MailSendToConfig mailListConfig;
+	private String[] eppMailTos;
+	private String[] eppMailCCs;
+	
+	public EmailService(){
+		try {
+			mailListConfig = new MailSendToConfig("mailto.properties");
+			eppMailTos = mailListConfig.getString("EPPMailTo").split(";");
+			eppMailCCs = mailListConfig.getString("EPPMailCC").split(";");
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 	public void sendModifyPwdEmail(String email)
 	{
 
@@ -37,15 +52,14 @@ public class EmailService
 		{
 			//Eml eml=new Eml("smtp.126.com", "amphenolmaster@126.com", "amphenolmaster@126.com", "test123");
 			LotusSendMail  eml = new LotusSendMail("Ericsson_EEPROM_ShipCheck@amphenol-tcs.com");
-			eml.addTo("rocky.cai@amphenol-tcs.com");
-			eml.addTo("chris.zhang@amphenol-tcs.com");
-			eml.addTo("kevin.ding@amphenol-tcs.com");
-			eml.addTo("John.tang@amphenol-tcs.com");
-			eml.addTo("susan.fan@amphenol-tcs.com");
-			eml.addTo("zhen.ma@amphenol-tcs.com");
-			eml.addTo("Cai-Hong.li@amphenol-tcs.com");
-			eml.addCc("CZBP_OQA@amphenol-tcs.com");
-			eml.addCc("guotai.yu@amphenol-tcs.com");
+
+			for(String to :eppMailTos){
+				eml.addTo(to);
+			}
+			for(String cc : eppMailCCs){
+				eml.addCc(cc);
+			}
+			
 			eml.setSubject("Ericsson EEPROM Shipping Scan 系统提示信息");
 			
 			StringBuilder sb=new StringBuilder();
@@ -79,15 +93,12 @@ public class EmailService
 		{
 			//Eml eml=new Eml("smtp.126.com", "amphenolmaster@126.com", "amphenolmaster@126.com", "test123");
 			LotusSendMail  eml = new LotusSendMail("Ericsson_EEPROM_PkgCheck@amphenol-tcs.com");
-			eml.addTo("rocky.cai@amphenol-tcs.com");
-			eml.addTo("chris.zhang@amphenol-tcs.com");
-			eml.addTo("kevin.ding@amphenol-tcs.com");
-			eml.addTo("John.tang@amphenol-tcs.com");
-			eml.addTo("susan.fan@amphenol-tcs.com");
-			eml.addTo("zhen.ma@amphenol-tcs.com");
-			eml.addTo("Cai-Hong.li@amphenol-tcs.com");
-			eml.addCc("CZBP_OQA@amphenol-tcs.com");
-			eml.addCc("guotai.yu@amphenol-tcs.com");
+			for(String to :eppMailTos){
+				eml.addTo(to);
+			}
+			for(String cc : eppMailCCs){
+				eml.addCc(cc);
+			}
 			eml.setSubject("Ercisson EEPROM Package Scan 系统提示信息");
 			
 			StringBuilder sb=new StringBuilder();
@@ -131,6 +142,6 @@ public class EmailService
 	}
 	public static void main(String[] args)
 	{
-		new EmailService().sendModifyPwdEmail("cww.jerry@gmail.com");
+		new EmailService();
 	}
 }
