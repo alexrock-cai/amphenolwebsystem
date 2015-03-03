@@ -1,9 +1,12 @@
 package com.amphenol.agis.config;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
+
+import com.jfinal.kit.PathKit;
 
 
 public class MailSendToConfig {
@@ -12,7 +15,13 @@ public class MailSendToConfig {
 	
 	public MailSendToConfig(String file) {
 		try {
-			table.load(new FileInputStream(file));
+			String fullFile;	// String fullFile = PathUtil.getWebRootPath() + file;
+			if (file.startsWith(File.separator))
+				fullFile = PathKit.getWebRootPath() + File.separator + "WEB-INF" + file;
+			else
+				fullFile = PathKit.getWebRootPath() + File.separator + "WEB-INF" + File.separator + file;
+			
+			table.load(new FileInputStream(fullFile));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
