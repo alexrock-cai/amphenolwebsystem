@@ -21,9 +21,10 @@ public class PkgModel extends Model<PkgModel>
 		return dao.find(sql);
 	}
 	
+	//2015-2-11 更新获取所有的
 	public List<PkgModel> findNoProgramAndNoVerify()
 	{
-		String sql = "select * from sys_pkg where hasprogram is null or hasverify is null";
+		String sql = "select * from sys_pkg where hasprogram is not true or hasverify is not true or hastagin is not true";
 		return find(sql);
 	}
 	

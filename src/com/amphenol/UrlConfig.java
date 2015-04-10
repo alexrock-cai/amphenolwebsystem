@@ -20,4 +20,5 @@ public class UrlConfig
 	public static final String PM_LOGIN="/bs-admin-bcore/comm/login.jsp";
 	
 	
+	
 }

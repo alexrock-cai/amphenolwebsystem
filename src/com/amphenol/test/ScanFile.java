@@ -4,13 +4,9 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
 import com.amphenol.agis.util.FileScanner;
-import com.amphenol.agis.util.FileUtil;
+
 
 
 public class ScanFile 

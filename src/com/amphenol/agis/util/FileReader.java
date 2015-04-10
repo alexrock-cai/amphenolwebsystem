@@ -78,14 +78,15 @@ public class FileReader
 		// TODO Auto-generated method stub
 		String path = file.getParent().substring(EepConfigModel.dao.getWorkPath().length());
 		System.out.println("readText Path="+path);
-		System.out.println("path.startsWith('LOG_FILE\\Program')"+path.startsWith("LOG_FILE\\Program"));
-		System.out.println("path.startsWith(\"LOG_FILE\\Verify\")"+path.startsWith("LOG_FILE\\Verify"));
+		System.out.println("path.startsWith('/LOG_FILE/Program')"+path.startsWith("/LOG_FILE/Program"));
+		System.out.println("path.startsWith(\"/LOG_FILE/Verify\")"+path.startsWith("/LOG_FILE/Verify"));
 		//判断此文件是程序烧录日志文件还是验证日志文件
-		if(path.startsWith("LOG_FILE\\Program"))
+		//2015-4-9 修改代码 原“LOG_FILE\\Program” 修改为 "/LOG_FILE/Program"
+		if(path.startsWith("/LOG_FILE/Program"))
 		{
 			readProgramLog(file,path);
 		}
-		if(path.startsWith("LOG_FILE\\Verify"))
+		if(path.startsWith("/LOG_FILE/Verify"))
 		{
 			readVerifyLog(file,path);
 		}

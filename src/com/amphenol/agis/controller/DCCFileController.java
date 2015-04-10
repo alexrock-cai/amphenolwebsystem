@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 
 
@@ -24,6 +25,8 @@ import com.jfinal.upload.UploadFile;
 @RequiresAuthentication
 public class DCCFileController extends Controller 
 {
+	//2015-4-8 add
+	Logger logger = Logger.getLogger(DCCFileController.class);
 	public void index()
 	{
 		renderText("Welcome to DCC !");
@@ -42,6 +45,8 @@ public class DCCFileController extends Controller
 			String p=file.getAbsolutePath().substring(path.length()).substring(UrlConfig.WI_PATH.length()+1);
 			// "/xx/xx/xx/xx.pdf"
 			System.out.println(p);
+			//2015-4-8 add
+			logger.debug(p);
 			String pp=file.getAbsolutePath().substring(path.length());
 			DCCListModel dccModel=new DCCListModel();
 			String customer=p.substring(0, p.indexOf("/"));
@@ -200,20 +205,22 @@ public class DCCFileController extends Controller
 		{
 			String filepath=DCCListModel.dao.findById(getParaToLong("id")).getStr("filepath");
 			// windows system code 
-			filepath=filepath.replace("/", "\\");
+			//filepath=filepath.replace("/", "\\");
 			System.out.println("Delete filepath:"+filepath);
 			//windows system code 
-			System.out.println("Delete filepath2:"+"H:\\Tomcat 7.0\\webapps"+filepath);
-			File testfile = new File("H:\\Tomcat 7.0\\webapps"+filepath);
+			System.out.println("Delete filepath2:"+"D:\\Tomcat 7.0\\webapps"+filepath);
+			File testfile = new File("D:\\Tomcat 7.0\\webapps"+filepath);
 			System.out.println(testfile.getAbsolutePath());
-			if(new File("H:\\Tomcat 7.0\\webapps"+filepath).delete())
-			//if(new File(getRequest().getServletContext().getRealPath("/")+filepath).delete())
+			//if(new File("D:\\Tomcat 7.0\\webapps"+filepath).delete())
+			if(new File(getRequest().getServletContext().getRealPath("/")+filepath).delete())
 			{
 				
 				DCCListModel.dao.deleteById(getParaToLong("id"));
 				
 				//2015-2-1 新增加 删除DccList记录同事更新WI认证表，将对应的记录置为失效。
 				List<UserDccCertModel> dccCertModels=UserDccCertModel.dao.findByDccId(getParaToLong("id"));
+				//2015-4-8添加log记录
+				logger.info("DCC版本更新：ID【 "+getParaToLong("id")+"】,用户认证取消："+dccCertModels);
 				System.out.println("DCC版本更新：ID【 "+getParaToLong("id")+"】,用户认证取消："+dccCertModels);
 				if(dccCertModels!=null){
 					
@@ -240,11 +247,11 @@ public class DCCFileController extends Controller
 			for (String id : ids) {
 				String filepath=DCCListModel.dao.findById(id).getStr("filepath");
 				//windows system code
-				filepath=filepath.replace("/", "\\");
+				//filepath=filepath.replace("/", "\\");
 				System.out.println("Delete filepath:"+filepath);
 				//windows system code
-				if(new File("H:\\Tomcat 7.0\\webapps"+filepath).delete())
-				//if(new File(getRequest().getServletContext().getRealPath("/")+filepath).delete()) //linux ,mac os system code 
+				//if(new File("D:\\Tomcat 7.0\\webapps"+filepath).delete())
+				if(new File(getRequest().getServletContext().getRealPath("/")+filepath).delete()) //linux ,mac os system code 
 				{
 					
 					flag=DCCListModel.dao.deleteById(id);
@@ -288,11 +295,12 @@ public class DCCFileController extends Controller
 				dcc.set("customer", getPara("customer").toUpperCase());
 				String path=UrlConfig.WI_PATH+"/"+getPara("customer")+"/"+getPara("type")+"-"+getPara("pn").toUpperCase();
 				//windows 系统代码
-				String targetPath="H:\\Tomcat 7.0\\webapps\\static\\"+getPara("type")+"\\"+getPara("customer")+"\\"+getPara("type")+"-"+getPara("pn").toUpperCase();
+				//String targetPath="D:\\Tomcat 7.0\\webapps\\static\\"+getPara("type")+"\\"+getPara("customer")+"\\"+getPara("type")+"-"+getPara("pn").toUpperCase();
+				String targetPath="/usr/local/tomcat7/webapps/static/"+getPara("type")+"/"+getPara("customer")+"/"+getPara("type")+"-"+getPara("pn").toUpperCase();
 				if(getPara("type").equals("OBA Check list"))
 				{
 					path=UrlConfig.OBA_CHECKLIST_PATH+"/"+getPara("customer");
-					targetPath="H:\\Tomcat 7.0\\webapps\\static\\"+getPara("type")+"\\"+getPara("customer");
+					targetPath="/usr/local/tomcat7/webapps/static/"+getPara("type")+"/"+getPara("customer");
 				}
 				 
 				//windows 系统代码

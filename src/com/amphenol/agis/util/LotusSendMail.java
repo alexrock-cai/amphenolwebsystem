@@ -18,7 +18,7 @@ public final class LotusSendMail {
     private MimeMessage message;
     private Multipart mp = new MimeMultipart();
     private Session ssn;
-    private String server = "mustang.ltd.amphenol-tcs.com";
+    private String server = "131.101.144.22";
     //private String uid;
     //private String pwd;
 

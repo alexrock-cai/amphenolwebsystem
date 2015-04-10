@@ -25,9 +25,18 @@ public class EmailService
 			mailListConfig = new MailSendToConfig("mailto.properties");
 			eppMailTos = mailListConfig.getString("EPPMailTo").split(";");
 			eppMailCCs = mailListConfig.getString("EPPMailCC").split(";");
-		
+			for(String to :eppMailTos){
+				//eml.addTo(to);
+				System.out.println("NoEpromList to:"+to);
+			}
+			for(String cc : eppMailCCs){
+				//eml.addCc(cc);
+				System.out.println("NoEpromList to:"+cc);
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("mailto.properties read error");
 		}
 	}
 	public void sendModifyPwdEmail(String email)
@@ -48,6 +57,7 @@ public class EmailService
 	}
 	public boolean sendNoEepromList(List<ShipdataModel> list,List<ShipdataModel> notindts)
 	{
+		System.out.println("发送Epprom邮件,启动");
 		try
 		{
 			//Eml eml=new Eml("smtp.126.com", "amphenolmaster@126.com", "amphenolmaster@126.com", "test123");
@@ -55,9 +65,11 @@ public class EmailService
 
 			for(String to :eppMailTos){
 				eml.addTo(to);
+				System.out.println("NoEpromList to:"+to);
 			}
 			for(String cc : eppMailCCs){
 				eml.addCc(cc);
+				System.out.println("NoEpromList to:"+cc);
 			}
 			
 			eml.setSubject("Ericsson EEPROM Shipping Scan 系统提示信息");
@@ -82,6 +94,7 @@ public class EmailService
 		catch (MessagingException e)
 		{
 			e.printStackTrace();
+			System.out.println("邮件发送失败---："+e.getMessage());
 			return false;
 		}
 		
@@ -91,13 +104,16 @@ public class EmailService
 	{
 		try
 		{
+			System.out.println("发送NoEEPROMAndNoTagin邮件,启动");
 			//Eml eml=new Eml("smtp.126.com", "amphenolmaster@126.com", "amphenolmaster@126.com", "test123");
 			LotusSendMail  eml = new LotusSendMail("Ericsson_EEPROM_PkgCheck@amphenol-tcs.com");
 			for(String to :eppMailTos){
 				eml.addTo(to);
+				System.out.println("NoEEPROMAndNoTagin to:"+to);
 			}
 			for(String cc : eppMailCCs){
 				eml.addCc(cc);
+				System.out.println("NoEEPROMAndNoTagin to:"+cc);
 			}
 			eml.setSubject("Ercisson EEPROM Package Scan 系统提示信息");
 			
@@ -121,6 +137,7 @@ public class EmailService
 		catch (MessagingException e)
 		{
 			e.printStackTrace();
+			System.out.println("邮件发送失败---："+e.getMessage());
 			return false;
 		}
 		
